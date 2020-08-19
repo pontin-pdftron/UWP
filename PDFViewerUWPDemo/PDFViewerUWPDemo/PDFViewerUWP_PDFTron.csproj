@@ -164,14 +164,12 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.10</Version>
     </PackageReference>
-    <PackageReference Include="PDFTron.UWP.Tools">
-      <Version>7.0.3.73129</Version>
+    <PackageReference Include="PDFTron.UWP">
+      <Version>7.2.0-beta1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="PDFTron.PDFNetUWPApps, Version=7.0.4.73543">
-      <Name>PDFNet SDK for UWP</Name>
-    </SDKReference>
+    <PackageReference Include="PDFTron.UWP.Tools">
+      <Version>7.2.0-beta1</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
