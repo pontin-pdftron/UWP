@@ -1,4 +1,4 @@
-# Contributing to UWP - PDFViewer sample
+# Contributing to PDFTron - UWP Samples
 
 ## Issues
 1. Check existing issues (open/closed) to avoid duplicates.
@@ -15,10 +15,3 @@
 6. Create a pull request to `master`.
 
 \* Please note that all pull requests should be tied to an issue, and all but the most trivial pull requests should be discussed before hand.
-
-## Style guides
-- Tab indentation (size of 2 spaces).
-- Curly braces for block statements.
-- Allman brace style.
-- Semicolon at the end of each statement.
-- Minimum line breaks.
