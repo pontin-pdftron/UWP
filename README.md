@@ -1,23 +1,13 @@
-# PDFViewer Sample
+# PDFTron UWP Samples
 
-This sample demonstrate how to implement the PDFViewer on a UWP app using MVVM pattern.
+This repository contains sample projects using different features of the PDFTron UWP SDK.
 
-## Project structure
-```
-PDFViewerUWPDemo/
-	PDFViewerUWPDemo/
-		Assets/							- App resources
-		Properties/						
-		ViewModel/						- MVVM files
-		images/							- icons
-		App.xaml
-		App.xaml.cs
-		MainPage.xaml
-		MainPage.xaml.cs
-		PDFViewerUWPDemo.csproj
-		Package.appxmanifest
-	PDFViewerUWPDemo.sln
-```
+## Integration samples
+
+| Sample | Description |
+|--|--|
+|[PDFViewerUWPDemo](./PDFViewerUWPDemo)| Viewer integration using PDFViewCtrl
+
 
 ## Contributing
 

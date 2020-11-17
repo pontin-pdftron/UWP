@@ -24,16 +24,25 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" 
                     HorizontalAlignment="Left" Margin="5">
 
-                <Button Command="{Binding CMDOpenFile}" Width="50" Height="50" Margin="0 0 4 0">
-                    <Image Source="/images/fileopen.gif"/>
+                <Button Command="{Binding CMDOpenFile}" Width="60" Height="65" Margin="0 0 4 0">
+                    <StackPanel>
+                        <Image Source="/images/fileopen.gif" Margin="0 0 0 4"/>
+                        <TextBlock Text="Open" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>                    
                 </Button>
 
-                <Button Command="{Binding CMDPreviousPage}" Width="50" Height="50" Margin="0 0 4 0">
-                    <Image Source="/images/reverse_green.png"/>
+                <Button Command="{Binding CMDPreviousPage}" Width="60" Height="65" Margin="0 0 4 0">
+                    <StackPanel Height="55" Width="60" Margin="0 0 0 0" HorizontalAlignment="Center">
+                        <Image Source="/images/reverse_green.png" Width="40"/>
+                        <TextBlock Text="Previous" FontSize="10" HorizontalAlignment="Center" />
+                    </StackPanel>                    
                 </Button>
 
-                <Button Command="{Binding CMDNextPage}" Width="50" Height="50" >
-                    <Image Source="/images/play_green.png" />
+                <Button Command="{Binding CMDNextPage}" Width="60" Height="65" >                    
+                    <StackPanel Width="50" Height="55" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="/images/play_green.png" Width="40" />
+                        <TextBlock Text="Next" FontSize="10" HorizontalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
 
             </StackPanel>
