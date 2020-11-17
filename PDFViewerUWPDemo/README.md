@@ -20,10 +20,6 @@ PDFViewerUWPDemo/
 	PDFViewerUWPDemo.sln
 ```
 
-## Contributing
-
-See [contributing](./CONTRIBUTING.md).
-
 ## License
 
-See [license](./LICENSE).
+See [license](./../LICENSE).
