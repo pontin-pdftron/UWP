@@ -1,6 +1,6 @@
 # PDFViewer Sample
 
-This sample demonstrate how to implement the PDFViewer on a UWP app using MVVM pattern.
+This sample demonstrate how to implement the PDFViewer on a UWP app using MVVM pattern, and also how to use Tools to annotate text.
 It can target x86, x64, ARM32 and ARM64
 
 ![main-page](./art/main-page.png)
