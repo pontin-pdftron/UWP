@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Width="800" Height="600"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Gray">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -15,10 +15,10 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Background="LightGray">
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
 
                 <Button Command="{Binding CMDOpenFile}" Width="60" Height="50" Margin="0 0 4 0">
@@ -44,7 +44,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Background="LightGray">
             <Button Command="{Binding CMDExitApplication}" Width="60" Height="50" Margin="0 0 4 0">
                 <StackPanel>
                     <SymbolIcon Symbol="Cancel" Height="20"/>
