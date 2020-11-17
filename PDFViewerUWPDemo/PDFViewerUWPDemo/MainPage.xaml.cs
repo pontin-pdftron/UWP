@@ -15,8 +15,7 @@ namespace PDFViewerUWP_PDFTron
         public MainPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageViewModel();
-            
+            this.DataContext = new MainPageViewModel();            
         }
     }
 }

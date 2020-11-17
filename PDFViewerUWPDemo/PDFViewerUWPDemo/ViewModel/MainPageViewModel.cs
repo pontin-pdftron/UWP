@@ -8,6 +8,7 @@ using Windows.UI.Popups;
 using pdftron.PDF.Tools;
 using pdftron.PDF.Annots;
 using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml.Media;
 
 namespace PDFViewerUWP_PDFTron.ViewModel
 {
@@ -21,11 +22,15 @@ namespace PDFViewerUWP_PDFTron.ViewModel
 
         public MainPageViewModel()
         {
+            // Initialize commands
             CMDOpenFile = new RelayCommand(OpenFile);
             CMDExitApplication = new RelayCommand(ExitApplication);
             CMDTextAnnotation = new RelayCommand(TextAnnotationSample);
             CMDPreviousPage = new RelayCommand(PreviousPage);
             CMDNextPage = new RelayCommand(NextPage);
+
+            // Set control background color to gray
+            PDFViewCtrl.SetBackgroundColor(Windows.UI.Color.FromArgb(100, 49, 51, 53));
 
             // ToolManager is initialized with the PDFViewCtrl and it activates all available tools
             _toolManagerPDF = new ToolManager(PDFViewCtrl);

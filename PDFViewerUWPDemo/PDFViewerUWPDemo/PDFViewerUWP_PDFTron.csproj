@@ -133,14 +133,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\fileopen.gif" />
-    <Content Include="images\msg_sticker.png" />
-    <Content Include="images\play_green.png" />
-    <Content Include="images\reverse_green.png" />
-    <Content Include="images\text2tool.gif" />
-    <Content Include="images\texttool.gif" />
-    <Content Include="images\zoomin_tool.gif" />
-    <Content Include="images\zoomout_tool.gif" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
