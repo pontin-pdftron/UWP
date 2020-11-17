@@ -10,15 +10,18 @@ PDFViewerUWPDemo/
 		Assets/							- App resources
 		Properties/						
 		ViewModel/						- MVVM files
-		images/							- icons
 		App.xaml
 		App.xaml.cs
-		MainPage.xaml
+		MainPage.xaml					- Main app page
 		MainPage.xaml.cs
 		PDFViewerUWPDemo.csproj
 		Package.appxmanifest
 	PDFViewerUWPDemo.sln
 ```
+
+## Running the Sample
+
+To run the sample, open the solution in Visual Studio 2019 and restore all the Nuget packages
 
 ## License
 
