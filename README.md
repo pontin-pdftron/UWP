@@ -6,7 +6,7 @@ This repository contains sample projects using different features of the PDFTron
 
 | Sample | Description |
 |--|--|
-|[PDFViewerUWPDemo](./PDFViewerUWPDemo)| Viewer integration using PDFViewCtrl
+|[PDFViewerUWP_WindowsInk](./PDFViewerUWP_WindowsInk)| Tests with Windows Ink API and PDFViewCtrl
 
 
 ## Contributing
