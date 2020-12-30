@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
+  xmlns:iot2="http://schemas.microsoft.com/appx/manifest/iot/windows10/2"
+  IgnorableNamespaces="uap mp desktop4 iot2">
+  
+  <Identity Name="5E8FC25E.XODODOCS" Publisher="CN=728D3E49-73AE-4BBD-BC7C-5885A138F109" Version="4.4.2.0" />
+  <mp:PhoneIdentity PhoneProductId="b909edf4-0130-42c2-a6e7-006a7257c88f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>PDF Reader - View, Edit, Annotate</DisplayName>
+    <PublisherDisplayName>Xodo Technologies Inc.</PublisherDisplayName>
+    <Logo>Assets\XodoStoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal"
+                        MinVersion="10.0.0.0"
+                        MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  
+  <Applications>
+    <Application Id="App" 
+                 Executable="$targetnametoken$.exe"
+                 EntryPoint="Xodo_Windows10.App"
+                 desktop4:SupportsMultipleInstances="true"
+                 iot2:SupportsMultipleInstances="true">
+      <uap:VisualElements DisplayName="PDF Reader by Xodo" Square150x150Logo="Assets\XodoMedTile.png" Square44x44Logo="Assets\XodoAppList.png" Description="Xodo_Windows10" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\XodoWideTile.png" Square71x71Logo="Assets\XodoSmallTile.png" ShortName="Xodo" Square310x310Logo="Assets\XodoLargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\XodoSplashScreen.png" BackgroundColor="#005B8C" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".xlsx">
+            <uap:Logo>assets\Icon_xlsx.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xlsx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".pptx">
+            <uap:Logo>assets\Icon_pptx.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pptx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".docx">
+            <uap:Logo>assets\Icon_docx.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.docx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".doc">
+            <uap:Logo>assets\Icon_doc.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.doc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".oxps">
+            <uap:Logo>assets\Icon_oxps.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.oxps</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".xps">
+            <uap:Logo>assets\Icon_xps.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xps</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name=".pdf">
+            <uap:Logo>assets\Icon_pdf.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pdf</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

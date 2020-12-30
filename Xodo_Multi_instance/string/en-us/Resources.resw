@@ -1,0 +1,1409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AuthorDialog_AuthorLabel.Text" xml:space="preserve">
+    <value>Author:</value>
+    <comment>Labels the text box where the user inputs their name.</comment>
+  </data>
+  <data name="AuthorDialog_Information.Text" xml:space="preserve">
+    <value>Add your name as an author to annotations you create.
+You can change this in the charm bar's settings menu later.</value>
+    <comment>Informs the user on what filling in the text does and how to change it later.</comment>
+  </data>
+  <data name="AuthorDialog_SkipButton.Content" xml:space="preserve">
+    <value>Skip</value>
+    <comment>Skip filling out author name.</comment>
+  </data>
+  <data name="AuthorDialog_Title.Text" xml:space="preserve">
+    <value>Add Author</value>
+    <comment>The tile of the dialog prompting the user to add their name as an author</comment>
+  </data>
+  <data name="DocumentsPage_BrowseButton_Title.Text" xml:space="preserve">
+    <value>Browse</value>
+    <comment>Open File picker to select a single file to load</comment>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_CorruptFile_Info" xml:space="preserve">
+    <value>This PDF has been damaged. {0} tried to repair it but could not, so it cannot be opened. Sorry!</value>
+    <comment>Information notifying the user that the file couldn't be opened because it's damaged. {0} will be replaced by the app's name.</comment>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_Title" xml:space="preserve">
+    <value>Error opening file</value>
+    <comment>Title of popup messages pertaining to opening files.</comment>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_UsedByAnother_Info" xml:space="preserve">
+    <value>This document could not be opened. The file appears to be in use by another program.</value>
+    <comment>Information notifying user that the file seems to be opened already and therefore cannot be opened.</comment>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_XFA_Info" xml:space="preserve">
+    <value>The file contains proprietary XFA extensions and can't be opened.</value>
+    <comment>Inforamtion notifying the user that the file contains XFA extensions</comment>
+  </data>
+  <data name="DocumentsPage_GettingStartedButton_Content.Text" xml:space="preserve">
+    <value>Getting Started</value>
+    <comment>Open the Getting Started PDF document</comment>
+  </data>
+  <data name="DocumentsPage_LoadngProgressBar_Label.Text" xml:space="preserve">
+    <value>Loading document</value>
+    <comment>Label of a progress bar which shows while a document is being loaded.</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_ClearSelection.Label" xml:space="preserve">
+    <value>Clear Selection</value>
+    <comment>Clears the selection of the recent list</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_Remove.Label" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Removed individual item from recent list</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_Button_Remove.Text" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Removed individual item from recent list</comment>
+  </data>
+  <data name="DocumentsPage_FoldersPage_AppBar_Unpin.Label" xml:space="preserve">
+    <value>Unpin</value>
+    <comment>Unpins individual folder from folders list</comment>
+  </data>
+  <data name="DocumentsPage_FoldersPage_Button_Unpin.Text" xml:space="preserve">
+    <value>Unpin</value>
+    <comment>Unpins individual folder from folders list</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_RemoveAll.Label" xml:space="preserve">
+    <value>Remove All</value>
+    <comment>Removes all items from the recent list</comment>
+  </data>
+  <data name="DocumentsPage_FoldersPage_AppBar_UnpinAll.Label" xml:space="preserve">
+    <value>Unpin All</value>
+    <comment>Removes all items from the recent list</comment>
+  </data>
+  <data name="DocumentsPage_FoldersPage_AppBar_Browse.Label" xml:space="preserve">
+    <value>Browse</value>
+    <comment>Pins a folder to the folders list</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_FileInfo.Label" xml:space="preserve">
+    <value>File Info</value>
+    <comment>Shows the file information of a selected recent item</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_Button_FileInfo.Text" xml:space="preserve">
+    <value>File Info</value>
+    <comment>Shows the file information of a selected recent item</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_ClearDialog_Cancel_Option" xml:space="preserve">
+    <value>Don't clear</value>
+    <comment>Cancels the clearing operation</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_ClearDialog_Clear_Option" xml:space="preserve">
+    <value>Clear all items</value>
+    <comment>The option to clear the list</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_ClearDialog_Info" xml:space="preserve">
+    <value>This will clear all of the files from the recent documents list.</value>
+    <comment>Information for popup confirming wherer or not the user wants to clear the recent list.</comment>
+  </data>
+  <data name="DocumentsPage_FoldersPage_ClearDialog_Info" xml:space="preserve">
+    <value>This will clear all of the files from the pinned folders list.</value>
+    <comment>Information for popup confirming wherer or not the user wants to clear the recent list.</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_ClearDialog_Title" xml:space="preserve">
+    <value>Clear List?</value>
+    <comment>Title of popup confirming whether or not user wants to clear the recent list.</comment>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileNoLongerThere_Info" xml:space="preserve">
+    <value>This file no longer exists. It will be removed from the recent list.</value>
+    <comment>Information notifying the user that a file from the recent file no longer exitsts.</comment>
+  </data>
+  <data name="FindTextDialog_NotFoundMessage.Text" xml:space="preserve">
+    <value>No matches were found.</value>
+    <comment>If the text search couldn't find any mathces, they get notified by this text. Note: Should not be more than 1.5 times the size of the english version, due to size requirements.</comment>
+  </data>
+  <data name="Nagscreen_AskLater_Option" xml:space="preserve">
+    <value>Ask Me Later</value>
+    <comment>Option to dismiss the dialog and have it show up at a later time. Note: The 3 nagscreen options can't be too long, since then they won't show up.</comment>
+  </data>
+  <data name="NagScreen_Info" xml:space="preserve">
+    <value>Find {0} useful?
+Recommend it!</value>
+    <comment>Information in popup dialog to direct users to recommend the app in the app store. {0} will be replaced by the app name. Note: The 3 nagscreen options can't be too long, since then they won't show up.</comment>
+  </data>
+  <data name="Nagscreen_NeverAskAgain_Option" xml:space="preserve">
+    <value>Never Ask Again</value>
+    <comment>Option to dismiss the dialog and never have it show up again. Note: The 3 nagscreen options can't be too long, since then they won't show up.</comment>
+  </data>
+  <data name="Nagscreen_RateNow_Option" xml:space="preserve">
+    <value>Recommend {0}</value>
+    <comment>Option to rate the app which will take them to the app store. {0} will be replaced by the app name.</comment>
+  </data>
+  <data name="NagScreen_Title" xml:space="preserve">
+    <value>Recommend {0}</value>
+    <comment>Title of popup dialog to direct users to recommend the app in the app store. {0} will be replaced by the app name.</comment>
+  </data>
+  <data name="OutlineDialog_AnnotationListButton_Tooltip.Content" xml:space="preserve">
+    <value>Annotations</value>
+    <comment>Shows the list of annotations</comment>
+  </data>
+  <data name="OutlineDialog_BookmarksButton_Tooltip.Content" xml:space="preserve">
+    <value>Bookmarks</value>
+    <comment>Show the list of bookmakrs</comment>
+  </data>
+  <data name="OutlineDialog_ThumbnailsButton_Tooltip.Content" xml:space="preserve">
+    <value>Thumbnails</value>
+  </data>
+  <data name="PackageDialog_FileExtractionError_Info" xml:space="preserve">
+    <value>{0} could not extract the selected file.</value>
+    <comment>Info for notification of file extraction error. {0} will be replaced by the app's name.</comment>
+  </data>
+  <data name="PackageDialog_FileExtractionError_Title" xml:space="preserve">
+    <value>Error</value>
+    <comment>Popup notifying the user there was an error extracting the file</comment>
+  </data>
+  <data name="PackageDialog_WrongFileType_Info" xml:space="preserve">
+    <value>{0} only displays PDF files.</value>
+    <comment>The information of the popup notifying the user that we can't open that file type. {0} will be replaced by the app's name</comment>
+  </data>
+  <data name="PackageDialog_WrongFileType_Title" xml:space="preserve">
+    <value>Cannot open this file</value>
+    <comment>The title of the popup notifying the user that we can't open that file type</comment>
+  </data>
+  <data name="PasswordDialog_IncorrectPassword_Notification.Text" xml:space="preserve">
+    <value>The password provided is incorrect.</value>
+    <comment>Pops up if an incorrect password is entered.</comment>
+  </data>
+  <data name="PasswordDialog_Info.Text" xml:space="preserve">
+    <value>This file is password protected, please enter the password below.</value>
+    <comment>Information on the popup for password entering</comment>
+  </data>
+  <data name="PasswordDialog_OkButton.Content" xml:space="preserve">
+    <value>Unlock</value>
+    <comment>The button to confrim the password entered.</comment>
+  </data>
+  <data name="PasswordDialog_Title.Text" xml:space="preserve">
+    <value>Enter Password</value>
+    <comment>Title of popup to enter password for protected files.</comment>
+  </data>
+  <data name="SaveBeforeClosingDialog_Discard_Option" xml:space="preserve">
+    <value>Discard changes</value>
+    <comment>Closes the documents and does not save</comment>
+  </data>
+  <data name="SaveBeforeClosingDialog_Info" xml:space="preserve">
+    <value>There are unsaved changes in {0}. Do you want to save before closing?</value>
+    <comment>The message  in the dialog</comment>
+  </data>
+  <data name="SaveBeforeClosingDialog_Save_Option" xml:space="preserve">
+    <value>Save</value>
+    <comment>Brings up the file picker</comment>
+  </data>
+  <data name="SaveBeforeClosingDialog_Title" xml:space="preserve">
+    <value>Alert</value>
+    <comment>Shows up when user is about navigates away from changes that cannot be saved.</comment>
+  </data>
+  <data name="Settings_About.Title" xml:space="preserve">
+    <value>About</value>
+    <comment>Title for the about settings menu</comment>
+  </data>
+  <data name="Settings_About_Build_Label.Text" xml:space="preserve">
+    <value>Build</value>
+    <comment>Label for build</comment>
+  </data>
+  <data name="Settings_About_Version_Label.Text" xml:space="preserve">
+    <value>Version</value>
+    <comment>Label for version</comment>
+  </data>
+  <data name="Settings_OptionLabels_About.Text" xml:space="preserve">
+    <value>About</value>
+    <comment>The label of the about menu as seen in the settings menu</comment>
+  </data>
+  <data name="Settings_OptionLabels_Options.Text" xml:space="preserve">
+    <value>Options</value>
+    <comment>The label of the options menu as seen in the settings menu</comment>
+  </data>
+  <data name="Settings_OptionLabels_PrivacyPolicy.Text" xml:space="preserve">
+    <value>Privacy Policy (Online)</value>
+    <comment>The label of the link to the privacy policy as seen in the settings menu</comment>
+  </data>
+  <data name="Settings_Options.Title" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Title for the Settings menu</comment>
+  </data>
+  <data name="Settings_Options_AnnotationAuthor_Description.Text" xml:space="preserve">
+    <value>Default author name for your annotations.</value>
+    <comment>The description ofthe option to change annotation author</comment>
+  </data>
+  <data name="Settings_Options_AnnotationAuthor_Title.Text" xml:space="preserve">
+    <value>Annotation Author</value>
+    <comment>The name of the option to change annotation author</comment>
+  </data>
+  <data name="Settings_Options_ContinuousAnnotationEdit_Option.Text" xml:space="preserve">
+    <value>Continuous Annotation Edit</value>
+    <comment>The label for the on/off switch to select continuous annotation editing</comment>
+  </data>
+  <data name="Settings_Options_EmailSignature_Default" xml:space="preserve">
+    <value>Sent from {0}</value>
+    <comment>The default signature. {0} will be replaced by the app name</comment>
+  </data>
+  <data name="Settings_Options_EmailSignature_Description.Text" xml:space="preserve">
+    <value>Default email signature.</value>
+    <comment>The description of hte option to change the defauly email signature</comment>
+  </data>
+  <data name="Settings_Options_EmailSignature_Title.Text" xml:space="preserve">
+    <value>Email Signature</value>
+    <comment>The name of the option to change the default email signature</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Edit.Label" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Brings up the annotation toolbar</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Edit_ToolTip.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ViewerPage_AppBar_Files.Label" xml:space="preserve">
+    <value>Back</value>
+    <comment>Takes you back to the files page</comment>
+  </data>
+  <data name="ViewerPage_AppBar_FindClose.Label" xml:space="preserve">
+    <value>Close</value>
+    <comment>Takes you back to the files page</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Outline.Label" xml:space="preserve">
+    <value>Outline</value>
+    <comment>Shows a dialog with various types of outlines (bookmarks, annotations)</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Outline_ToolTip.Content" xml:space="preserve">
+    <value>Outline</value>
+  </data>
+  <data name="ViewerPage_AppBar_PinUI.Label" xml:space="preserve">
+    <value>Pin Command Bar</value>
+    <comment>Pins the UI in the Viewer Page</comment>
+  </data>
+  <data name="ViewerPage_AppBar_UnpinUI.Label" xml:space="preserve">
+    <value>Unpin Command Bar</value>
+    <comment>Unpins the UI in the Viewer Page</comment>
+  </data>
+  <data name="ViewerPage_AppBar_UnpinUI_Message" xml:space="preserve">
+    <value>To bring back the command bar, right click or tap on the screen</value>
+  </data>
+  <data name="ViewerPage_AppBar_Save.Label" xml:space="preserve">
+    <value>Save</value>
+    <comment>Saves the document to the current file</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Save_ToolTip.Content" xml:space="preserve">
+    <value>Save (Ctrl+S)</value>
+    <comment>Save ToolTip</comment>
+  </data>
+  <data name="ViewerPage_AppBar_SaveAs.Label" xml:space="preserve">
+    <value>Save As</value>
+    <comment>Saves the document to a new file</comment>
+  </data>
+  <data name="ViewerPage_AppBar_SaveAs_ToolTip.Content" xml:space="preserve">
+    <value>Save As</value>
+    <comment>Saves the document to a new file</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Search.Label" xml:space="preserve">
+    <value>Search</value>
+    <comment>Searches the document for a matchring string</comment>
+  </data>
+  <data name="ViewerPage_AppBar_Search_ToolTip.Content" xml:space="preserve">
+    <value>Search (Ctrl+F)</value>
+    <comment>Tooltip for Search App Bar Button</comment>
+  </data>
+  <data name="ViewerPage_AppBar_SearchFullView.Label" xml:space="preserve">
+    <value>List All</value>
+    <comment>Searches the document for a matchring string</comment>
+  </data>
+  <data name="ViewerPage_AppBar_SearchFullView_ToolTip.Content" xml:space="preserve">
+    <value>List All</value>
+  </data>
+  <data name="ViewerPage_AppBar_ViewMode.Label" xml:space="preserve">
+    <value>View Mode</value>
+    <comment>Shows a menu that allows the user to select how the pages of the document should be laid out</comment>
+  </data>
+  <data name="ViewerPage_AppBar_ViewMode_ToolTip.Content" xml:space="preserve">
+    <value>View Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Continuous.Text" xml:space="preserve">
+    <value>Vertical Scrolling</value>
+    <comment>Showns new pages by scrolling down</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_ColorMode.Text" xml:space="preserve">
+    <value>Color Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Normal_ToolTip.Content" xml:space="preserve">
+    <value>Normal Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Night_ToolTip.Content" xml:space="preserve">
+    <value>Night Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Sepia_ToolTip.Content" xml:space="preserve">
+    <value>Sepia Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_CustomColor_ToolTip.Content" xml:space="preserve">
+    <value>Custom Color Mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_SignlePage.Text" xml:space="preserve">
+    <value>Single</value>
+    <comment>Shows one page per screen with side swiping to switch</comment>
+  </data>
+  <data name="DocumentsPage_SharingFailed_DocumentsNeeded" xml:space="preserve">
+    <value>You have to select files from the recent list in order to share.</value>
+    <comment>The error message when the user tries to share from the File page without having selected any files.</comment>
+  </data>
+  <data name="Sharing_MultipleDocuments_Title" xml:space="preserve">
+    <value>{0} Documents</value>
+    <comment>The subject line for emails sent from this app with multiple documents. {0} will be replaced by the app's name.</comment>
+  </data>
+  <data name="Sharing_SignleDocument_Title" xml:space="preserve">
+    <value>{0} Document - {1}</value>
+    <comment>The subject line for emails sent from the app. {0} will be replaced by the app's name and {1} will be replaced by the document name.</comment>
+  </data>
+  <data name="ViewerPage_SaveAsNotification_Save.Text" xml:space="preserve">
+    <value>Saving...</value>
+    <comment>Shows up with a progress ring to notify the user that we are saving.</comment>
+  </data>
+  <data name="ViewerPage_SaveAsNotification_Optimize.Text" xml:space="preserve">
+    <value>Reducing file size...</value>
+    <comment>Shows up with a progress ring to notify the user that we are saving.</comment>
+  </data>
+  <data name="ViewerPage_SaveAsNotification_Flatten.Text" xml:space="preserve">
+    <value>Flattening PDF...</value>
+    <comment>Shows up with a progress ring to notify the user that we are saving.</comment>
+  </data>
+  <data name="ViewerPage_SaveAsNotification_Password.Text" xml:space="preserve">
+    <value>Password protecting PDF...</value>
+    <comment>Shows up with a progress ring to notify the user that we are saving.</comment>
+  </data>
+  <data name="ViewerPage_SaveAsNotification_Crop.Text" xml:space="preserve">
+    <value>Saving cropped PDF...</value>
+    <comment>Shows up with a progress ring to notify the user that we are saving.</comment>
+  </data>
+  <data name="SaveBeforeClosingDialog_OpenWithInfo" xml:space="preserve">
+    <value>{0} is about to open a new document.
+
+You have unsaved changes. Do you want to save before closing?</value>
+    <comment>This dialog shows up if the user double clicks a pdf file to open it in CompleteReader, and the current document is read only and has unsaved changes.</comment>
+  </data>
+  <data name="Settings_Options_PinCommandBar_Description.Text" xml:space="preserve">
+    <value>When enabled, the Command Bar in the viewer page will be permanently pinned on the screen</value>
+  </data>
+  <data name="Settings_Options_PinCommandBar_Title.Text" xml:space="preserve">
+    <value>Pin Command Bar</value>
+  </data>
+  <data name="Settings_Options_RememberLastPage_Description.Text" xml:space="preserve">
+    <value>When enabled, documents opened from the Recent List are reopened on the last page they were on.</value>
+  </data>
+  <data name="Settings_Options_RememberLastPage_Title.Text" xml:space="preserve">
+    <value>Remember Last Page</value>
+  </data>
+  <data name="Settings_Options_EnableJavaScript_Description.Text" xml:space="preserve">
+    <value>When enabled, JavaScript actions embedded in PDF files will be executed.</value>
+  </data>
+  <data name="Settings_Options_EnableJavaScript_Title.Text" xml:space="preserve">
+    <value>Enable JavaScript</value>
+  </data>
+  <data name="Settings_Options_ContinuousAnnotationEdit_Info.Text" xml:space="preserve">
+    <value>When enabled, the annotation toolbar does not return to the hand tool after an annotation is created.</value>
+  </data>
+  <data name="ViewerPage_AppBar_Print.Label" xml:space="preserve">
+    <value>Print</value>
+    <comment>Label for print button in app bar</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Facing.Text" xml:space="preserve">
+    <value>Double</value>
+    <comment>Shows two pages per screen.</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FacingCover.Text" xml:space="preserve">
+    <value>Cover</value>
+    <comment>Shows two pages per screen, except for the cover page which is alone.</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Reflow.Text" xml:space="preserve">
+    <value>Reflow</value>
+    <comment>Shows a reflow (HTML) version of the PDF</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Rotate.Text" xml:space="preserve">
+    <value>Rotate Clockwise</value>
+    <comment>Rotates all pages 90 degrees clockwise.</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Crop.Text" xml:space="preserve">
+    <value>Crop Pages</value>
+    <comment>Rotates all pages 90 degrees clockwise.</comment>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Thumbnails.Text" xml:space="preserve">
+    <value>Thumbnails</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FullScreen.Text" xml:space="preserve">
+    <value>Full Screen</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_ExitFullScreen.Text" xml:space="preserve">
+    <value>Exit Full Screen</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FullScreen_MessageDialog" xml:space="preserve">
+    <value>Press Escape or F11 to exit full screen mode</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FullScreen_DontShow" xml:space="preserve">
+    <value>Don't show me again</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FullScreen_Okay" xml:space="preserve">
+    <value>Close now</value>
+  </data>
+  <data name="ViewerPage_FullScreen_Exit.Content" xml:space="preserve">
+    <value>Exit Full Screen</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FacingContinuous.Text" xml:space="preserve">
+    <value>Two Pages</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_NightMode.Text" xml:space="preserve">
+    <value>Night Mode</value>
+  </data>
+  <data name="ViewerPage_Navigation_Undo_ToolTip.Content" xml:space="preserve">
+    <value>Navigate Back</value>
+  </data>
+  <data name="ViewerPage_Navigation_Redo_ToolTip.Content" xml:space="preserve">
+    <value>Navigate Forward</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_CreateDocument_PickerConfirm" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_CreationFailed_Content" xml:space="preserve">
+    <value>An error occurred trying to create the document.</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_CreationFailed_Title" xml:space="preserve">
+    <value>Error Creating Document</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_DefaultTitle" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_DocumentTitle.Text" xml:space="preserve">
+    <value>Document Title</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_UnitsInch" xml:space="preserve">
+    <value>in</value>
+  </data>
+  <data name="DocumentCreation_AllDocuments_UnitsMilliMeter" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_A4PageText.Content" xml:space="preserve">
+    <value>A4</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_CreateDocumentButton.Content" xml:space="preserve">
+    <value>Create PDF</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_Landscape.Content" xml:space="preserve">
+    <value>Landscape</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_LetterPageText.Content" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_NumberOfPages" xml:space="preserve">
+    <value>Maximum {0}</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_NumberOfPagesHeader.Text" xml:space="preserve">
+    <value>Number of Pages</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_PageOrientationHeader.Text" xml:space="preserve">
+    <value>Page Orientation</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_PageSizeHeader.Text" xml:space="preserve">
+    <value>Page Size</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_Portrait.Content" xml:space="preserve">
+    <value>Portrait</value>
+  </data>
+  <data name="DocumentCreation_BlankDocument_Title.Text" xml:space="preserve">
+    <value>Blank Document</value>
+  </data>
+  <data name="DocumentCreation_CameraDocument_Title.Text" xml:space="preserve">
+    <value>From Camera</value>
+  </data>
+  <data name="DocumentCreation_CreateBlankDocumentButton.Content" xml:space="preserve">
+    <value>Blank PDF</value>
+  </data>
+  <data name="DocumentCreation_CreateFromCameraButton.Content" xml:space="preserve">
+    <value>From Camera</value>
+  </data>
+  <data name="DocumentCreation_CreateFromImageButton.Content" xml:space="preserve">
+    <value>From Image</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_CreateDocumentButton.Content" xml:space="preserve">
+    <value>Create PDF</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_CreationFailed_Content" xml:space="preserve">
+    <value>An error occured while adding {0} to the document. The image file might be corrupt.</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_CreationFailed_Title" xml:space="preserve">
+    <value>Error Creating Document</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_PickFileConform" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="DocumentCreation_PDFDocument_PickFileConform" xml:space="preserve">
+    <value>Select PDF</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_Preview.Text" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_SelectFileButton.Content" xml:space="preserve">
+    <value>Get Picture from File</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_TakePictureButton.Content" xml:space="preserve">
+    <value>Get Picture from Camera</value>
+  </data>
+  <data name="DocumentCreation_ImageDocument_Title.Text" xml:space="preserve">
+    <value>From Image File</value>
+  </data>
+  <data name="PasswordDialog_ManyFails_Info" xml:space="preserve">
+    <value>You have entered the wrong password {0} times. Please re-open the file to try again.</value>
+  </data>
+  <data name="PasswordDialog_ManyFails_Title" xml:space="preserve">
+    <value>Incorrect Password</value>
+  </data>
+  <data name="OutlineDialog_OutlineButton_ToolTip.Content" xml:space="preserve">
+    <value>Outline</value>
+  </data>
+  <data name="Settings_Options_AutoSave_Description.Text" xml:space="preserve">
+    <value>When on, edits will automatically be saved to the Document, provided the document can be saved to. Turning this off will enable a save button for manual saving.</value>
+  </data>
+  <data name="Settings_Options_AutoSave_Title.Text" xml:space="preserve">
+    <value>Enable Auto-Saving</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Corrupted_Dismiss" xml:space="preserve">
+    <value>Don't Repair</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Corrupted_Info" xml:space="preserve">
+    <value>This document contains invalid data. {0} can try to repair the document to create a valid document again. Please select {1} and {0} will attempt to save a repaired copy. Otherwise, changes will not be saved.</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Corrupted_Title" xml:space="preserve">
+    <value>Invalid Document</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Created_Dismiss" xml:space="preserve">
+    <value>Save Later</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Created_Info" xml:space="preserve">
+    <value>In order to save your recently created document with it's changes, please select {0}.</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_Created_Title" xml:space="preserve">
+    <value>Save your changes</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_ReadOnly_Dismiss" xml:space="preserve">
+    <value>Save Later</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_ReadOnly_Info" xml:space="preserve">
+    <value>You have modified a document that can not be saved to. Please select {0} in order to save your changes.</value>
+  </data>
+  <data name="Viewerpage_DocumentModifiedDialog_ReadOnly_Title" xml:space="preserve">
+    <value>Cannot save to original</value>
+  </data>
+  <data name="ViewerPage_FileOpeningError_Close_Option" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ViewerPage_FileOpeningError_SaveACopy_Option" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="DocumentsPage_AppBar_Browse.Label" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_Title.Text" xml:space="preserve">
+    <value>View Modes</value>
+  </data>
+  <data name="DocumentsPage_GettingStartedButton.Label" xml:space="preserve">
+    <value>Getting Started</value>
+  </data>
+  <data name="DocumentsPage_SubViewes_CreateNew.Header" xml:space="preserve">
+    <value>Create New</value>
+  </data>
+  <data name="DocumentsPage_SubViewes_RecentItems.Header" xml:space="preserve">
+    <value>Recent Items</value>
+  </data>
+  <data name="OutlineDialog_AnnotationListHeader.Text" xml:space="preserve">
+    <value>Annotations</value>
+    <comment>Shows the list of annotations</comment>
+  </data>
+  <data name="OutlineDialog_BookmarksHeader.Text" xml:space="preserve">
+    <value>Bookmarks</value>
+    <comment>Show the list of bookmakrs</comment>
+  </data>
+  <data name="OutlineDialog_OutlineHeader.Text" xml:space="preserve">
+    <value>Outline</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_Select.Label" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_IconView.Label" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_SmallTilesView.Text" xml:space="preserve">
+    <value>Small Tiles</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_ListView.Text" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_CoverView.Text" xml:space="preserve">
+    <value>Covers</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_LargeTilesView.Text" xml:space="preserve">
+    <value>Large Tiles</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_AppBar_Share.Label" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_Button_Share.Text" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_Title.Text" xml:space="preserve">
+    <value>Title: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_Author.Text" xml:space="preserve">
+    <value>Author: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_PageCount.Text" xml:space="preserve">
+    <value>Page Count: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_Path.Text" xml:space="preserve">
+    <value>Path: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_Size.Text" xml:space="preserve">
+    <value>Size: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_DateModified.Text" xml:space="preserve">
+    <value>Date Modified: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_NumFolders.Text" xml:space="preserve">
+    <value>Number of Folders: </value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_NumPDFs.Text" xml:space="preserve">
+    <value>Number of PDFs: </value>
+  </data>
+  <data name="FindTextDialog_NotFoundText" xml:space="preserve">
+    <value>No matches were found.</value>
+    <comment>If the text search couldn't find any mathces, they get notified by this text. Note: Should not be more than 1.5 times the size of the english version, due to size requirements.</comment>
+  </data>
+  <data name="FindTextDialog_FullSearch_CurrentPageText" xml:space="preserve">
+    <value>{0} of {1} pages...</value>
+  </data>
+  <data name="FindTextDialog_FullSearch_Results" xml:space="preserve">
+    <value>Found {0} results</value>
+  </data>
+  <data name="AuthorDialog_Information_Phone.Text" xml:space="preserve">
+    <value>Add your name as an author to annotations you create.
+You can change this in the settings menu later.</value>
+    <comment>Informs the user on what filling in the text does and how to change it later.</comment>
+  </data>
+  <data name="Settings_Options_Phone.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ViewerPage_AppBar_Options.Label" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="SaveBeforeClosingDialog_SaveAs_Option" xml:space="preserve">
+    <value>Save As</value>
+  </data>
+  <data name="AnnotationSavingNotification_AnnotsSaved" xml:space="preserve">
+    <value>Changes have been saved.</value>
+  </data>
+  <data name="AnnotationSavingNotification_ReadOnlyOpened" xml:space="preserve">
+    <value>To save this document, use Save As.</value>
+  </data>
+  <data name="DocumentsPage_FileOpeningNotification_WaitWhileSaving_Info" xml:space="preserve">
+    <value>Please wait while the document is being saved.
+Try again later.</value>
+  </data>
+  <data name="DocumentsPage_FileOpeningNotification_WaitWhileSaving_Title" xml:space="preserve">
+    <value>Document is being Saved</value>
+  </data>
+  <data name="ShareCharm_Description_MultipleFiles" xml:space="preserve">
+    <value>These files have been shared with you.</value>
+  </data>
+  <data name="ShareCharm_Description_NoFileSelected" xml:space="preserve">
+    <value>You have to select files from the shared list in order to share.</value>
+  </data>
+  <data name="ShareCharm_Description_NonSharedFileSelected" xml:space="preserve">
+    <value>You have selected files from the shared list that are not ready for sharing. Unselect, or wait until publishing is complete.</value>
+  </data>
+  <data name="ShareCharm_Description_SignleFile" xml:space="preserve">
+    <value>This file has been shared with you.</value>
+  </data>
+  <data name="ViewerPage_ViewModeControl_FacingContinuousCover.Text" xml:space="preserve">
+    <value>Continuous with Cover</value>
+  </data>
+  <data name="ViewerPage_TabControl_TabLoadError_FileMissing_Info" xml:space="preserve">
+    <value>The document in this tab ({0}) is no longer available, please re-open the file.</value>
+  </data>
+  <data name="ViewerPage_TabControl_TabLoadError_FileMissing_Title" xml:space="preserve">
+    <value>Could not open file</value>
+  </data>
+  <data name="ViewerPage_TabControl_TabLoadErro_OriginalMissing_Info" xml:space="preserve">
+    <value>The original document opened in this tab ({0}) is no longer available. However, you will still be able to view the contents. Use Save As to save the document to a new file.</value>
+  </data>
+  <data name="ViewerPage_TabControl_TabLoadErro_OriginalMissing_Title" xml:space="preserve">
+    <value>Could not load original file</value>
+  </data>
+  <data name="ViewerPage_TabControl_TabLoadErro_OriginalMissing_Cancel" xml:space="preserve">
+    <value>Don't open tab</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_Info" xml:space="preserve">
+    <value>The document {1} has been modfied outside of {0} while {0} contains unsaved changes to the original document. Would you like to use the document from disk, losing the changes made in {0}, or would you like to save the changes in {0} to a new file.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_PasswordFail_Info" xml:space="preserve">
+    <value>The document {0} could not be loaded and will be closed. Please re-open the document.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_PasswordFail_Title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAs" xml:space="preserve">
+    <value>Save to new file</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsFlatten_Title" xml:space="preserve">
+    <value>Cannot save and flatten to the same file</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsFlatten" xml:space="preserve">
+    <value>The document in this tab ({0}) cannot be the target for save and flattening. Please select a different file name.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsOptimize_Title" xml:space="preserve">
+    <value>Cannot save and optimize to the same file</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsOptimize" xml:space="preserve">
+    <value>The document in this tab ({0}) cannot be the target for saving a file size reduced copy. Please select a different file name.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsPassword_Title" xml:space="preserve">
+    <value>Cannot save a password protected copy to the same file</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsPassword" xml:space="preserve">
+    <value>The document in this tab ({0}) cannot be the target for saving a password protected copy. Please select a different file name.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsCrop_Title" xml:space="preserve">
+    <value>Cannot save a permanently cropped copy to the same file</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_SaveAsCrop" xml:space="preserve">
+    <value>The document in this tab ({0}) cannot be the target for saving a permanently cropped copy. Please select a different file name.</value>
+  </data>
+  <data name="ViewerPage_TabDialog_SaveError_Title" xml:space="preserve">
+    <value>Could not save the file</value>
+  </data>
+  <data name="ViewerPage_TabDialog_SaveError" xml:space="preserve">
+    <value>The document {0} could not be saved. Please ensure that it is not currently open in another program.</value>
+  </data>
+  <data name="ViewerPage_TabDialog_SaveError_AccessDenied" xml:space="preserve">
+    <value>The document {0} could not be saved. This is likely due to the file being open by another program. Please ensure that it is not currently open in another program.</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_Title" xml:space="preserve">
+    <value>Conflicting Documents</value>
+  </data>
+  <data name="ViewerPage_TabConflictDialog_UseFile" xml:space="preserve">
+    <value>Use file from disk</value>
+  </data>
+  <data name="DocumentsPage_ConvertingToPDF_Label.Text" xml:space="preserve">
+    <value>Converting to PDF...</value>
+  </data>
+  <data name="ViewerPage_OverflowOptions_Print.Text" xml:space="preserve">
+    <value>Print (Ctrl+P)</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_Print.Label" xml:space="preserve">
+    <value>Print (Ctrl+P)</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_Share.Label" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_Optimize.Text" xml:space="preserve">
+    <value>reduced file size copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_Password" xml:space="preserve">
+    <value>password protected copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_ChangePassword" xml:space="preserve">
+    <value>changed/removed password copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_PermCroppedCopy.Text" xml:space="preserve">
+    <value>permanently cropped copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_SaveASomething.Label" xml:space="preserve">
+    <value>Save a ...</value>
+  </data>
+  <data name="ViewerPage_OverflowOptions_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Options_InkSmoothing_AllButStylus" xml:space="preserve">
+    <value>Do not smooth stylus</value>
+  </data>
+  <data name="Settings_Options_InkSmoothing_Info.Text" xml:space="preserve">
+    <value>When using the inking tool to mark up a PDF, this option determines when to smooth the ink.</value>
+  </data>
+  <data name="Settings_Options_InkSmoothing_NoSmoothing" xml:space="preserve">
+    <value>Do not smooth</value>
+  </data>
+  <data name="Settings_Options_InkSmoothing_Option.Text" xml:space="preserve">
+    <value>Smooth Ink</value>
+  </data>
+  <data name="Settings_Options_InkSmoothing_SmoothAll" xml:space="preserve">
+    <value>Smooth all ink</value>
+  </data>
+  <data name="ViewerPage_OverflowOptions_SaveAndFlatten.Text" xml:space="preserve">
+    <value>Save a Flattened Copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_SaveAndFlatten.Text" xml:space="preserve">
+    <value>flattened copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_SaveAndFlatten_Message_Title" xml:space="preserve">
+    <value>Flattened Copy</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_SaveAndFlatten_Message" xml:space="preserve">
+    <value>Flattening the document will make form fields, signatures and other annotations permanent parts of the PDF, so that they cannot be modified or removed by Xodo or other standard viewing software.</value>
+  </data>
+  <data name="ViewerPage_SecondaryOptions_SaveAndFlatten_Message_Confirm" xml:space="preserve">
+    <value>Flatten</value>
+  </data>
+  <data name="DocumentsPage_CreateDocument_Title.Text" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="DocumentsPage_CreateDocument_Title_ToolTip.Content" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_Title.Text" xml:space="preserve">
+    <value>Recent Documents</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_Title_ToolTip.Content" xml:space="preserve">
+    <value>Recent Documents</value>
+  </data>
+  <data name="DocumentsPage_OpenedDocuments_Title.Text" xml:space="preserve">
+    <value>Opened Documents</value>
+  </data>
+  <data name="DocumentsPage_OpenedDocuments_Title_ToolTip.Content" xml:space="preserve">
+    <value>Opened Documents</value>
+  </data>
+  <data name="DocumentsPage_MyFolders_Title.Text" xml:space="preserve">
+    <value>Pinned Folders</value>
+  </data>
+  <data name="DocumentsPage_MyFolders_Title_ToolTip.Content" xml:space="preserve">
+    <value>Pinned Folders</value>
+  </data>
+  <data name="NoRecentDocuments_Textblock.Text" xml:space="preserve">
+    <value>Open Document</value>
+  </data>
+  <data name="NoPinnedFolders_Textblock.Text" xml:space="preserve">
+    <value>Pin Folder</value>
+  </data>
+  <data name="NoSubFolderItems_Textblock.Text" xml:space="preserve">
+    <value>No files in this folder</value>
+  </data>
+  <data name="DocumentCreation_CreateFromCameraTitle.Text" xml:space="preserve">
+    <value>PDF From Camera</value>
+  </data>
+  <data name="DocumentCreation_CreateFromImageTitle.Text" xml:space="preserve">
+    <value>PDF From Image</value>
+  </data>
+  <data name="Settings_OptionLabels_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_OptionLabels_Settings_ToolTip.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Options_Background_Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Settings_Options_Background_Description.Text" xml:space="preserve">
+    <value>Choose a theme.</value>
+  </data>
+  <data name="Settings_Options_Background_Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Settings_Options_ThemeMessage_Content" xml:space="preserve">
+    <value>Please restart the app to see the new theme.</value>
+  </data>
+  <data name="Settings_Options_ThemeMessage_Title" xml:space="preserve">
+    <value>Restart the App</value>
+  </data>
+  <data name="Settings_Options_Background_Title.Text" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="FindTextDialog_EmptyMessage.Text" xml:space="preserve">
+    <value>Type to Search</value>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_FailedToCreateTempFile" xml:space="preserve">
+    <value>This document could not be opened. An error happened while trying to open it.</value>
+  </data>
+  <data name="Settings_Options_StylusAsPen_Info.Text" xml:space="preserve">
+    <value>When using the stylus, this determines if the stylus should pan or ink as the default state.</value>
+  </data>
+  <data name="Settings_Options_StylusAsPen_Option.Text" xml:space="preserve">
+    <value>Stylus as Pen</value>
+  </data>
+  <data name="Settings_Options_ScreenSleepLock_Info.Text" xml:space="preserve">
+    <value>When using the app, this determines if the screen should stay on as long as you are viewing a document.</value>
+  </data>
+  <data name="Settings_Options_ScreenSleepLock_Option.Text" xml:space="preserve">
+    <value>Screen Sleep Lock</value>
+  </data>
+  <data name="ViewerPage_FullSearch_SearchCount" xml:space="preserve">
+    <value>Search Results</value>
+  </data>
+  <data name="App_RootFrameDrop_Caption" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="App_RootFrameDrop_TooManyMessage" xml:space="preserve">
+    <value>Only one PDF file can be dragged at once.</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_Title" xml:space="preserve">
+    <value>Pinned Folders</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_DefaultPathName" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_SameFolderMessage" xml:space="preserve">
+    <value>This folder is already pinned.</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_PinItem_Text" xml:space="preserve">
+    <value>Click here to pin a folder</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_SmallPinItem_Text" xml:space="preserve">
+    <value>Pin Folder</value>
+  </data>
+  <data name="DocumentsPage_BrowseButton_Title_ToolTip.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="PackageDialog_FailedToLaunchNonPDF_Info" xml:space="preserve">
+    <value>Failed to open the file {0}</value>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_NoPages_Info" xml:space="preserve">
+    <value>This file cannot be opened because it has no pages.</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Title.Text" xml:space="preserve">
+    <value>Reduce File Size</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Ok.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced.Content" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Basic.Content" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Basic_High.Content" xml:space="preserve">
+    <value>Higher Quality</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Basic_Balanced.Content" xml:space="preserve">
+    <value>Balanced</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Basic_Small.Content" xml:space="preserve">
+    <value>Smaller File Size</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_IfGreater.Text" xml:space="preserve">
+    <value>If greater than</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_DownSampleTo.Text" xml:space="preserve">
+    <value>Down sample to</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_DownSampling.Text" xml:space="preserve">
+    <value>Image Downsampling</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression.Text" xml:space="preserve">
+    <value>Image Compression</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Color.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Monochrome.Text" xml:space="preserve">
+    <value>Monochrome</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Quality.Text" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Color_None" xml:space="preserve">
+    <value>No Compression</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Color_PNG" xml:space="preserve">
+    <value>PNG</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Color_JPEG" xml:space="preserve">
+    <value>JPEG</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Color_JPEG2000" xml:space="preserve">
+    <value>JPEG2000</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Monochrome_PNG" xml:space="preserve">
+    <value>PNG</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Monochrome_JBIG2" xml:space="preserve">
+    <value>JBIG2</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Quality_Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Quality_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Quality_High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="ViewerPage_Optimize_Dialog_Advanced_Compression_Quality_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="ViewerPage_TabControl_UpdatingDocument.Text" xml:space="preserve">
+    <value>Updating PDF document...</value>
+  </data>
+  <data name="ViewerPage_PermCropSave_Error" xml:space="preserve">
+    <value>This document has not been modified using the "Crop Pages" action and a cropped copy cannot be saved.</value>
+  </data>
+  <data name="ViewerPage_PermCropSave_Error_Title" xml:space="preserve">
+    <value>No Cropped Pages</value>
+  </data>
+  <data name="ViewerPage_PermCropSave_Error_CropNow" xml:space="preserve">
+    <value>Crop Now</value>
+  </data>
+  <data name="CropPopup_Ok.Content" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CropPopup_Title.Text" xml:space="preserve">
+    <value>Automatically crop each page to its content, manually crop pages, or remove all page cropping.</value>
+  </data>
+  <data name="CropPopup_Automatic.Content" xml:space="preserve">
+    <value>Automatically Crop Pages</value>
+  </data>
+  <data name="CropPopup_Manual.Content" xml:space="preserve">
+    <value>Manually Crop Pages</value>
+  </data>
+  <data name="CropPopup_Remove.Content" xml:space="preserve">
+    <value>Remove All Page Cropping</value>
+  </data>
+  <data name="CropPopup_Automatic_Title.Text" xml:space="preserve">
+    <value>Calculating crop boxes...</value>
+  </data>
+  <data name="CropPopup_Automatic_PageText" xml:space="preserve">
+    <value>Page {0} of {1}</value>
+  </data>
+  <data name="PasswordPopup_Title.Text" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="PasswordPopup_PlaceHolderText" xml:space="preserve">
+    <value>Leave blank to remove password</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Close_Discard" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Close_Message_AccessDenied" xml:space="preserve">
+    <value>Xodo tried to save the document {0} but was unable. This is likely due to the file being open by another program. To save the document, select {1}, close the file in other programs, and try again.</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Close_Message_Unknown" xml:space="preserve">
+    <value>Xodo tried to save the document {0} but was unable. Try to ensure that the document is not open by another program. Would you like to close the file and discard any changes?</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_TabChanged_IgnoreAndDiscard" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_TabChanged_Message_AccessDenied" xml:space="preserve">
+    <value>The previous tab, {0}, has unsaved changes that Xodo was not able to save. This is likely due to the file being open by another program. To save the changes, close the file in other programs and return to the tab {0}.</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_TabChanged_Message_Unknown" xml:space="preserve">
+    <value>The previous tab, {0}, has unsaved changes that Xodo was not able to save. The file might be used by another program.</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_TabChanged_ReturnToTab" xml:space="preserve">
+    <value>Go back to tab</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Title" xml:space="preserve">
+    <value>Save Failed</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Suspend_Message_AccessDenied" xml:space="preserve">
+    <value>Xodo tried to save the document {0} when the app was backgrounded, but was unable. This is likely due to the file being open by another program. To save the document, close the file in other programs.</value>
+  </data>
+  <data name="ViewerPage_AutoSaveFailed_Suspend_Message_Unknown" xml:space="preserve">
+    <value>Xodo tried to save the document {0} when the app was backgrounded, but was unable. Ensure no other program is using the file in order to save.</value>
+  </data>
+  <data name="CustomColorPopup_Title.Text" xml:space="preserve">
+    <value>Custom Color Mode</value>
+  </data>
+  <data name="CustomColorPopup_Icon_Edit.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="CustomColorPopup_LoadDefault_Title" xml:space="preserve">
+    <value>Load Defaults</value>
+  </data>
+  <data name="CustomColorPopup_LoadDefault_Content" xml:space="preserve">
+    <value>Are you sure you wish to restore the default color presets?</value>
+  </data>
+  <data name="CustomColorPopup_LoadDefault_Ok" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="CustomColorPopup_Edit_BackgroundButton.Content" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="CustomColorPopup_Edit_TextButton.Content" xml:space="preserve">
+    <value>Text Color</value>
+  </data>
+  <data name="Settings_Options_EnableLogging_Description.Text" xml:space="preserve">
+    <value>Turn this on to enable Xodo to print logs. Turn this on only if directly asked by Xodo support to track down a problem with Xodo.</value>
+  </data>
+  <data name="Settings_Options_EnableLogging_Title.Text" xml:space="preserve">
+    <value>Enable Logging</value>
+  </data>
+  <data name="Settings_Options_DeveloperOptions.Text" xml:space="preserve">
+    <value>Developer Options</value>
+  </data>
+  <data name="OutlineDialog_CloseButton_ToolTip.Content" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="OutlineDialog_DockButton_Left_ToolTip" xml:space="preserve">
+    <value>Dock Left</value>
+  </data>
+  <data name="OutlineDialog_DockButton_Right_ToolTip" xml:space="preserve">
+    <value>Dock Right</value>
+  </data>
+  <data name="OutlineDialog_AddBookmarkButton.Content" xml:space="preserve">
+    <value>Add bookmark</value>
+  </data>
+  <data name="OutlineDialog_SelectNumberOfThumbnailColumns_Singular" xml:space="preserve">
+    <value>{0} column</value>
+  </data>
+  <data name="OutlineDialog_SelectNumberOfThumbnailColumns_Plural" xml:space="preserve">
+    <value>{0} columns</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_CopyPath.Content" xml:space="preserve">
+    <value>Copy path</value>
+  </data>
+  <data name="DocumentsPage_RecentItems_FileInfo_PathCopied.Text" xml:space="preserve">
+    <value>Path copied to clipboard</value>
+  </data>
+  <data name="GenericStrings_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Settings_Options_Font_Button.Content" xml:space="preserve">
+    <value>Import Fonts</value>
+  </data>
+  <data name="Settings_Options_Font_Description.Text" xml:space="preserve">
+    <value>Importing fonts will give Xodo access to fonts it may otherwise not be able to use.</value>
+  </data>
+  <data name="Settings_Options_Font_ErrorInfo.Text" xml:space="preserve">
+    <value>An error occurred trying to load the fonts.</value>
+  </data>
+  <data name="Settings_Options_Font_ErrorInfo_TryAgain.Content" xml:space="preserve">
+    <value>Try again</value>
+  </data>
+  <data name="Settings_Options_Font_FileAlreadyExists" xml:space="preserve">
+    <value>A file with the name {0} already exisist, do you want to replace it?</value>
+  </data>
+  <data name="Settings_Options_Font_FileAlreadyExists_Replace" xml:space="preserve">
+    <value>Replace it</value>
+  </data>
+  <data name="Settings_Options_Font_FileAlreadyExists_KeepOriginal" xml:space="preserve">
+    <value>Keep original</value>
+  </data>
+  <data name="Settings_Options_Font_ImportFile.Content" xml:space="preserve">
+    <value>Import file</value>
+  </data>
+  <data name="Settings_Options_Font_ImportFolder.Content" xml:space="preserve">
+    <value>Import folder</value>
+  </data>
+  <data name="Settings_Options_Font_Remove.Content" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Settings_Options_Font_Title.Text" xml:space="preserve">
+    <value>Import fonts</value>
+  </data>
+  <data name="Settings_Options_Font_YesToAll" xml:space="preserve">
+    <value>Yes to all</value>
+  </data>
+  <data name="Settings_Options_CopyTextToNote_Info.Text" xml:space="preserve">
+    <value>When enabled, the text of a highlight/underline/strikeout annotation is automatically copied into the annotation's note.</value>
+  </data>
+  <data name="Settings_Options_CopyTextToNote_Option.Text" xml:space="preserve">
+    <value>Copy Annotated Text to Note</value>
+  </data>
+  <data name="DocumentsPage_FileOpeningError_ConversionFailed_Content" xml:space="preserve">
+    <value>{0} was unable to convert the document to a PDF.</value>
+  </data>
+  <data name="Generic_Cancel_Button.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Generic_Cancel_Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Generic_Okay_Button.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Generic_Okay_Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OutlineDialog_WidthNarrow_Button.Content" xml:space="preserve">
+    <value>Narrow</value>
+  </data>
+  <data name="OutlineDialog_WidthMedium_Button.Content" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="OutlineDialog_WidthWide_Button.Content" xml:space="preserve">
+    <value>Wide</value>
+  </data>
+  <data name="Settings_Options_Font_MessageWhileEmpty.Text" xml:space="preserve">
+    <value>Select Import file or Import folder to add fonts to Xodo</value>
+  </data>
+  <data name="Settings_Options_TextAnnotationFont_Button.Content" xml:space="preserve">
+    <value>Manage fonts</value>
+  </data>
+  <data name="Settings_Options_TextAnnotationFont_Description.Text" xml:space="preserve">
+    <value>Select which fonts will be available for use when creating text box annotations.</value>
+  </data>
+  <data name="Settings_Options_TextAnnotationFont_Title.Text" xml:space="preserve">
+    <value>Text annotation fonts</value>
+  </data>
+  <data name="ViewerPage_SaveAsFailed_Content" xml:space="preserve">
+    <value>The file could not be saved. Please forward the below error to {0}: {1}</value>
+  </data>
+  <data name="ViewerPage_SaveWithPasswordFailed_Content" xml:space="preserve">
+    <value>The file could not be saved with a password.</value>
+  </data>
+  <data name="ViewerPage_SaveAsFailed_Title" xml:space="preserve">
+    <value>Save Failed</value>
+  </data>
+  <data name="Settings_Options_MaintainZoom_Content.Text" xml:space="preserve">
+    <value>When enabled, the zoom level will not change when you turn pages horizontally.</value>
+  </data>
+  <data name="Settings_Options_MaintainZoom_Title.Text" xml:space="preserve">
+    <value>Maintain Zoom Level</value>
+  </data>
+  <data name="Conversion_Finished_Notification_Text" xml:space="preserve">
+    <value>Finished converting {0}, it can now be modified.</value>
+  </data>
+  <data name="Conversion_Preparing_Message.Text" xml:space="preserve">
+    <value>Opening document as a PDF...</value>
+  </data>
+  <data name="Conversion_IsConverting_Please_Wait.Text" xml:space="preserve">
+    <value>The document can not be edited until fully Opened.</value>
+  </data>
+  <data name="Conversion_IsConverting_Outline_Preparing.Text" xml:space="preserve">
+    <value>Opening the document as PDF.</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_FilterButton.Label" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_FilterFlyout_ShowAll.Content" xml:space="preserve">
+    <value>Show all file types</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_FilterFlyout_ShowImages.Content" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_FilterFlyout_ShowOffice.Content" xml:space="preserve">
+    <value>Office documents</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_FilterFlyout_ShowPDFs.Content" xml:space="preserve">
+    <value>PDFs</value>
+  </data>
+  <data name="DocumentsPage_FoldersPage_NoFilteredDocuments.Text" xml:space="preserve">
+    <value>There are no doucments of the selected file types in this folder.</value>
+  </data>
+  <data name="DocumentsPage_Help_Title.Text" xml:space="preserve">
+    <value>Help (Online)</value>
+  </data>
+  <data name="DocumentsPage_Help_Title_ToolTip.Content" xml:space="preserve">
+    <value>Help (Online)</value>
+  </data>
+  <data name="ViewerPage_AppBar_EditPages.Label" xml:space="preserve">
+    <value>Edit Pages ...</value>
+  </data>
+</root>

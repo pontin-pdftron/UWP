@@ -1,0 +1,220 @@
+﻿<UserControl
+    x:Class="CompleteReader.Settings.ViewerSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    mc:Ignorable="d"
+    d:DesignWidth="346"
+    d:DesignHeight="2000">
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="250"/>
+        </Style>
+
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <ScrollViewer x:Name="OptionsScroller" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" 
+                      Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="300" MaxWidth="500">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Thin">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="RootStackPanel.MaxWidth" Value="280"></Setter>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Thick">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="450"></AdaptiveTrigger>
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Grid x:Name="ScrollRootGrid">
+                <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+                <StackPanel x:Name="RootStackPanel" VerticalAlignment="Stretch" HorizontalAlignment="Left" MaxWidth="1000" Margin="0 0 10 0">
+
+                    <!-- The StackPanel(s) below define individual content sections -->
+
+                    <!-- Set default theme (light/dark) -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_Background_Title" Text="Background%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock x:Uid="Settings_Options_Background_Description" Text="Choose a theme.%" 
+                       Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ComboBox Margin="0 10 0 0"
+                      ItemsSource="{Binding BackgroundSettings}"
+                      SelectedItem="{Binding SelectedBackgroundSettings, Mode=TwoWay}"
+                      >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding OptionName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Remember Last Page -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_RememberLastPage_Title" Text="Remember Last Page%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_RememberLastPage_Description" Text="Open a document at the page you left it.%" 
+                       Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="RememberLastPageToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding RememberLastPageSetting, Mode=TwoWay}"/>
+                    </StackPanel>
+                    
+                    <!-- Maintain Zoom -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_MaintainZoom_Title" Text="Maintain Zoom Level%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_MaintainZoom_Content" Text="When enabled, the zoom level will not change when you turn pages horizontally.%" 
+                       Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="MaintainZoomToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding MaintainZoomSetting, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- EnableJavaScript -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_EnableJavaScript_Title" Text="EnableJavaScript%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_EnableJavaScript_Description" Text="Enable JavaScript Support.%" 
+                       Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="EnableJavaScript" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding EnableJavaScriptSetting, Mode=TwoWay}"/>
+
+                    </StackPanel>
+
+                    <!-- Buttons Stay Down -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_ContinuousAnnotationEdit_Option" Text="Continuous Annotaton Edit%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" Text="When using the annotation toolbar, this determines if the selected tool remains or if it return to the pan tool once the annotation is finished.%" x:Uid="Settings_Options_ContinuousAnnotationEdit_Info" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="ButtonsStayDownToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding ContinuousAnnotationEditOption, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- Ink Smoothing -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_InkSmoothing_Option" Text="Smooth Ink%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" Text="When using the inking tool to mark up a PDF, this option determines when to smooth the ink.%" x:Uid="Settings_Options_InkSmoothing_Info" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ComboBox Margin="0 10 0 0"
+                      ItemsSource="{Binding InkSmoothingItems}"
+                      SelectedItem="{Binding SelectedInkSmoothingOption, Mode=TwoWay}"
+                      >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding OptionName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Stylus as Pen -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_StylusAsPen_Option" Text="Stylus As Pen%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" Text="When using the stylus, this determines if the stylus should act as a pen tool instead of a finger when touching the viewer.%" x:Uid="Settings_Options_StylusAsPen_Info" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="StylusAsPenToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding StylusAsPenOption, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- Copy Text Markups into note -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_CopyTextToNote_Option" Text="Copy Annotated Text to Note%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" Text="When enabled, the text of a highlight/underline/strikeout annotation is automatically copied into the annotation's note.%" 
+                                   x:Uid="Settings_Options_CopyTextToNote_Info" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="CopyTextIntoNoteToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding CopyAnnotatedTextToNote, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- FreeText Font Import -->
+                    <StackPanel x:Name="FreeTextFontStackpanel" Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Text annotation fonts%" x:Uid="Settings_Options_TextAnnotationFont_Title" />
+                        <TextBlock Margin="0,0,0,0" Text="Import fonts into the App%" x:Uid="Settings_Options_TextAnnotationFont_Description"
+                                   Style="{StaticResource BodyTextBlockStyle}"/>
+
+                        <Button x:Name="FreeTextFontButton" Margin="0,10,0,0" Content="Manage fonts%" x:Uid="Settings_Options_TextAnnotationFont_Button"
+                                HorizontalAlignment="Left" Command="{Binding NavigationCommand}" CommandParameter="TextAnnotationFonts"/>
+                    </StackPanel>
+
+                    <!-- Screen Sleep Lock -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <TextBlock x:Uid="Settings_Options_ScreenSleepLock_Option" Text="Screen Sleep Lock%" Style="{StaticResource TitleTextBlockStyle}"/>
+                        <TextBlock Margin="0,0,0,0" Text="When using the stylus, this determines if the stylus should act as a pen tool instead of a finger when touching the viewer.%" x:Uid="Settings_Options_ScreenSleepLock_Info" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="ScreenSleepLockToggle" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding ScreenSleepLockOption, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- Auto Save -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" x:Uid="Settings_Options_AutoSave_Title" Text="Enable Auto-Saveing%" />
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_AutoSave_Description" Text="When on, CompleteReader will automatically save the Document, provided the document can be saved to. Turning this off will enable a save button for manual saving.%" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <ToggleSwitch x:Name="AutoSaveOnToggle" Header="" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                          IsOn="{Binding AutoSaveSetting, Mode=TwoWay}"/>
+                    </StackPanel>
+
+                    <!-- Author -->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+                        <!-- Author header -->
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" x:Uid="Settings_Options_AnnotationAuthor_Title" Text="Annotation Author%" />
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_AnnotationAuthor_Description" Text="The author of annotaitons%" Style="{StaticResource BodyTextBlockStyle}"/>
+
+                        <TextBox x:Name="AuthorNameTextBox" Margin="0,10,0,0" HorizontalAlignment="Left" TextWrapping="NoWrap" Width="250" AcceptsReturn="False" IsTextPredictionEnabled="False" Text="{Binding AuthorSetting, Mode=TwoWay}"/>
+
+                    </StackPanel>
+
+                    <!-- Email Signature-->
+                    <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" x:Uid="Settings_Options_EmailSignature_Title" Text="Email Signature%" />
+                        <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_EmailSignature_Description" Text="The signature for emails sent from the App%" Style="{StaticResource BodyTextBlockStyle}"/>
+                        <TextBox x:Name="EmailSignatureTextBox" Margin="0,10,0,0" HorizontalAlignment="Left" TextWrapping="Wrap" Height="100" Text="{Binding EmailSignatureSetting, Mode=TwoWay}"/>
+
+                    </StackPanel>
+
+                    <!-- Font Import -->
+                    <StackPanel x:Name="FontsStackpanel" Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Import Font%" x:Uid="Settings_Options_Font_Title" />
+                        <TextBlock Margin="0,0,0,0" Text="Import fonts into the App%" x:Uid="Settings_Options_Font_Description"
+                                   Style="{StaticResource BodyTextBlockStyle}"/>
+
+                        <Button x:Name="FontImportButton" Margin="0,10,0,0" Content="Import Fonts%" x:Uid="Settings_Options_Font_Button"
+                                HorizontalAlignment="Left" Command="{Binding NavigationCommand}" CommandParameter="Fonts"/>
+                    </StackPanel>
+
+                    <!-- Devloper Options -->
+                    <StackPanel x:Name="DeveloperHeaderStack" Orientation="Horizontal" Style="{StaticResource SettingsFlyoutSectionStyle}">
+                        <Button Content="+" x:Name="ShowDeveloperOptionsButton" Margin="0 0 15 0"/>
+                        <TextBlock Text="Developer Options%" x:Uid="Settings_Options_DeveloperOptions" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Visibility="Collapsed" x:Name="DeveloperOptionsStack">
+
+                        <!-- Turn on Logging  -->
+                        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+                            <TextBlock x:Uid="Settings_Options_EnableLogging_Title" Text="Enable Logging%" Style="{StaticResource TitleTextBlockStyle}"/>
+                            <TextBlock Margin="0,0,0,0" x:Uid="Settings_Options_EnableLogging_Description" Text="Enable Logging.%" 
+                           Style="{StaticResource BodyTextBlockStyle}"/>
+                            <ToggleSwitch x:Name="EnableLogging" Header = "" HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+                              IsOn="{Binding EnableLoggingSettings, Mode=TwoWay}"/>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

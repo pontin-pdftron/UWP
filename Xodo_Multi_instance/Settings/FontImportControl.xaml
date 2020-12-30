@@ -1,0 +1,86 @@
+﻿<UserControl
+    x:Class="CompleteReader.Settings.FontImportControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Settings"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+
+        <DataTemplate x:Key="FontItemDataTemplate">
+            <Border Height="50" Width="350" Background="Transparent" Margin="8 0">
+                <TextBlock Text="{Binding FontName}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid Visibility="{Binding ErrorLoadingFonts, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="1" Margin="0 0 0 15" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="Import File%" x:Uid="Settings_Options_Font_ImportFile"
+                    Command="{Binding BrowseFileCommand}" IsEnabled="{Binding IsReady}"/>
+                <Button Grid.Column="2" Content="Import Folder%" x:Uid="Settings_Options_Font_ImportFolder"
+                    Command="{Binding BroseFolderCommand}" IsEnabled="{Binding IsReady}"/>
+                <Button Grid.Column="4" Content="Remove%" x:Uid="Settings_Options_Font_Remove"
+                    Command="{Binding RemoveFontsCommand}" IsEnabled="{Binding HasSelection}"/>
+            </Grid>
+
+
+            <ListView Grid.Row="0" 
+                      x:Name="FontListView"
+                      ItemsSource="{Binding FontItems}" 
+                      SelectionMode="Multiple" 
+                      IsEnabled="{Binding IsWorking, Converter={StaticResource ReverseBooleanConverter}}"
+                      ItemTemplate="{StaticResource FontItemDataTemplate}"
+                      commands:SelectionChangedCommand.Command="{Binding FontItemsSelectionChangedCommand}"
+                      Visibility="{Binding IsReady, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      >
+            </ListView>
+
+            <ProgressRing Visibility="{Binding IsWorking, Converter={StaticResource BooleanToVisibilityConverter}}"
+                          IsActive="{Binding IsWorking}" 
+                          HorizontalAlignment="Center" 
+                          VerticalAlignment="Center"/>
+
+        </Grid>
+        <StackPanel Visibility="{Binding ErrorLoadingFonts, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="An error occurred trying to load the fonts.%" x:Uid="Settings_Options_Font_ErrorInfo" FontSize="16" TextWrapping="WrapWholeWords"/>
+            <Button HorizontalAlignment="Center" Margin="0 5 0 0"
+                    Content="Try again%" x:Uid="Settings_Options_Font_ErrorInfo_TryAgain"
+                    Command="{Binding InitCommand}"
+                    />
+        </StackPanel>
+
+        <TextBlock Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
+                   TextWrapping="WrapWholeWords"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" FontSize="16"
+                   x:Uid="Settings_Options_Font_MessageWhileEmpty" Text="Click Import fonts to add fonts to the App%"/>
+    </Grid>
+</UserControl>

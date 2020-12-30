@@ -1,0 +1,429 @@
+﻿<Page
+    x:Class="CompleteReader.Documents.SubPages.RecentItemsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Documents.SubPages"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:common="using:CompleteReader.Pages.Common"
+    xmlns:document="using:CompleteReader.ViewModels.Document"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <EntranceNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <converters:ReverseEnumToBoolConverter x:Key="ReverseEnumToBoolConverter"/>
+        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+        <converters:BooleanToOpacityParamConverter x:Key="BooleanToOpacityParamConverter"/>
+        <converters:BooleanToThicknessConverter x:Key="BooleanToThicknessConverter"/>
+
+        <DataTemplate x:Key="DefaultRecentListDataTemplate">
+            <Border Height="150" Width="350" Background="Transparent" Margin="12"
+                    RightTapped="RecentItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120">
+                            <Border BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0" 
+                                    BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" >
+                                <Viewbox>
+                                    <Image Grid.Column="0" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"/>
+                                </Viewbox>
+                            </Border>
+                            <Border Background="White" Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BooleanToVisibilityConverter}}" MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="20" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center"  TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SmallRecentListDataTemplate">
+            <Border Height="85" Width="250" Background="Transparent" Margin="5" Padding="0,5,0,5"
+                    RightTapped="RecentItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120">
+                            <Border BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0" 
+                                    BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" >
+                                <Viewbox MaxHeight="75" MaxWidth="75">
+                                    <Image Grid.Column="0" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"/>
+                                </Viewbox>
+                            </Border>
+                            <Border Background="White" Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    MaxHeight="21" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="18" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                       TextTrimming="CharacterEllipsis" Margin="-20,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ListRecentListDataTemplate">
+            <Border Height="70" Background="Transparent" Margin="3" Padding="3" Width="{Binding ElementName=RecentDocumentsView, Path=ActualWidth}"
+                    RightTapped="RecentItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Margin="0,-4,75,-4" 
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="100">
+                            <Border BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 1 10 1" 
+                                    BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" >
+                                <Viewbox MaxHeight="75" MaxWidth="75">
+                                    <Image Grid.Column="0" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"/>
+                                </Viewbox>
+                            </Border>
+                            <Border Background="White" Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    MaxHeight="21" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="18" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                       TextTrimming="CharacterEllipsis" Margin="-5,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CoverRecentListDataTemplate">
+            <Border Height="400" Width="300" Background="Transparent" Margin="25"
+                    RightTapped="RecentItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Border BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0" 
+                                BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" >
+                            <Viewbox>
+                                <Image Grid.Column="0" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"/>
+                            </Viewbox>
+                        </Border>
+                        <Border Background="White" Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BooleanToVisibilityConverter}}" MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                            <Image Source="{Binding AdditionalIconLocation}"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <Storyboard x:Name="FadeInNoItemsMessage">
+            <DoubleAnimation Duration="0:0:1.0" Storyboard.TargetName="NoItemsMessageHost" 
+                             Storyboard.TargetProperty="Opacity" From="0.0" To="1.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeOutNoItemsMessage">
+            <DoubleAnimation Duration="0:0:0.200" Storyboard.TargetName="NoItemsMessageHost" 
+                             Storyboard.TargetProperty="Opacity" From="1.0" To="0.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <MenuFlyout x:Name="FlyoutOptions">
+            <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_Button_Remove" Command="{Binding DeleteItemCommand}">
+                
+            </MenuFlyoutItem>
+            <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_Button_Share" Command="{Binding ShareCommand}">
+
+            </MenuFlyoutItem>
+            <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_Button_FileInfo" Command="{Binding FileInfoCommand}">
+
+            </MenuFlyoutItem>
+        </MenuFlyout>
+
+        <Flyout x:Name="FlyoutFileInfo">
+            <StackPanel x:Name="FlyoutStackPanel" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Title" Text="Title: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Author" Text="Author: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_PageCount" Text="Page Count: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Path" Text="Path: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Size" Text="Size: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_DateModified" Text="Date Modified: %" Margin="0,0,5,5" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <TextBlock x:Name="LayoutLoopPreventionTextBlock" Height="1" />
+                <!-- UWP can get into an infinite layout loop here on devices with a scale factor that is not 100 -->
+            </StackPanel>
+        </Flyout>
+
+    </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar x:Name="CommandBar" IsOpen="{Binding IsAppBarOpen, Mode=TwoWay}" 
+                    IsEnabled="{Binding IsModal, Converter={StaticResource ReverseBooleanConverter}}"
+                    Style="{StaticResource HamburgerCommandBar}">
+            <CommandBar.Content>
+                <Grid Height="{Binding ElementName=CommandBar, Path=ActualHeight}" x:Name="CommandBarContentGrid">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_Title" 
+                               x:Name="DocumentsPageRecentItemsTitle"
+                               Margin="20,0,0,0" 
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Opacity="{Binding IsModal, Converter={StaticResource BooleanToOpacityParamConverter}, ConverterParameter=0.5}"
+                               Text="RecentDocuments%"
+                               Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    </TextBlock>
+                </Grid>
+            </CommandBar.Content>
+            
+            <AppBarButton x:Name="CancelSelectionButton"
+                          Command="{Binding CancelSelectionButtonCommand}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsEnabled="{Binding HasItems, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=HasItems}">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18">Cancel</TextBlock>
+            </AppBarButton>
+
+            <AppBarSeparator x:Name="AppBarSeparatorBar"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+            </AppBarSeparator>
+
+            <AppBarButton x:Name="DeleteAppBarButton" Icon="Delete" Command="{Binding DeleteSelectedItemsCommand}"
+                          x:Uid="DocumentsPage_RecentItems_AppBar_Remove" Label="Remove" IsEnabled="{Binding HasSelection}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}"/>
+
+            <AppBarButton x:Name="ShareAppBarButton" x:Uid="DocumentsPage_RecentItems_AppBar_Share" 
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                          IsEnabled="{Binding HasSelection}"
+                          Command="{Binding ShareCommand}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph=""></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="SelectAppBarButton"
+                          Label="Select" 
+                          Command="{Binding SelectionButtonCommand}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsEnabled="{Binding HasItems, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=HasItems}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph=""></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Name="IconViewAppBarButton"  
+                          x:Uid="DocumentsPage_RecentItems_AppBar_IconView"
+                          Label="View Mode"
+                          Style="{StaticResource styleAppBarButtonPageNavigation}"
+                          Visibility="{Binding IsIconViewVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding CurrVisibleIconView}"></FontIcon>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="l" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="0" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=List}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE179;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_ListView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="s" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="1" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Small}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE80A;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_SmallTilesView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="d" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="2" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Default}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE154;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_LargeTilesView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="c" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="3" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Cover}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE739;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_CoverView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="DocumentsPage_RecentItems_AppBar_RemoveAll" 
+                          Label="Remove All%" Icon="Clear" 
+                          Command="{Binding DeleteAllCommand}" 
+                          IsEnabled="{Binding HasItems, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=HasItems}"
+                ></AppBarButton>
+                <!-- We handle this click in the View, since there are no conveniet ways to clear multiiple selection from the ViewModel -->
+                <AppBarButton x:Name="ClearSelectionAppBarButton" Icon="ClearSelection" Click="ClearSelectionAppBarButton_Click" 
+                          x:Uid="DocumentsPage_RecentItems_AppBar_ClearSelection" Label="Clear Selection" IsEnabled="{Binding HasSelection}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                <AppBarButton x:Uid="DocumentsPage_RecentItems_AppBar_FileInfo" 
+                          Label="File Info%" Icon="Document" 
+                          Command="{Binding FileInfoCommand}"
+                          IsEnabled="{Binding IsOneItemSelected}"
+                ></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Margin="20,-25,20,0" commands:TappedCommand.Command="{Binding GridTappedCommand}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Thin">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NoRecentDocsTextBlock.FontSize" Value="30"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Middle">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <common:EntranceAnimationContentControl x:Name="NoItemsMessageHost" 
+                                                IsOpen="{Binding HasItems, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=NoItems}" 
+                                                EntranceAnimation="{Binding ElementName=FadeInNoItemsMessage, Mode=TwoWay}"
+                                                ExitAnimation="{Binding ElementName=FadeOutNoItemsMessage, Mode=TwoWay}"
+                                                Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel x:Name="NoRecentDocumentsPanel" Margin="0,-50,0,0">
+                <TextBlock x:Name="NoRecentDocsTextBlock" x:Uid="NoRecentDocuments_Textblock" Text="OpenDocument%" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="45" Margin="0,0,0,15"
+                           Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center">
+                </TextBlock>
+                <Button FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/custom.ttf#PDFTron Glyphicons" Content="" 
+                    Style="{StaticResource RoundButtonStyle}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Width="95"
+                    Height="105" 
+                    FontSize="35" 
+                    Command="{Binding BrowseFilesCommand}">
+                </Button>
+            </StackPanel>
+        </common:EntranceAnimationContentControl>
+
+        <!-- Using this textblock to allign flyouts when using ShowAt()-->
+        <TextBlock x:Name="MarginTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="0"></TextBlock>
+
+        <Grid x:Name="RecentDocumentsGrid" 
+              Visibility="{Binding HasItems, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=HasItems}">
+
+            <TextBox x:Name="FocusBox" Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="0" TextChanged="FocusBox_TextChanged"/>
+
+            <ListView x:Name="RecentDocumentsView"
+                  ItemsSource="{Binding RecentItems}" 
+                  SelectionMode="{Binding SelectionMode}" 
+                  IsItemClickEnabled="{Binding IsInSelectionMode, Converter={StaticResource ReverseBooleanConverter}}"
+                  commands:SelectionChangedCommand.Command="{Binding RecentItemsSelectionChangedCommand}"
+                  commands:ItemClickCommand.Command="{Binding RecentItemClickCommand}"
+                  commands:RightTappedCommand.Command="{Binding FileInfoCommand}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" Loaded="ItemsWrapGrid_Loaded"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemWithBorderBrushSelection}"/>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+    </Grid>
+</Page>

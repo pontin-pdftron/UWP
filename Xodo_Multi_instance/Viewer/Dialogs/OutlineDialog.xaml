@@ -1,0 +1,327 @@
+﻿<UserControl
+    x:Class="CompleteReader.Viewer.Dialogs.OutlineDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Viewer.Dialogs"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:toolResources="using:pdftron.PDF.Tools.Controls.Resources"
+    xmlns:toolsCommon="using:pdftron.PDF.Tools.Controls.ViewModels.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    Width="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Resources/CompleteReaderStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/ThemeColors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <local:NumberToColumnNameConverter x:Key="NumberToColumnNameConverter"/>
+            <local:GreaterThanToOpacityConverter x:Key="GreaterThanToOpacityConverter"/>
+
+            <Style TargetType="FontIcon" x:Key="TabFontIconStyle">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            </Style>
+            
+            <Style TargetType="Grid" x:Key="PivotSubHeaderGridStyle">
+                <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource TabNonSelectedBackgroundBrush}"/>
+            </Style>
+
+
+            <Style TargetType="TextBlock" x:Key="PivotSubHeaderTextBlockStyle">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="15 10 0 10"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="toolResources:TabButton" x:Key="PivotSubHeaderButtonStyle" BasedOn="{StaticResource CompleteReaderTabButtonStyle}">
+                <Setter Property="Foreground" Value="{ThemeResource ThemeBrushHighlightDifferentBrightness}"/>
+                <Setter Property="PointerOverForegroundBrush" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}"/>
+                <Setter Property="PointerPressedForegroundBrush" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                <Setter Property="PointerOverBackgroundBrush" Value="Transparent"/>
+                <Setter Property="PointerPressedBackgroundBrush" Value="Transparent"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+
+            <Style TargetType="toolResources:TabButton" x:Key="NonMatchedSubviewButtonStyle" BasedOn="{StaticResource OutlineDialogTabButtonStyle}">
+                <Setter Property="Padding" Value="0 2 0 2"/>
+            </Style>
+
+            <Style TargetType="toolResources:TabButton" x:Key="MatchedSubviewButtonStyle" BasedOn="{StaticResource OutlineDialogTabButtonStyle}">
+                <Setter Property="Foreground" Value="{ThemeResource ThemeBrushHighlightDifferentBrightness}"/>
+                <Setter Property="PointerOverForegroundBrush" Value="{ThemeResource ThemeBrushHighlightMediumBrightness}"/>
+                <Setter Property="PointerPressedForegroundBrush" Value="{ThemeResource ThemeBrushHighlightMediumBrightness}"/>
+                <Setter Property="PointerOverBackgroundBrush" Value="Transparent"/>
+                <Setter Property="PointerPressedBackgroundBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                <Setter Property="Padding" Value="0 2 0 0"/>
+            </Style>
+            <Storyboard x:Name="FadeOutStoryBoard">
+                <DoubleAnimationUsingKeyFrames Duration="0:0:0.8" Storyboard.TargetName="BackgroundGrid"
+                                 Storyboard.TargetProperty="Opacity">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.3">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                    <DiscreteDoubleKeyFrame KeyTime="0:0:0.6" Value="0.5"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+
+            <toolsCommon:EnumToStyleConverter x:Key="EnumToStyleConverter" NotMatchedStyle="{StaticResource NonMatchedSubviewButtonStyle}" 
+                                            MatchedStyle="{StaticResource MatchedSubviewButtonStyle}"/>
+            <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="BackgroundGrid" Background="{StaticResource SystemControlBackgroundAltHighBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Thin">
+                    <VisualState.Setters>
+                        <Setter Target="MainPivot.(Grid.Row)" Value="1"/>
+                        <Setter Target="MainPivot.(Grid.RowSpan)" Value="1"/>
+                        <Setter Target="ThumbnailsHeader.Visibility" Value="Collapsed"/>
+                        <Setter Target="BookmarksHeader.Visibility" Value="Collapsed"/>
+                        <Setter Target="OutlineHeader.Visibility" Value="Collapsed"/>
+                        <Setter Target="AnnotationListHeader.Visibility" Value="Collapsed"/>
+                        <Setter Target="SecondaryButtonGrid.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Middle">
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Border Grid.Row="0" BorderThickness="0 0 0 0" BorderBrush="Black" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Thumbnails, Bookmarks, Outline, Annotations -->
+                <Pivot x:Name="MainPivot" Grid.RowSpan="2" Grid.Row="0" SelectedIndex="{Binding SubViewIndex, Mode=TwoWay}">
+                    <Pivot.Resources>
+                        <Style TargetType="PivotHeaderItem" BasedOn="{StaticResource OutlineDialogPivotHeaderStyle}"/>
+                        <Style TargetType="PivotItem">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </Pivot.Resources>                    
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <FontIcon Style="{StaticResource TabFontIconStyle}" FontFamily="ms-appx:///Assets/custom.ttf#PDFTron Glyphicons" Glyph="&#xE156;">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="OutlineDialog_ThumbnailsButton_Tooltip" Content="Thumbnails%"/>
+                                </ToolTipService.ToolTip>
+                            </FontIcon>
+                        </PivotItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="ThumbnailsHeader" Style="{StaticResource PivotSubHeaderGridStyle}">
+                                <TextBlock Style="{StaticResource PivotSubHeaderTextBlockStyle}" Text="Thumbnails%" x:Uid="ViewerPage_ViewModeControl_Thumbnails"/>
+                                <toolResources:TabButton x:Name="ThumbnailsOptions" Style="{StaticResource PivotSubHeaderButtonStyle}" 
+                                                         HorizontalAlignment="Right" Margin="0 0 15 0"
+                                                         Content="{Binding NumberOfColumns, Converter={StaticResource NumberToColumnNameConverter}}">
+                                    <toolResources:TabButton.Flyout>
+                                        <Flyout x:Name="NumColumnsFlyout">
+                                            <StackPanel Style="{StaticResource FlyoutAsCommandBarOverflowStackPanel}">
+                                                <Button Content="1 Column%" Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}"
+                                                        Command="{Binding SetNumColumnsCommand}" CommandParameter="1" Click="ColumnNumberButton_Click"/>
+                                                <Button Content="2 Columns%" Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}"
+                                                        Command="{Binding SetNumColumnsCommand}" CommandParameter="2" Click="ColumnNumberButton_Click"/>
+                                                <Button Content="3 Columns%" Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}"
+                                                        Command="{Binding SetNumColumnsCommand}" CommandParameter="3" Click="ColumnNumberButton_Click"/>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </toolResources:TabButton.Flyout>
+                                </toolResources:TabButton>
+                            </Grid>
+                            <Border x:Name="ThumbnailsGrid" Grid.Row="1" Child="{Binding Thumbnails}"/>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <FontIcon Style="{StaticResource TabFontIconStyle}" FontFamily="ms-appx:///Assets/custom.ttf#PDFTron Glyphicons" Glyph="&#xE073;">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="OutlineDialog_BookmarksButton_Tooltip" Content="Bookmarks%"/>
+                                </ToolTipService.ToolTip>
+                            </FontIcon>
+                        </PivotItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="BookmarksHeader" Style="{StaticResource PivotSubHeaderGridStyle}">
+                                <TextBlock Style="{StaticResource PivotSubHeaderTextBlockStyle}" Text="Bookmarks%" x:Uid="OutlineDialog_BookmarksHeader"/>
+                                <toolResources:TabButton x:Name="BookmarksOptions" Style="{StaticResource PivotSubHeaderButtonStyle}" 
+                                                         HorizontalAlignment="Right" Margin="0 0 15 0"
+                                                         Content="Add bookmark%" x:Uid="OutlineDialog_AddBookmarkButton"
+                                                         Command="{Binding AddBookmarkCommand}">
+                                    <toolResources:TabButton.Resources>
+                                        <Flyout x:Name="BookmarkButtonFlyout">
+                                            <Grid Margin="-10">
+                                                <TextBlock Text="Please wait until document is ready%" x:Uid="Conversion_IsConverting_Please_Wait"/>
+                                            </Grid>
+                                        </Flyout>
+                                    </toolResources:TabButton.Resources>
+                                </toolResources:TabButton>
+                            </Grid>
+                            <Border x:Name="UserBookmarkGrid" Grid.Row="1" Child="{Binding UserBookmarks}"/>
+                            <StackPanel Grid.Row="1" Visibility="{Binding Isconverting, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                                <ProgressRing IsActive="{Binding Isconverting}" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" Height="30" Width="30"/>
+                                <TextBlock Text="Opening the document as PDF%" FontSize="16" x:Uid="Conversion_IsConverting_Outline_Preparing"
+                                   Margin="10" TextWrapping="WrapWholeWords"/>
+                            </StackPanel>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <FontIcon Style="{StaticResource TabFontIconStyle}" Glyph="&#xE12F;">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="OutlineDialog_OutlineButton_ToolTip" Content="Outline%"/>
+                                </ToolTipService.ToolTip>
+                            </FontIcon>
+                        </PivotItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="OutlineHeader" Style="{StaticResource PivotSubHeaderGridStyle}">
+                                <TextBlock Style="{StaticResource PivotSubHeaderTextBlockStyle}" Text="Outline%" x:Uid="OutlineDialog_OutlineHeader"/>
+                            </Grid>
+                            <Border x:Name="OutlineGrid" Grid.Row="1" Child="{Binding Outline}"/>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <FontIcon Style="{StaticResource TabFontIconStyle}" Glyph="&#xE104;">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="OutlineDialog_AnnotationListButton_Tooltip" Content="Annotations%"/>
+                                </ToolTipService.ToolTip>
+                            </FontIcon>
+                        </PivotItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="AnnotationListHeader" Style="{StaticResource PivotSubHeaderGridStyle}">
+                                <TextBlock Style="{StaticResource PivotSubHeaderTextBlockStyle}" Text="Annotations%" x:Uid="OutlineDialog_AnnotationListHeader"/>
+                            </Grid>
+                            <Border x:Name="AnnotationGrid" Grid.Row="1" Child="{Binding AnnotationList}"/>
+                        </Grid>
+                    </PivotItem>
+                </Pivot>
+
+                <!-- Collapse and Close -->
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                    <toolResources:TabButton x:Name="DockButton" Style="{StaticResource NonMatchedSubviewButtonStyle}" >
+                        <FontIcon x:Name="DockButtonFontIcon" Style="{StaticResource TabFontIconStyle}" Glyph="&#xE146;"/>
+                        <toolResources:TabButton.Flyout>
+                            <Flyout x:Name="DockAndWidthFlyout">
+                                <StackPanel Style="{StaticResource FlyoutAsCommandBarOverflowStackPanel}">
+                                    <Button x:Name="SwitchDockSideButton" Content="Dock Left%"
+                                            Command="{Binding SwitchSidesCommand}" Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}" 
+                                            Click="DockAndWidthFlyoutButton_Click"/>
+                                    <Rectangle HorizontalAlignment="Stretch" Height="1" Fill="{ThemeResource TabNonSelectedBackgroundBrush}" Margin="0 5"/>
+                                    <Button x:Name="WidthButton0" Content="Narrow%" x:Uid="OutlineDialog_WidthNarrow_Button"
+                                            Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}" 
+                                            Click="DockAndWidthFlyoutButton_Click" Tag="0"
+                                            HorizontalContentAlignment="Stretch"/>
+                                    <Button x:Name="WidthButton1" Content="Medium%" x:Uid="OutlineDialog_WidthMedium_Button"
+                                            Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}" 
+                                            Click="DockAndWidthFlyoutButton_Click" Tag="1"/>
+                                    <Button x:Name="WidthButton2" Content="Wide%" x:Uid="OutlineDialog_WidthWide_Button"
+                                            Style="{StaticResource RegularButtonWithAppBarOverflowAppearance}"
+                                            Click="DockAndWidthFlyoutButton_Click" Tag="2" />
+                                </StackPanel>
+                            </Flyout>
+                        </toolResources:TabButton.Flyout>
+                    </toolResources:TabButton>
+                    <toolResources:TabButton Style="{StaticResource NonMatchedSubviewButtonStyle}" Command="{Binding CloseCommand}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="OutlineDialog_CloseButton_ToolTip" Content="Close%"/>
+                        </ToolTipService.ToolTip>
+                        <FontIcon Style="{StaticResource TabFontIconStyle}" Glyph="&#xE10A;"/>
+                    </toolResources:TabButton>
+                </StackPanel>
+
+                <Grid x:Name="SecondaryButtonGrid" HorizontalAlignment="Left" Visibility="Collapsed" Opacity="0.9">
+                    <Grid.Resources>
+                        <Style x:Key="NarrowSubHeaderButtonStyle" TargetType="toolResources:TabButton"
+                               BasedOn="{StaticResource PivotSubHeaderButtonStyle}">
+                            <Setter Property="Width" Value="{StaticResource OutlineTabButtonSize}"/>
+                            <Setter Property="Height" Value="{StaticResource OutlineTabButtonSize}"/>
+                            <Setter Property="Margin" Value="0"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                        </Style>
+                    </Grid.Resources>
+                    <toolResources:TabButton Style="{StaticResource NarrowSubHeaderButtonStyle}" 
+                                             Command="{Binding AddBookmarkCommand}"
+                                             Visibility="{Binding SubView, Converter={StaticResource EnumToVisibilityConverter}, 
+                        ConverterParameter=UserBookmarks, FallbackValue=Collapsed}">
+                        <toolResources:TabButton.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xECC8;"/>
+                        </toolResources:TabButton.Content>
+                    </toolResources:TabButton>
+                    <toolResources:TabButton x:Name="SecondaryColumnsButton" Style="{StaticResource NarrowSubHeaderButtonStyle}" 
+                                             Visibility="{Binding SubView, Converter={StaticResource EnumToVisibilityConverter}, 
+                        ConverterParameter=Thumbnails, FallbackValue=Collapsed}">
+                        <toolResources:TabButton.Content>
+                            <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5 0.5">
+                                <StackPanel.RenderTransform>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.5"/>
+                                </StackPanel.RenderTransform>
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE004;" FontSize="8"/>
+                                <FontIcon x:Name="SecondaryColumnIcon2" FontFamily="Segoe MDL2 Assets" Glyph="&#xE004;" FontSize="8" 
+                                          Opacity="{Binding NumberOfColumns, Converter={StaticResource GreaterThanToOpacityConverter}, ConverterParameter=1}"/>
+                                <FontIcon x:Name="SecondaryColumnIcon3" FontFamily="Segoe MDL2 Assets" Glyph="&#xE004;" FontSize="8"
+                                          Opacity="{Binding NumberOfColumns, Converter={StaticResource GreaterThanToOpacityConverter}, ConverterParameter=2}"/>
+                            </StackPanel>
+                        </toolResources:TabButton.Content>
+                    </toolResources:TabButton>
+                </Grid>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

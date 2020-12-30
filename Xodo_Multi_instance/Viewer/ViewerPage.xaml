@@ -1,0 +1,1161 @@
+﻿<common:NavigablePage
+    x:Class="CompleteReader.Viewer.ViewerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Viewer"
+    xmlns:common="using:CompleteReader.Pages.Common"
+    xmlns:toolResources="using:pdftron.PDF.Tools.Controls.Resources"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:flyouts="using:CompleteReader.Viewer.Flyouts"
+    xmlns:dialogs="using:CompleteReader.Viewer.Dialogs"
+    xmlns:fileOpening="using:CompleteReader.FileOpening"
+    xmlns:tools="using:pdftron.PDF.Tools.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Resources/CompleteReaderStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/ThemeColors.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:ReverseVisibilityConverter x:Key="ReverseVisibilityConverter"/>
+            <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+            <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+            <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter"/>
+            <converters:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
+            <converters:BooleanToMarginConverter x:Key="BooleanToMarginConverter"/>
+            <converters:StringWithResourceParameterConverter x:Key="StringWithResourceParameterConverter"/>
+
+            <x:Double x:Key="FontIconDefaultFontSize">20</x:Double>
+
+            <!-- This values are mainly used for animations -->
+            <x:Double x:Key="AnnotationToolbarHeight">100</x:Double>
+            <x:Double x:Key="AnnotationToolbarNegativeHeight">-100</x:Double>
+            <x:Double x:Key="OutlineWidth">500</x:Double>
+            <x:Double x:Key="FindTextDialogNegativeHeight">-100</x:Double>
+
+            <x:Double x:Key="TabCtrlMinHeight">40</x:Double>
+            <x:Double x:Key="TabCtrlMaxHeight">60</x:Double>
+
+            <Storyboard x:Name="FadeInZoomButtons">
+                <DoubleAnimation Duration="0:0:0.750" Storyboard.TargetName="ZoomButtonHost" 
+                             Storyboard.TargetProperty="Opacity" To="1">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeOutZoomButtons">
+                <DoubleAnimation Duration="0:0:0.200" Storyboard.TargetName="ZoomButtonHost" 
+                             Storyboard.TargetProperty="Opacity" To="0">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeInPageNumber">
+                <DoubleAnimation Duration="0:0:0.750" Storyboard.TargetName="PageNumberHost" 
+                             Storyboard.TargetProperty="Opacity" To="1">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeOutPageNumber">
+                <DoubleAnimation Duration="0:0:0.200" Storyboard.TargetName="PageNumberHost" 
+                             Storyboard.TargetProperty="Opacity" To="0">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideInOutline">
+                <DoubleAnimation
+                Storyboard.TargetName="OutlineHostGridTranslation"
+                Storyboard.TargetProperty="X"
+                To="0" Duration="0:0:0.2">
+                    <DoubleAnimation.EasingFunction>
+                        <QuarticEase EasingMode="EaseIn">
+                        </QuarticEase>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideOutOutlineToLeft">
+                <DoubleAnimation
+                Storyboard.TargetName="OutlineHostGridTranslation"
+                Storyboard.TargetProperty="X"
+                To="-400" Duration="0:0:0.2">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="SlideOutOutlineToRight">
+                <DoubleAnimation
+                Storyboard.TargetName="OutlineHostGridTranslation"
+                Storyboard.TargetProperty="X"
+                To="400" Duration="0:0:0.2">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeInOutline">
+                <DoubleAnimation
+                Storyboard.TargetName="OutlineHostEntranceControl"
+                Storyboard.TargetProperty="Opacity"
+                To="1" Duration="0:0:0.2">
+                    <DoubleAnimation.EasingFunction>
+                        <QuarticEase EasingMode="EaseIn">
+                        </QuarticEase>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeOutOutline">
+                <DoubleAnimation
+                Storyboard.TargetName="OutlineHostEntranceControl"
+                Storyboard.TargetProperty="Opacity"
+                To="0" Duration="0:0:0.2">
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="FadeInConversionSpinner">
+                <DoubleAnimationUsingKeyFrames Duration="0:0:1" Storyboard.TargetName="ConversionSpinnerHost" 
+                             Storyboard.TargetProperty="Opacity">
+                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                    <DiscreteDoubleKeyFrame KeyTime="0:0:0.8" Value="0"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <QuadraticEase EasingMode="EaseIn"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+
+            <Color x:Key="DefaultViewerTextColor">#FFFFFFFF</Color>
+            <SolidColorBrush x:Key="DefaultViewerTextBrush" Color="{StaticResource DefaultViewerTextColor}"/>
+
+            <x:Double x:Key="ZoomButtonSize">56</x:Double>
+            <x:Double x:Key="ZoomButtonFontSize">18</x:Double>
+
+            <Color x:Key="ZoomButtonForegroundColor">#FFFFFFFF</Color>
+            <Color x:Key="ZoomButtonBorderColor">#77646464</Color>
+            <Color x:Key="ZoomButtonPointerOverBackgroundColor">#77777777</Color>
+
+            <SolidColorBrush x:Key="ZoomButtonBackgroundBrush" Color="{StaticResource MainViewerButtonOverlayBackgroundColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonForegroundBrush" Color="{StaticResource ZoomButtonForegroundColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonBorderBrush" Color="{StaticResource ZoomButtonBorderColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerOverBackgroundBrush" Color="{ThemeResource ThemeColorHighlightSubtle}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerOverForegroundBrush" Color="{StaticResource ZoomButtonForegroundColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerOverBorderBrush" Color="{StaticResource ZoomButtonPointerOverBackgroundColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerPressedBackgroundBrush" Color="{ThemeResource ThemeColorHighlightSimilarBrightness}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerPressedForegroundBrush" Color="{StaticResource ZoomButtonForegroundColor}"/>
+            <SolidColorBrush x:Key="ZoomButtonPointerPressedBorderBrush" Color="{StaticResource ZoomButtonForegroundColor}"/>
+
+            <DataTemplate x:Key="FullTextSearchListViewDataTemplate">
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="55"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle x:Name="HighlightRect" IsHitTestVisible="False" VerticalAlignment="Top" Fill="Yellow" Opacity="0.5"
+                           DataContextChanged="Highlight_Text" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{Binding ContextText}" TextWrapping="Wrap" ></TextBlock>
+                    <TextBlock Text="{Binding PageNumber}" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                    <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="1" 
+                                                               Fill="LightGray" VerticalAlignment="Bottom" Margin="-15,0,-15,-10">
+                    </Rectangle>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SmallFullTextSearchListViewDataTemplate">
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle x:Name="HighlightRect" IsHitTestVisible="False" VerticalAlignment="Top" Fill="Yellow" Opacity="0.5"
+                                                               DataContextChanged="Highlight_Text" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{Binding ContextText}" TextWrapping="Wrap" ></TextBlock>
+                    <TextBlock Text="{Binding PageNumber}" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                    <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="1" 
+                           Fill="LightGray" VerticalAlignment="Bottom" Margin="-15,0,-15,-10">
+                    </Rectangle>
+                </Grid>
+            </DataTemplate>
+
+            <Style TargetType="AppBarButton" x:Key="AppBarButtonWithoutHighlight">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Width" Value="68"/>
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="AppBarButton">
+                            <Grid
+            x:Name="Root"
+            MinWidth="{TemplateBinding MinWidth}"
+            MaxWidth="{TemplateBinding MaxWidth}"
+            Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="ApplicationViewStates">
+                                        <VisualState x:Name="FullSize"/>
+                                        <VisualState x:Name="Compact">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextLabel" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Overflow">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OverflowTextLabel" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="OverflowWithToggleButtons">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentRoot" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OverflowTextLabel" Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OverflowTextLabel" Storyboard.TargetProperty="Margin">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="38,0,12,0"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="OverflowTextLabel" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextLabel" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OverflowTextLabel" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="InputModeStates">
+                                        <VisualState x:Name="InputModeDefault" />
+                                        <VisualState x:Name="TouchInputMode" >
+                                            <VisualState.Setters>
+                                                <Setter Target="OverflowTextLabel.Padding" Value="0,11,0,13" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <StackPanel x:Name="ContentRoot" MinHeight="50">
+                                    <ContentPresenter
+                x:Name="Content"
+                Height="20"
+                Margin="0,14,0,4"
+                Content="{TemplateBinding Icon}"
+                Foreground="{TemplateBinding Foreground}"
+                HorizontalAlignment="Stretch"
+                AutomationProperties.AccessibilityView="Raw"/>
+                                    <TextBlock
+                x:Name="TextLabel"
+                Text="{TemplateBinding Label}"
+                Foreground="{TemplateBinding Foreground}"
+                FontSize="12"
+                FontFamily="{TemplateBinding FontFamily}"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Margin="0,0,0,6"/>
+                                </StackPanel>
+
+                                <TextBlock
+              x:Name="OverflowTextLabel"
+              Text="{TemplateBinding Label}"
+              Foreground="{TemplateBinding Foreground}"
+              FontSize="15"
+              FontFamily="{TemplateBinding FontFamily}"
+              TextAlignment="Left"
+              TextTrimming="Clip"
+              TextWrapping="NoWrap"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Margin="12,0,12,0"
+              Padding="0,5,0,7"
+              Visibility="Collapsed"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <SolidColorBrush x:Name="PrevNextBackgroundBrush" Color="#FF000000"/>
+            <SolidColorBrush x:Name="PrevNextForegroundBrush" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Name="PrevNextPointerOverBackgroundBrush" Color="#FF444444"/>
+            <SolidColorBrush x:Name="PrevNextPointerOverForegroundColor" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Name="PrevNextPointerPressedBackgroundColor" Color="{ThemeResource ThemeColorHighlightDifferentBrightness}"/>
+            <SolidColorBrush x:Name="PrevNextPointerPressedForegroundColor" Color="#FF000000"/>
+            <SolidColorBrush x:Name="PrevNextDisabledBackgroundColor" Color="#FF666666"/>
+            <SolidColorBrush x:Name="PrevNextDisabledForegroundColor" Color="#FF999999"/>
+            <SolidColorBrush x:Key="PrevNextButtonFlashBrush" Color="{ThemeResource ThemeColorHighlightDifferentBrightness}"/>
+            <SolidColorBrush x:Key="PrevNextButtonBackgroundBrush" Color="Black"/>
+            <x:Double x:Key="PrevNextButtonWidth">75</x:Double>
+            <x:Double x:Key="PrevNextButtonHeight">50</x:Double>
+
+            <Style TargetType="Button" x:Key="PrevNextButtonStyleSquare">
+                <Setter Property="Background" Value="{StaticResource PrevNextButtonFlashBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource PrevNextForegroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource PrevNextForegroundBrush}" />
+                <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="Width" Value="{StaticResource PrevNextButtonWidth}"/>
+                <Setter Property="Height" Value="{StaticResource PrevNextButtonHeight}"/>
+                <Setter Property="Opacity" Value="0.8"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextPointerOverBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextPointerOverForegroundColor}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextPointerPressedBackgroundColor}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextPointerPressedForegroundColor}" />
+                                            </ObjectAnimationUsingKeyFrames>-->
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Margin">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="5" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="FontSize">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="27" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextPointerPressedForegroundColor}" />
+                                            </ObjectAnimationUsingKeyFrames>-->
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextDisabledBackgroundColor}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextDisabledForegroundColor}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PrevNextDisabledForegroundColor}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                        <VisualState x:Name="PointerFocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="3">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          AutomationProperties.AccessibilityView="Raw"/>
+                                </Border>
+                                <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                                <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Button" x:Key="ZoomButtonStyle">
+                <Setter Property="Background" Value="{StaticResource ZoomButtonBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource ZoomButtonForegroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ZoomButtonBorderBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="3" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontSize" Value="{StaticResource ZoomButtonFontSize}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerOverBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerOverBorderBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerOverForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerPressedBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerPressedBorderBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZoomButtonPointerPressedForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                        <VisualState x:Name="PointerFocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="1">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" 
+                                          AutomationProperties.AccessibilityView="Raw"/>
+                                </Border>
+                                <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                                <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    
+    <!-- NOTE: Top App bar is opened once the documents are opened, displaying all available tools -->
+    <Page.TopAppBar>
+        <AppBar x:Name="CompleteReaderTopAppBar" Style="{StaticResource CompleteReaderAppBarWithoutEllipsis}" 
+                IsOpen="{Binding IsEntireAppBarOpen, Mode=TwoWay}"
+                ClosedDisplayMode="Hidden" IsSticky="True" 
+                IsHitTestVisible="{Binding IsSecretlyModal, Converter={StaticResource ReverseBooleanConverter}}">
+            
+            <Grid x:Name="CompleteReaderTopAppBarGrid">
+                
+                <!-- The AnnotationToolbar is Visible once Edit Mode is on -->
+                <Border x:Name="AnnotationBorder" Child="{Binding AnnotationToolbar}" 
+                        Visibility="{Binding IsAnnotationToolbarOpen, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <!-- The CompeteReaderTopCommandBar is Invisible once Edit Mode is on -->
+                <CommandBar x:Name="CompeteReaderTopCommandBar" IsSticky="True" 
+                            IsOpen="{Binding IsAppBarOpen, Mode=TwoWay}" 
+                            IsEnabled="{Binding IsModal, Converter={StaticResource ReverseBooleanConverter}}"
+                            Visibility="{Binding IsAnnotationToolbarOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
+                    
+                    <CommandBar.Content>
+                        <Grid x:Name="CommandBarContentGrid"> 
+                            
+                            <StackPanel x:Name="CommandBarContentPanel" Orientation="Horizontal" 
+                                        Visibility="{Binding IsFindTextDialogOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
+
+                                <toolResources:AppBarTabButton x:Name="AppBarButton_Files" 
+                                                                    x:Uid="ViewerPage_AppBar_Files" 
+                                                                    Label="Back%" 
+                                                                    Command="{Binding GoToFilesCommand}"
+                                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}"
+                                                                    LabelOpacity="{Binding IsAppBarOpen, Converter={StaticResource BooleanToOpacityConverter}}"
+                                                                    IsCompact="{Binding IsAppBarOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                                    
+                                    <toolResources:ExtendedAppBarButton.Icon>
+                                        <FontIcon Glyph="&#x006D;"
+                                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>                                        
+                                    </toolResources:ExtendedAppBarButton.Icon>
+                                    
+                                </toolResources:AppBarTabButton>
+
+                                <toolResources:AppBarTabButton x:Name="AppBarButton_Save" x:Uid="ViewerPage_AppBar_Save" Label="Save" Tag="1"
+                                                                    Visibility="{Binding IsSaveButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                                                    Icon="Save" IsEnabled="{Binding IsSaveButtonEnabled}" Command="{Binding SaveCommand}"
+                                                                    AutomationProperties.AcceleratorKey="Control S" 
+                                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}"
+                                                                    LabelOpacity="{Binding IsAppBarOpen, Converter={StaticResource BooleanToOpacityConverter}}"
+                                                                    IsCompact="{Binding IsAppBarOpen, Converter={StaticResource ReverseBooleanConverter}}">   
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Uid="ViewerPage_AppBar_Save_ToolTip"/>
+                                    </ToolTipService.ToolTip>
+                                </toolResources:AppBarTabButton>
+
+                                <toolResources:AppBarTabButton x:Name="AppBarButton_SaveAs" x:Uid="ViewerPage_AppBar_SaveAs" 
+                                                                    Label="Save As" Icon="SaveLocal" Tag="2"
+                                                                    Command="{Binding SaveAsCommand}" 
+                                                                    IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}"
+                                                                    Visibility="{Binding IsSaveAsButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                                                    AutomationProperties.AcceleratorKey="Control Alt S"
+                                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}"
+                                                                    LabelOpacity="{Binding IsAppBarOpen, Converter={StaticResource BooleanToOpacityConverter}}"
+                                                                    IsCompact="{Binding IsAppBarOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Uid="ViewerPage_AppBar_SaveAs_ToolTip"/>
+                                    </ToolTipService.ToolTip>
+                                </toolResources:AppBarTabButton>
+                                
+                            </StackPanel>
+                            
+                            <StackPanel x:Name="ComamndBarFindContentPanel" Orientation="Horizontal"
+                                    Visibility="{Binding IsFindTextDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <toolResources:ExtendedAppBarButton x:Name="AppBarButton_FindClose" x:Uid="ViewerPage_AppBar_FindClose" Label="Close Search%" 
+                                                                    Command="{Binding CloseSearchCommand}" 
+                                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}"
+                                                                    LabelOpacity="{Binding IsAppBarOpen, Converter={StaticResource BooleanToOpacityConverter}}"
+                                                                    IsCompact="{Binding IsAppBarOpen,Converter={StaticResource ReverseBooleanConverter}}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE711;"/>
+                                    </AppBarButton.Icon>
+                                </toolResources:ExtendedAppBarButton>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </CommandBar.Content>
+
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton x:Name="AppBarButton_PinUI" x:Uid="ViewerPage_AppBar_PinUI" Label="Pin" 
+                                      Visibility="{Binding IsUiPinned, Converter={StaticResource ReverseBooleanToVisibilityConverter}}" 
+                                      Command="{Binding PinCommand}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#x0069;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        
+                        <AppBarButton x:Name="AppBarButton_UnpinUI" x:Uid="ViewerPage_AppBar_UnpinUI" Label="Unpin" 
+                                      Visibility="{Binding IsUiPinned, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                      Command="{Binding UnpinCommand}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#x0068;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        
+                        <AppBarButton x:Name="AppBarButton_Save2" x:Uid="ViewerPage_AppBar_Save" Label="Save" Tag="1"
+                                      Visibility="{Binding IsSaveButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                      IsEnabled="{Binding IsSaveButtonEnabled}" Command="{Binding SaveCommand}"
+                                      AutomationProperties.AcceleratorKey="Control S">
+                        </AppBarButton>
+                        <AppBarButton x:Name="AppBarButton_SaveAs2" x:Uid="ViewerPage_AppBar_SaveAs" Label="Save As" Tag="2"
+                                      IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}"
+                                      Command="{Binding SaveAsCommand}" Visibility="{Binding IsSaveAsButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                      AutomationProperties.AcceleratorKey="Control Alt S">
+                        </AppBarButton>
+                        <AppBarButton x:Name="AppBarButton_EditPages" x:Uid="ViewerPage_AppBar_EditPages" Label="%Edit Pages ..."
+                                      IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}"
+                                      Command="{Binding PageEditingCommand}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#x0066;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+
+                        <AppBarButton x:Name="AppBarButton_SaveDotDot" Label="Save a ...%" x:Uid="ViewerPage_SecondaryOptions_SaveASomething"
+                                      IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xEA35;"/>
+                            </AppBarButton.Icon>
+                            <AppBarButton.Flyout>
+                                <MenuFlyout commands:FlyoutOpenedCommand.Command="{Binding QuickSettingsOpenedCommand}"
+                                            commands:FlyoutClosedCommand.Command="{Binding QuickSettingsClosedCommand}">
+
+                                    <MenuFlyoutItem Text="flattened copy%" x:Uid="ViewerPage_SecondaryOptions_SaveAndFlatten"
+                                                    Command="{Binding SaveAndFlattenCommand}"/>
+                                    <MenuFlyoutItem Text="Optimize%" x:Uid="ViewerPage_SecondaryOptions_Optimize"
+                                                    Command="{Binding SaveReducedFileSizeCopyCommand}"/>
+                                    <MenuFlyoutItem Text="{Binding SaveAPasswordCopyText}"
+                                                    Command="{Binding SavePasswordCopyCommand}"/>
+                                    <MenuFlyoutItem Text="Crop%" x:Uid="ViewerPage_SecondaryOptions_PermCroppedCopy"
+                                                    Command="{Binding SavePermCroppedCopyCommand}"/>
+                                </MenuFlyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
+                        <AppBarButton x:Name="AppBarButton_Print" x:Uid="ViewerPage_SecondaryOptions_Print" Label="Print%" Command="{Binding PrintCommand}"
+                                      IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE749;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton x:Name="AppBarButton_Share" x:Uid="ViewerPage_SecondaryOptions_Share" Label="Share%" Command="{Binding ShareCommand}"
+                                      IsEnabled="{Binding IsConverting, Converter={StaticResource ReverseBooleanConverter}}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#x006E;"
+                                          FontSize="{StaticResource FontIconDefaultFontSize}"
+                                          FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        
+                    </CommandBar.SecondaryCommands>
+
+
+                    <toolResources:AppBarTabButton x:Name="AppBarButton_Search" 
+                                                        x:Uid="ViewerPage_AppBar_Search"
+                                                        Label="Search" 
+                                                        Command="{Binding SearchCommand}"
+                                                        IsEnabled="{Binding IsDocumentSearchable}"
+                                                        Style="{StaticResource ExtendedAppBarButtonDefaultStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="ViewerPage_AppBar_Search_ToolTip"/>
+                        </ToolTipService.ToolTip>
+
+                        <FontIcon Glyph="&#xE028;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+
+                        <AppBarButton.Flyout>
+                            <Flyout Opened="SearchFlyout_OnOpened">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <common:EntranceAnimationContentControl ContentIsAvailable="FindText_ContentIsAvailable" IsOpen="{Binding IsFindTextDialogOpen}">
+                                        <dialogs:FindTextDialog x:Name="FindTextDialog" DataContext="{Binding FindTextViewModel}"/>
+                                    </common:EntranceAnimationContentControl>
+                                </Grid>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </toolResources:AppBarTabButton>
+
+                    <toolResources:AppBarTabButton x:Name="AppBarButton_SearchFullView" x:Uid="ViewerPage_AppBar_SearchFullView" Label="List All" Icon="List"
+                                  DataContext="{Binding FindTextViewModel}" Command="{Binding SearchFullCommand}"
+                                  Visibility="{Binding IsInSearchMode, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  IsEnabled="{Binding IsFullSearchEnabled}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="ViewerPage_AppBar_SearchFullView_ToolTip"/>
+                        </ToolTipService.ToolTip>
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <Grid MaxHeight="400">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ListView x:Name="FullTextSearchListView"
+                                        MaxHeight="370"
+                                        ItemsSource="{Binding FullSearchItems}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding CurrentFullSearchItem}"
+                                        IsItemClickEnabled="True"
+                                        ItemTemplate="{StaticResource FullTextSearchListViewDataTemplate}"
+                                        commands:ItemClickCommand.Command="{Binding FullSearchItemClickedCommand}">
+                                    </ListView>
+
+                                    <TextBlock Grid.Row="1" Margin="0,10,0,0" HorizontalAlignment="Center" 
+                                               Visibility="{Binding FoundFullSearchItems, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                               Text="{Binding FullSearchResultText}">
+                                    </TextBlock>
+
+                                    <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center"
+                                                Visibility="{Binding FoundFullSearchItems, Converter={StaticResource ReverseBooleanToVisibilityConverter}}">
+                                        <ProgressRing IsActive="{Binding FoundFullSearchItems, Converter={StaticResource ReverseBooleanConverter}}" Margin="10,0,10,0"></ProgressRing>
+                                        <TextBlock Text="{Binding CurrentFullSearchStatusText}" Margin="10,0,10,0"></TextBlock>
+                                    </StackPanel>
+
+                                </Grid>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </toolResources:AppBarTabButton>
+                    
+                    <toolResources:AppBarTabButton  x:Name="AppBarButton_ViewMode" 
+                                                    x:Uid="ViewerPage_AppBar_ViewMode" 
+                                                    Label="View Mode"
+                                                    Visibility="{Binding IsFindTextDialogOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="ViewerPage_AppBar_ViewMode_ToolTip"/>
+                        </ToolTipService.ToolTip>
+
+                        <FontIcon Glyph="&#x005B;"                                  
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+                        
+                        <AppBarButton.Flyout>
+                            <Flyout commands:FlyoutOpenedCommand.Command="{Binding QuickSettingsOpenedCommand}" commands:FlyoutClosedCommand.Command="{Binding QuickSettingsClosedCommand}">
+                                <flyouts:QuickSettingsControl x:Name="QuickSettings" Margin="-15" DataContext="{Binding ViewerPageSettingsViewModel}"/>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </toolResources:AppBarTabButton>
+
+                    <toolResources:AppBarTabButton  x:Name="AppBarButton_Outline" 
+                                                    x:Uid="ViewerPage_AppBar_Outline"
+                                                    Label="Outline" 
+                                                    Command="{Binding OutlineCommand}"
+                                                    Visibility="{Binding IsFindTextDialogOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                                                    Style="{StaticResource ExtendedAppBarButtonDefaultStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="ViewerPage_AppBar_Outline_ToolTip"/>
+                        </ToolTipService.ToolTip>
+
+                        <FontIcon Glyph="&#xE115;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+
+                    </toolResources:AppBarTabButton>
+
+                    <toolResources:AppBarTabButton x:Name="AppBarButton_Edit" 
+                                                   x:Uid="ViewerPage_AppBar_Edit"
+                                                   Label="Edit"
+                                                   Command="{Binding EditCommand}"
+                                                   IsEnabled="{Binding IsDocumentEditable}"
+                                                   Visibility="{Binding IsFindTextDialogOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                                                   Style="{StaticResource ExtendedAppBarButtonDefaultStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="ViewerPage_AppBar_Edit_ToolTip"/>
+                        </ToolTipService.ToolTip>
+
+                        <FontIcon Glyph="&#xE035;"
+                                  FontSize="{StaticResource FontIconDefaultFontSize}"
+                                  FontFamily="ms-appx:///pdftron.PDF.Tools/Controls/Resources/FontIcons.ttf#PDFTron Glyphicons"/>
+
+                        <AppBarButton.Resources>
+                            <Flyout x:Name="EditButtonFlyout">
+                                <Grid Margin="-10">
+                                    <TextBlock Text="Please wait until document is ready%" x:Uid="Conversion_IsConverting_Please_Wait"/>
+                                </Grid>
+                            </Flyout>
+                        </AppBarButton.Resources>
+                    </toolResources:AppBarTabButton>
+                
+                </CommandBar>
+
+                <Border x:Name="TabBorder" Margin="0,48,0,0" VerticalAlignment="Bottom">
+                    <Border.Resources>
+                        <Storyboard x:Name="TabStoryBoardExpand">
+                            <DoubleAnimation EnableDependentAnimation="True"
+                                Storyboard.TargetName="TabButtonControl"
+                                Storyboard.TargetProperty="Height"
+                                To="{StaticResource TabCtrlMaxHeight}" Duration="0:0:0.06">
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Name="TabStoryBoardCollapse">
+                            <DoubleAnimation EnableDependentAnimation="True" 
+                                Storyboard.TargetName="TabButtonControl"
+                                Storyboard.TargetProperty="Height"
+                                To="{StaticResource TabCtrlMinHeight}" Duration="0:0:0.06">
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Name="TabStoryBoardClose">
+                            <DoubleAnimation EnableDependentAnimation="True" 
+                                Storyboard.TargetName="TabButtonControl"
+                                Storyboard.TargetProperty="Height"
+                                To="0" Duration="0:0:0.10">
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </Border.Resources>
+                    
+                    <dialogs:PDFViewCtrlTabButtonControl Grid.Column="1" x:Name="TabButtonControl" 
+                                                         DataContext="{Binding TabControlViewModel}"
+                                                         Height="{StaticResource TabCtrlMinHeight}"/>
+                </Border>
+            </Grid>
+            
+        </AppBar>
+    </Page.TopAppBar>
+    
+    
+    <Page.BottomAppBar>
+        <AppBar x:Name="CompeteReaderBottomAppBar" IsOpen="{Binding IsThumbnailSliderVisible, Mode=TwoWay}" IsSticky="True"
+                IsEnabled="{Binding IsModal, Converter={StaticResource ReverseBooleanConverter}}" 
+                Style="{StaticResource LowAppBar}" Background="Transparent"
+                ClosedDisplayMode="Hidden">
+            
+            <!--We add this border below because if the slider goes all the way to the edge then we're likely to bring up the charms bar...-->
+            <Grid>
+                <Border BorderThickness="0,1,0,0" BorderBrush="#555555" Background="#C1C1C1" Opacity="0.6" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="25" IsHitTestVisible="False"/>
+                <Border Margin="50 0 50 0" Child="{Binding ThumbnailSlider}" Background="Transparent" BorderBrush="Transparent"/>
+                
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+    
+    <Grid x:Name="BackgroundGrid" Background="{StaticResource MainViewerBackgroundBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Thin">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="OutlineView.OpenPaneLength" Value="250"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Middle">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid x:Name="PDFViewCtrlGrid">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="ViewerHostGrid" Grid.Column="1">
+                    <Border x:Name="PDFViewCtrlBorder">
+                        <dialogs:PDFViewCtrlTabControl DataContext="{Binding TabControlViewModel}"/>
+                    </Border>
+
+                    <common:EntranceAnimationContentControl x:Name="ConversionSpinnerHost" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                            EntranceAnimation="{Binding ElementName=FadeInConversionSpinner, Mode=TwoWay}"
+                                                            IsOpen="{Binding IsPreparingForConversion}" Visibility="Collapsed">
+                        
+                        <StackPanel x:Name="PreparingForConversionHost" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                            <ProgressRing IsActive="{Binding IsPreparingForConversion}" Foreground="{StaticResource DefaultViewerTextBrush}" Height="35" Width="35"/>
+                            <TextBlock Text="Preparing for Conversion%" x:Uid="Conversion_Preparing_Message" FontSize="24" 
+                                       Margin="10" Foreground="{StaticResource DefaultViewerTextBrush}" TextWrapping="WrapWholeWords"/>
+                        </StackPanel>
+                        
+                    </common:EntranceAnimationContentControl>
+
+                    <common:EntranceAnimationContentControl x:Name="PageNumberHost" HorizontalAlignment="Left" VerticalAlignment="Bottom" 
+                                                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                    EntranceAnimation="{Binding ElementName=FadeInPageNumber, Mode=TwoWay}"
+                                                    ExitAnimation="{Binding ElementName=FadeOutPageNumber, Mode=TwoWay}"
+                                                    IsOpen="{Binding IsExtraUIVisible}"
+                                                    Margin="20 0 0 60" Visibility="Collapsed">
+                        
+                        <Grid>
+                            <Border x:Name="PageNumberBorder" Background="{StaticResource ZoomButtonBackgroundBrush}" Child="{Binding PageNumberIndicator}" VerticalAlignment="Bottom"/>
+                            <Grid Margin="0,0,0,55">
+                                
+                                <Button x:Name="UndoButton" FontFamily="Segoe MDL2 Assets" Content="&#xE0A6;" FontSize="25"  
+                                        Command="{Binding UndoCommand}" Style="{StaticResource ZoomButtonStyle}" 
+                                        Visibility="{Binding IsUndoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Uid="ViewerPage_Navigation_Undo_ToolTip"/>
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                                
+                                <Button x:Name="RedoButton" FontFamily="Segoe MDL2 Assets" Content="&#xE0AB;" FontSize="25"
+                                        Command="{Binding RedoCommand}"  Margin="40,0,0,0" Style="{StaticResource ZoomButtonStyle}"
+                                        Visibility="{Binding IsRedoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Uid="ViewerPage_Navigation_Redo_ToolTip"/>
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </common:EntranceAnimationContentControl>
+
+                    <common:EntranceAnimationContentControl x:Name="ZoomButtonHost" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                    EntranceAnimation="{Binding ElementName=FadeInZoomButtons, Mode=TwoWay}"
+                                                    ExitAnimation="{Binding ElementName=FadeOutZoomButtons, Mode=TwoWay}"
+                                                    IsOpen="{Binding AreZoombuttonsVisible}"
+                                                    Margin="0 0 20 50" Visibility="Collapsed">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Style="{StaticResource ZoomButtonStyle}" Content="&#xE109;" Command="{Binding ZoomButtonCommand}" CommandParameter="in"/>
+                            <Button Grid.Column="2" Style="{StaticResource ZoomButtonStyle}" Content="&#xE108;" Command="{Binding ZoomButtonCommand}" CommandParameter="out"/>
+                        </Grid>
+                    </common:EntranceAnimationContentControl>
+
+                    <Grid x:Name="AudioButtonHost" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 20 90" 
+                          Visibility="{Binding AreAudioButtonsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="Button" x:Key="AudioButtonStyle" BasedOn="{StaticResource ZoomButtonStyle}">
+                                    <Setter Property="Width" Value="36"/>
+                                    <Setter Property="Height" Value="36"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="Background" Value="#88646464"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button x:Name="StopAudioButton" 
+                                FontFamily="Segoe UI Symbol" Content="&#xE20D;"
+                                    Padding="1 1 3 3"
+                                    FontSize="19"
+                                Style="{StaticResource AudioButtonStyle}"
+                                Command="{Binding StopAudioCommand}">
+                            </Button>
+                            <Grid Margin="10 0 0 0">
+                                <Button x:Name="PlayAudioButton"
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE768;" 
+                                Style="{StaticResource AudioButtonStyle}"
+                                Visibility="{Binding IsAudioPlaying, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                                Command="{Binding PlayAudioCommand}">
+                                </Button>
+                                <Button x:Name="PauseAudioButton"
+                                FontFamily="Segoe MDL2 Assets" Content="&#xE769;"
+                                Style="{StaticResource AudioButtonStyle}"
+                                Visibility="{Binding IsAudioPlaying, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Command="{Binding PauseAudioCommand}">
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid x:Name="OutlineSpaceHolderGrid" Width="{Binding ElementName=OutlineDialog, Path=Width}" Grid.Column="0"
+                      Visibility="{Binding IsOutlineDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+              
+                <Grid Grid.ColumnSpan="3" x:Name="OutlineHostGrid">
+                    <common:EntranceAnimationContentControl x:Name="OutlineHostEntranceControl" CollapseWhenExited="True"
+                                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                            IsOpen="{Binding IsOutlineDialogOpen}"
+                                                            Visibility="Collapsed">
+                        <UserControl IsEnabled="{Binding Path=IsModal, Converter={StaticResource ReverseBooleanConverter}}">
+                            <Grid x:Name="NonModalDisplayGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                              Background="{StaticResource MessageDialogGrayoutThemeBrush}"
+                              BorderBrush="{ThemeResource TabNonSelectedBackgroundBrush}" BorderThickness="0,1,0,0">
+                                <Grid.RenderTransform>
+                                    <TranslateTransform x:Name="OutlineHostGridTranslation" X="-400" Y="0"/>
+                                </Grid.RenderTransform>
+                                <dialogs:OutlineDialog x:Name="OutlineDialog" Width="400" DataContext="{Binding OutlineDialogViewModel}" HorizontalAlignment="Center" AnchorSide="None"/>
+                            </Grid>
+                        </UserControl>
+                    </common:EntranceAnimationContentControl>
+                </Grid>
+          
+                <Grid Grid.ColumnSpan="3" x:Name="SnapResizeHost">
+                    <toolResources:SnapResizer x:Name="OutlineResizer" Width="500"
+                                               Visibility="{Binding IsOutlineDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </Grid>
+
+            <flyouts:OptimizePopupControl DataContext="{Binding OptimizeFileViewModel}"></flyouts:OptimizePopupControl>
+            <flyouts:PasswordPopupControl DataContext="{Binding PasswordFileViewModel}"></flyouts:PasswordPopupControl>
+            <flyouts:CropPopupControl DataContext="{Binding CropPopupViewModel}"></flyouts:CropPopupControl>
+            <flyouts:CustomColorPopupControl DataContext="{Binding CustomColorViewModel}"></flyouts:CustomColorPopupControl>
+
+            <Grid x:Name="NonModalOverlayGrid" Background="#00444488" Visibility="{Binding Path=IsDismissableDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+              commands:PointerPressedCommand.Command="{Binding DismissDialogCommand}"/>
+
+            <!--<UserControl IsEnabled="{Binding Path=IsModal, Converter={StaticResource ReverseBooleanConverter}}">
+                <Grid x:Name="NonModalDisplayGrid">
+                    <SplitView x:Name="OutlineView" IsPaneOpen="{Binding IsOutlineDialogOpen, Mode=TwoWay}" PanePlacement="Right" DisplayMode="Overlay" 
+                           OpenPaneLength="400">
+                        <SplitView.Pane>
+                            <Border x:Name="ControlDialogOutline" HorizontalAlignment="Right" VerticalAlignment="Stretch" 
+                            BorderThickness="0 0 0 0" BorderBrush="Black">
+                                <dialogs:OutlineDialog DataContext="{Binding OutlineDialogViewModel}"/>
+                            </Border>
+                        </SplitView.Pane>
+                    </SplitView>
+                </Grid>
+            </UserControl>-->
+
+            <Grid x:Name="ModalDialogOverlayGrid" Background="Transparent" Visibility="{Binding Path=IsModal, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid x:Name="ModalGrayoutGrid" Background="{StaticResource MessageDialogGrayoutThemeBrush}" Visibility="{Binding Path=IsModalGrayout, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"/>
+            </Grid>
+
+            <Grid x:Name="ModalDialogGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.Resources>
+                    <Storyboard x:Name="FadeInSaveAsDialog">
+                        <DoubleAnimation 
+                        Duration="0:0:0.750" 
+                        Storyboard.TargetName="SaveAsDialogHost"
+                        Storyboard.TargetProperty="Opacity" To="1">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseIn"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+
+                    <Storyboard x:Name="FadeOutSaveAsDialog">
+                        <DoubleAnimation Duration="0:0:0.150" Storyboard.TargetName="SaveAsDialogHost" 
+                             Storyboard.TargetProperty="Opacity" To="0">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </Grid.Resources>
+
+                <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" x:Name="ThumbnailViewerHost"
+                        Visibility="{Binding IsThumbnailsViewOpen, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" 
+                        Child="{Binding ThumbnailViewer}">
+                </Border>
+
+                <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Black" x:Name="CropViewerHost"                    
+                    Visibility="{Binding IsCropViewOpen, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" Child="{Binding CropView}">
+                </Border>
+
+                <common:EntranceAnimationContentControl x:Name="SaveAsDialogHost" IsOpen="{Binding IsSaveTimerOpen}" Opacity="0" Visibility="Collapsed"
+                                                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                    EntranceAnimation="{Binding ElementName=FadeInSaveAsDialog, Mode=TwoWay}"
+                                                    ExitAnimation="{Binding ElementName=FadeOutSaveAsDialog, Mode=TwoWay}">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <!--  Background="{StaticResource MessageDialogGrayoutThemeBrush}" -->
+                        <dialogs:SaveAsNotification/>
+                    </Grid>
+                </common:EntranceAnimationContentControl>
+
+                <Grid Visibility="{Binding DocumentOpener, Converter={StaticResource NotNullToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <fileOpening:FileOpeningDialog DataContext="{Binding DocumentOpener}"/>
+                </Grid>
+
+            </Grid>
+
+            <!--<Grid IsHitTestVisible="False" Margin="50" Visibility="Visible">
+            <Border Background="#88444444" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <TextBlock x:Name="DebugInfoTextBlock" Text="Debug Information Goes Here" TextWrapping="Wrap" Margin="4" MaxWidth="300"/>
+            </Border>
+        </Grid>-->
+
+            <Grid DataContext="{Binding FindTextViewModel}" VerticalAlignment="Bottom" Margin="0,0,0,20">
+                <StackPanel x:Name="ButtonStack" Margin="0,0,0,50" HorizontalAlignment="Center" Orientation="Horizontal" IsHitTestVisible="{Binding IsPrevNextAvailable}" 
+                        Visibility="{Binding IsPrevNextAvailable, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    <Button x:Name="PreviousButton" Content="&#xe112;" Style="{StaticResource PrevNextButtonStyleSquare}" Opacity="1"
+                        Command="{Binding PrevNextCommand}" CommandParameter="Prev" Background="Gray" BorderBrush="Transparent"/>
+                    <Grid Margin="30 0 30 0"/>
+                    <Button x:Name="NextButton" Content="&#xe111;" Style="{StaticResource PrevNextButtonStyleSquare}" Opacity="1"
+                        Command="{Binding PrevNextCommand}" CommandParameter="Next" Background="Gray" BorderBrush="Transparent"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+    
+    
+</common:NavigablePage>

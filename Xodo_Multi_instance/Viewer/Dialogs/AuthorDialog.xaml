@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="CompleteReader.Viewer.Dialogs.AuthorDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Viewer.Dialogs"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource MessageDialogButtonStyle}"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="{StaticResource MessageDialogTextThemeBrush}"/>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid Style="{StaticResource MessageDialogGrayoutGridStyle}">
+        <Grid Style="{StaticResource MessageDialogOuterGridStyle}">
+            <Grid Style="{StaticResource MessageDialogInnerGridStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Style="{StaticResource MessageDialogHeaderStyle}" x:Uid="AuthorDialog_Title" Text=""/>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Style="{StaticResource MessageDialogInformationStyle}" x:Uid="AuthorDialog_Information" Text="Add your name as an author to annotations you create. You can change this in the charm bar's settings menu.%" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBlock x:Uid="AuthorDialog_AuthorLabel" Text="" FontSize="18" VerticalAlignment="Center" Margin="0 0 5 0" Style="{StaticResource MessageDialogInformationStyle}"/>
+                        <TextBox x:Name="AuthorNameTextBox" Width="200" Height="30" Text="{Binding AuthorName}" AcceptsReturn="False" IsTextPredictionEnabled="False"
+                                 commands:KeyUpCommand.Command="{Binding AuthorNameKeyUpCommand}" commands:TextChangedCommand.Command="{Binding AuthorNameChangedCommand}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="OKButton" x:Uid="Generic_Okay_Button" Content="Ok" 
+                                IsEnabled="{Binding DoesAuthorNameHaveContent}" Command="{Binding AuthorNameOkPressedCommand}"/>
+                        <Button x:Name="CancelButton" x:Uid="AuthorDialog_SkipButton" Content="Cancel" Command="{Binding AuthorNameCancelPressedCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

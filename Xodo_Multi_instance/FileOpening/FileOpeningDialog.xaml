@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="CompleteReader.FileOpening.FileOpeningDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.FileOpening"
+    xmlns:common="using:CompleteReader.Pages.Common"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="900"
+    d:DesignWidth="1200">
+    
+    <UserControl.Resources>
+        <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+        <converters:ReverseEnumToBoolConverter x:Key="ReverseEnumToBoolConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid>
+            <Border Visibility="{Binding IsPasswordDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                <local:PasswordDialog DataContext="{Binding PasswordViewModel}"/>
+            </Border>
+            <Border Visibility="{Binding IsPackageDialogOpen, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" >
+                <local:PackageDialog  DataContext="{Binding PackageViewModel}"/>
+            </Border>
+            <!-- Progress bar for loading documents from browse menu -->
+            <Grid x:Name="DocumentOpeningProgressbar" Grid.Row="2" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Background="Transparent"
+                          Visibility="{Binding IsFileOpeningProgressBarVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" x:Uid="DocumentsPage_LoadngProgressBar_Label" Text="Loading...%" FontSize="16" Margin="0 0 20 0"/>
+                <ProgressBar Grid.Column="1" IsIndeterminate="True"/>
+            </Grid>
+            <StackPanel Orientation="Vertical" x:Name="ConvertingProgressBar" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                        Visibility="{Binding IsConvertingDocument, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <ProgressRing IsActive="{Binding IsConvertingDocument}" Width="35" Height="35" Margin="0 0 20 0"/>
+                    <TextBlock x:Uid="DocumentsPage_ConvertingToPDF_Label" Text="Converting to PDF...%" VerticalAlignment="Center" FontSize="16" Margin="0 0 20 0"/>
+                </StackPanel>
+                <Button Content="Cancel%" x:Uid="Generic_Cancel_Button" HorizontalAlignment="Center" Margin="10" Command="{Binding CancelConversionCommand}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>

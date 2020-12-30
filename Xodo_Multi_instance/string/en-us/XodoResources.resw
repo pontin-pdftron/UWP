@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="CollaborationDialog_Info.Text" xml:space="preserve">
+		<value>Add group members by entering their email addresses. Xodo Docs will send them an invitation to join.</value>
+	</data>
+	<data name="CollaborationWizard_Step1_Info.Text" xml:space="preserve">
+		<value>With this new feature, groups can use Xodo Docs to work together on documents from any device or platform using just a web browser. To try it out, enter your name and email, then tap OK to invite others.</value>
+	</data>
+	<data name="CollaborationDialog_AddContacts_Button.Content" xml:space="preserve">
+		<value>Pick Contacts</value>
+	</data>
+	<data name="CollaborationDialog_CollaboratorSettings_Delete.Text" xml:space="preserve">
+		<value>Delete</value>
+	</data>
+	<data name="CollaborationDialog_CollaboratorSettings_QuickEdoitNotification.Text" xml:space="preserve">
+		<value>Did you know that you can simply click this symbol to change read and annotation settings?</value>
+	</data>
+	<data name="CollaborationDialog_CollaboratorSettings_ReadAnnotate.Text" xml:space="preserve">
+		<value>Annotate</value>
+	</data>
+	<data name="CollaborationDialog_CollaboratorSettings_ReadOnly.Text" xml:space="preserve">
+		<value>Read Only</value>
+	</data>
+	<data name="CollaborationDialog_Collaborator_PlaceHolderText" xml:space="preserve">
+		<value>Enter an email address</value>
+	</data>
+	<data name="CollaborationDialog_ContactsPicker_Confirm_Button" xml:space="preserve">
+		<value>Add</value>
+	</data>
+	<data name="CollaborationDialog_EmailNotification.Text" xml:space="preserve">
+		<value>Email Notification:</value>
+	</data>
+	<data name="CollaborationDialog_EmailNotification_Option_Daily" xml:space="preserve">
+		<value>Daily</value>
+	</data>
+	<data name="CollaborationDialog_EmailNotification_Option_Hourly" xml:space="preserve">
+		<value>Hourly</value>
+	</data>
+	<data name="CollaborationDialog_EmailNotification_Option_Off" xml:space="preserve">
+		<value>Off</value>
+	</data>
+	<data name="CollaborationDialog_EmailRequired_Email.Text" xml:space="preserve">
+		<value>Email:</value>
+	</data>
+	<data name="CollaborationDialog_EmailRequired_Info.Text" xml:space="preserve">
+		<value>You must enter an email in order to receive email notifications.</value>
+	</data>
+	<data name="CollaborationDialog_EmailRequired_InvalidEmailNotification.Text" xml:space="preserve">
+		<value>Please enter a valid email address.</value>
+	</data>
+	<data name="CollaborationDialog_EmailRequired_Name.Text" xml:space="preserve">
+		<value>Name:</value>
+	</data>
+	<data name="CollaborationDialog_EmailRequired_Title.Text" xml:space="preserve">
+		<value>Email Required</value>
+	</data>
+	<data name="CollaborationDialog_LearnMore_Button.Content" xml:space="preserve">
+		<value>Learn More</value>
+	</data>
+	<data name="CollaborationDialog_Legend_ReadOnly" xml:space="preserve">
+		<value>Read Only</value>
+	</data>
+	<data name="CollaborationDialog_Legend_ReadWrite" xml:space="preserve">
+		<value>Read/Annotate</value>
+	</data>
+	<data name="CollaborationDialog_Notifications_EmailAlreadyExists" xml:space="preserve">
+		<value>A user with the email {0} has already been added.</value>
+		<comment>[Email]</comment>
+	</data>
+	<data name="CollaborationDialog_Notifications_EmailFromPickerAlreadyExists" xml:space="preserve">
+		<value>One or more of the selected emails is already in the list and was therefore not added again.</value>
+	</data>
+	<data name="CollaborationDialog_Notifications_InvalidEmail" xml:space="preserve">
+		<value>There are invalid email addresses in the list. Please correct these emails.</value>
+	</data>
+	<data name="CollaborationDialog_PersonalMessage_Title.Text" xml:space="preserve">
+		<value>Add a personal message:</value>
+	</data>
+	<data name="CollaborationDialog_Share_Button.Content" xml:space="preserve">
+		<value>Share</value>
+	</data>
+	<data name="CollaborationWizard_ContactingServer.Text" xml:space="preserve">
+		<value>Contacting Server</value>
+	</data>
+	<data name="CollaborationWizard_Step1_EmailLabel.Text" xml:space="preserve">
+		<value>Your Email:</value>
+	</data>
+	<data name="CollaborationWizard_Step1_InvalidEmail.Text" xml:space="preserve">
+		<value>Please enter a valid email address.</value>
+	</data>
+	<data name="CollaborationWizard_Step1_NameLabel.Text" xml:space="preserve">
+		<value>Your Name:</value>
+	</data>
+	<data name="CollaborationWizard_Step1_SkipButton.Content" xml:space="preserve">
+		<value>Skip</value>
+	</data>
+	<data name="CollaborationWizard_Step2_CancelButton.Content" xml:space="preserve">
+		<value>Back</value>
+	</data>
+	<data name="CollaborationWizard_Step2_CointinueButton.Content" xml:space="preserve">
+		<value>Start Sharing</value>
+	</data>
+	<data name="CollaborationWizard_Step2_Email.Text" xml:space="preserve">
+		<value>Selected Email</value>
+	</data>
+	<data name="CollaborationWizard_Step2_EmailNotVerified.Text" xml:space="preserve">
+		<value>The entered email address has yet to be verified.</value>
+	</data>
+	<data name="CollaborationWizard_Step2_Info.Text" xml:space="preserve">
+		<value>Please check your email and click the link to verify that the email address entered belongs to you.
+
+Once the email is verified, please press start sharing.</value>
+	</data>
+	<data name="CollaborationWizard_Step2_Title" xml:space="preserve">
+		<value>Email sent to {0}</value>
+	</data>
+	<data name="DocumentsPage_GetLink_AllValid_Info" xml:space="preserve">
+		<value>Links to the public, read-only copies of the selected documents have been copied to the clipboard.</value>
+	</data>
+	<data name="DocumentsPage_GetLink_AllValid_Title" xml:space="preserve">
+		<value>Document Link Copied</value>
+	</data>
+	<data name="DocumentsPage_GetLink_NotValid_Info" xml:space="preserve">
+		<value>One or more of the selected documents have not been shared. Please make sure that all selected documents has been successfully shared.</value>
+	</data>
+	<data name="DocumentsPage_GetLink_NotValid_Title" xml:space="preserve">
+		<value>Getting links failed</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_ClearSelection.Label" xml:space="preserve">
+		<value>Clear Selection</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_GetLink.Label" xml:space="preserve">
+		<value>Get Link</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_Manage.Label" xml:space="preserve">
+		<value>Manage Members</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_Settings.Label" xml:space="preserve">
+		<value>Manage My Settings</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_Unshare.Label" xml:space="preserve">
+		<value>Remove</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_AppBar_UnshareAll.Label" xml:space="preserve">
+		<value>Remove All</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ClearDialog_Confirm_Option" xml:space="preserve">
+		<value>Delete All</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ClearDialog_Info" xml:space="preserve">
+		<value>This will remove all the documents from the web. This means that the documents will be unavailable for all the people you are sharing with.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ClearDialog_Title" xml:space="preserve">
+		<value>Delete All Documents?</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_DeletingDocumentsSpinnerText.Text" xml:space="preserve">
+		<value>Deleting Documents...</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ErrorText_Conversion" xml:space="preserve">
+		<value>The document could not be shared. It may be may be corrupt.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ErrorText_FileNotFound" xml:space="preserve">
+		<value>The document could not be shared. The file seems to have been removed or deleted.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ErrorText_Internal" xml:space="preserve">
+		<value>The document could not be shared.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ErrorText_Server" xml:space="preserve">
+		<value>The Xodo server experienced an error.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ErrorText_Storage" xml:space="preserve">
+		<value>There is not enough disk space to share. Please free up some space on your device and try again.</value>
+	</data>	
+	<data name="DocumentsPage_SharedItems_ShareState_Cancelled" xml:space="preserve">
+		<value>Canceled</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_FailedError" xml:space="preserve">
+		<value>Error: Publishing</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_FailedNetwork" xml:space="preserve">
+		<value>Error: Network</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_FailedStorage" xml:space="preserve">
+		<value>Error: Not enough Storage</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_Pending" xml:space="preserve">
+		<value>Pending</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_Shared" xml:space="preserve">
+		<value>Shared</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_ShareState_Sharing" xml:space="preserve">
+		<value>Sharing</value>
+	</data>
+  <data name="DocumentsPage_SharedItems_UnshareDialog_Confirm_Option" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+	<data name="DocumentsPage_SharedItems_UnshareDialog_Info" xml:space="preserve">
+		<value>This will remove the selected documents from the web. This means that the documents will be unavailable for all the people you are sharing with.</value>
+	</data>
+	<data name="DocumentsPage_SharedItems_UnshareDialog_Title" xml:space="preserve">
+		<value>Delete Selected Documents?</value>
+	</data>
+	<data name="DocumentsPage_SharingPasswordDialog_Info.Text" xml:space="preserve">
+		<value>This file is password protected, please enter the password below in order to share it.
+
+Note: Once shared, users accessing this document online will not require a password.</value>
+	</data>
+	<data name="FeedbackForm_Loading_Message.Text" xml:space="preserve">
+		<value>Loading feedback form...</value>
+	</data>
+	<data name="ManagingDialog_CollaboratorList_Current_Empty.Text" xml:space="preserve">
+		<value>No current group members.</value>
+	</data>
+	<data name="ManagingDialog_CollaboratorList_Current_Header" xml:space="preserve">
+		<value>Manage Group Members</value>
+	</data>
+	<data name="ManagingDialog_CollaboratorList_New_Header" xml:space="preserve">
+		<value>Add New Members</value>
+	</data>
+	<data name="ManagingDialog_Confirm_Button.Content" xml:space="preserve">
+		<value>Save Changes</value>
+	</data>
+	<data name="MessageDialog_UpdateRequired_Info" xml:space="preserve">
+		<value>Xodo Docs must be updated in order to continue.</value>
+	</data>
+	<data name="MessageDialog_UpdateRequired_Title" xml:space="preserve">
+		<value>Update Required</value>
+	</data>
+	<data name="NotificationMessage_DocumentName_Generic_Mid_Sentence" xml:space="preserve">
+		<value>the document</value>
+	</data>
+	<data name="NotificationMessage_DocumentName_Generic_Start_Sentence" xml:space="preserve">
+		<value>The document</value>
+	</data>
+	<data name="NotificationMessage_EmailValidationSucceeded" xml:space="preserve">
+		<value>In order to associate your messages with your email address, please check your inbox and verify that you are the owner of {0}.</value>
+		<comment>[User email address].</comment>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Internal" xml:space="preserve">
+		<value>The account could not be updated due to an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Internal_UpdateAvailable" xml:space="preserve">
+		<value>The account could not be updated due to an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Server" xml:space="preserve">
+		<value>The account could not be updated because of a server error. Please try again later.</value>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Server_UpdateAvailable" xml:space="preserve">
+		<value>The account could not be updated because of a server communication error.</value>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Server_UpdateRequired" xml:space="preserve">
+		<value>The account could not be updated because this version of Xodo Docs is out of date.</value>
+	</data>
+	<data name="NotificationMessage_Error_AccountUpdate_Title" xml:space="preserve">
+		<value>Account Not Updated</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Internal" xml:space="preserve">
+		<value>The group members could not be updated because of an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Internal_UpdateAvailable" xml:space="preserve">
+		<value>The group members could not be updated because of an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Server" xml:space="preserve">
+		<value>The group members could not be updated because of a server error. Please try again later.</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Server_UpdateAvailable" xml:space="preserve">
+		<value>The group members could not be updated because of a server communication error.</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Server_UpdateRequired" xml:space="preserve">
+		<value>The group members could not be updated because this version of Xodo Docs is out of date.</value>
+	</data>
+	<data name="NotificationMessage_Error_CollaboratorUpdate_Title" xml:space="preserve">
+		<value>group members for {0} were not updated.</value>
+	</data>
+	<data name="NotificationMessage_Error_ContactSupport" xml:space="preserve">
+		<value>Please contact us as xodo.com/support.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Internal" xml:space="preserve">
+		<value>The document could not be deleted due to an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Internal_UpdateAvailable" xml:space="preserve">
+		<value>The document could not be deleted due to an internal error.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Server" xml:space="preserve">
+		<value>The document could not be deleted because of a server error. Please try again later.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Server_UpdateAvailable" xml:space="preserve">
+		<value>The document could not be deleted because of a server communication error.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Server_UpdateRequired" xml:space="preserve">
+		<value>The document could not be deleted because this version of Xodo Docs is out of date.</value>
+	</data>
+	<data name="NotificationMessage_Error_DocumentUpdate_Title" xml:space="preserve">
+		<value>{0} was not deleted.</value>
+	</data>
+	<data name="NotificationMessage_Error_Generic" xml:space="preserve">
+		<value>An error occured.</value>
+	</data>
+	<data name="NotificationMessage_Error_UpdateAvailable" xml:space="preserve">
+		<value>A new version of Xodo Docs is available; updating may help.</value>
+	</data>
+	<data name="NotificationMessage_Error_UpdateRequired" xml:space="preserve">
+		<value>Please update to the latest version to continue.</value>
+	</data>
+	<data name="NotificationMessage_Error_UpdateRequired_Title" xml:space="preserve">
+		<value>Update Required</value>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Convert" xml:space="preserve">
+		<value>{0} could not be shared because of a problem with the document.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_FileNotFound" xml:space="preserve">
+		<value>{0} could not be shared because it has been moved or deleted.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Generic" xml:space="preserve">
+		<value>The document {0} could not be shared. Please try again.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Internal" xml:space="preserve">
+		<value>{0} could not be shared because of an internal error.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Internal_UpdateAvailable" xml:space="preserve">
+		<value>{0} could not be shared because of an internal error.</value>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Server" xml:space="preserve">
+		<value>{0} could not be shared because of a server error. Please try again later.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Server_UpdateAvailable" xml:space="preserve">
+		<value>{0} could not be shared because of a server communication error. </value>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Server_UpdateRequired" xml:space="preserve">
+		<value>{0} could not be shared because this version of Xodo Docs is out of date.</value>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Storage" xml:space="preserve">
+		<value>{0} could not be shared because the disc is full. Please free up some space and try again.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareFailed_Title" xml:space="preserve">
+		<value>Document Not Shared</value>
+	</data>
+	<data name="NotificationMessage_ShareFailed_UpdateRequired_Title" xml:space="preserve">
+		<value>Update Required</value>
+	</data>
+	<data name="NotificationMessage_ShareFinished" xml:space="preserve">
+		<value>{0} is online.</value>
+	</data>
+	<data name="NotificationMessage_ShareQueued" xml:space="preserve">
+		<value>Xodo is currently in the process of sharing other documents. {0} will be shared when those are finished.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareStarted" xml:space="preserve">
+		<value>Sharing {0}.</value>
+	</data>
+	<data name="NotificationMessage_ShareToManyFinished" xml:space="preserve">
+		<value>The document {0} has been shared with {1} users.</value>
+		<comment>[Document Name] [Number of users]</comment>
+	</data>
+	<data name="NotificationMessage_ShareToManyStarted" xml:space="preserve">
+		<value>Started sharing the document {0} with {1} users.</value>
+		<comment>[Document Name] [Number of users]</comment>
+	</data>
+	<data name="NotificationMessage_ShareToNoneFinished" xml:space="preserve">
+		<value>The document {0} has been shared.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareToNoneStarted" xml:space="preserve">
+		<value>Started sharing the document {0}.</value>
+		<comment>[Document Name]</comment>
+	</data>
+	<data name="NotificationMessage_ShareToOneFinished" xml:space="preserve">
+		<value>The document {0} has been shared with {1}.</value>
+		<comment>[Document Name] [Email of collaborator]</comment>
+	</data>
+	<data name="NotificationMessage_ShareToOneStarted" xml:space="preserve">
+		<value>Started sharing the document {0} with {1}.</value>
+		<comment>[Document Name] [Email of collaborator]</comment>
+	</data>
+	<data name="NotificationMessage_UpdateAvailable_Generic" xml:space="preserve">
+		<value>A new version of Xodo Docs is available. Please update to the latest version and try again.</value>
+	</data>
+	<data name="NotificationMessage_UserUpdateFailed" xml:space="preserve">
+		<value>Xodo was unable to change the permissions of some group members on {0}. </value>
+	</data>
+	<data name="WebViewerPage_AppBar_BackButton.Label" xml:space="preserve">
+		<value>Back to Files</value>
+	</data>
+	<data name="WebViewerPage_AppBar_OpenInBrowser.Label" xml:space="preserve">
+		<value>Open in Web Browser</value>
+	</data>
+	<data name="WebViewerPage_Error_BackButton.Content" xml:space="preserve">
+		<value>Back to Files</value>
+	</data>
+	<data name="WebViewerPage_Error_Message" xml:space="preserve">
+		<value>Could not navigate to the document requested. Please try again later.</value>
+	</data>
+	<data name="WebViewerPage_Error_Title" xml:space="preserve">
+		<value>Error navigating to document</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Internal" xml:space="preserve">
+		<value>The document cannot be viewed because of an internal error.</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Internal_UpdateAvailable" xml:space="preserve">
+		<value>The document cannot be viewed because of an internal error.</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Network" xml:space="preserve">
+		<value>The document cannot be viewed because there is no internet connection. Please connect to the internet and try again.</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Server" xml:space="preserve">
+		<value>The document cannot be viewed because of a server error. Please try again later.</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Server_UpdateAvailable" xml:space="preserve">
+		<value>The document cannot be viewed because of a server communication error.</value>
+	</data>
+	<data name="WebViewerPage_GetPrivateURL_Error_Server_UpdateRequired" xml:space="preserve">
+		<value>The document cannot be viewed because this version of Xodo Docs is out of date.</value>
+	</data>
+	<data name="WebViewer_DownloadPDFContent" xml:space="preserve">
+		<value>"Document is ready. &lt;a class='dialogLink' href='__downloadLink__' download='' onclick='window.external.notify(\"__downloadLink__\")'&gt;Choose download location...&lt;/a&gt;"</value>
+	</data>
+	<data name="WebViewPage_DownloadNotification_CompeltedSavedAs" xml:space="preserve">
+		<value>Saved as {0}</value>
+		<comment>Document Name</comment>
+	</data>
+	<data name="WebViewPage_DownloadNotification_CompletedInfo.Text" xml:space="preserve">
+		<value>Download completed</value>
+	</data>
+	<data name="WebViewPage_DownloadNotification_CompletedOpenButton.Content" xml:space="preserve">
+		<value>Open</value>
+	</data>
+	<data name="WebViewPage_DownloadNotification_DownloadFailed.Text" xml:space="preserve">
+		<value>Download Failed
+Please try again.</value>
+	</data>
+	<data name="WebViewPage_DownloadNotification_InProgress.Text" xml:space="preserve">
+		<value>Downloading...</value>
+	</data>
+	<data name="Settings_OptionLabels_SendFeedback.Text" xml:space="preserve">
+		<value>Send Feedback</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_ChangeButton.Content" xml:space="preserve">
+		<value>Change</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_Email.Text" xml:space="preserve">
+		<value>Email:</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_Name.Text" xml:space="preserve">
+		<value>Name:</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_NeedEmail.Text" xml:space="preserve">
+		<value>You must enter an email to continue.</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_NewEmail.Text" xml:space="preserve">
+		<value>New Email:</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_NewName.Text" xml:space="preserve">
+		<value>New Name:</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_SaveButton.Content" xml:space="preserve">
+		<value>Save</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_SetUpButton.Content" xml:space="preserve">
+		<value>Set Up</value>
+	</data>
+	<data name="Settings_Options_XodoOnline_UpdatingNameAndEmail" xml:space="preserve">
+		<value>Updating...</value>
+	</data>
+</root>

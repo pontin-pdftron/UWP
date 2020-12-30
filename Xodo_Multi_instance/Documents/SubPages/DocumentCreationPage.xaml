@@ -1,0 +1,517 @@
+﻿<Page
+    x:Class="CompleteReader.Documents.SubPages.DocumentCreationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Documents.SubPages"
+    xmlns:common="using:CompleteReader.Pages.Common"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <EntranceNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    
+    <Page.Resources>
+        <converters:IntEnumToBooleanConverter x:Key="IntEnumToBooleanConverter"/>
+        <converters:ReverseEnumToVisibilityConverter x:Key="ReverseEnumToVisibilityConverter"/>
+        <converters:IntEnumToVisibilityConverter x:Key="IntEnumToVisibilityConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+
+        <Style TargetType="TextBlock" x:Key="SectionHeaderStyle">
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="NarrowSectionHeaderStyle" BasedOn="{StaticResource SectionHeaderStyle}">
+            <Setter Property="FontSize" Value="26"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="NarrowSectionFooterStyle">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="NarrowFooterArrowStyle">
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="15 0 15 0"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <CompositeTransform ScaleX="1.3" ScaleY="1.3" TranslateY="-8"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ScrollViewer" x:Key="NarrowLayoutContentScrollViewer">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalScrollMode" Value="Disabled"/>
+            <Setter Property="VerticalScrollMode" Value="Auto"/>
+            <Setter Property="ZoomMode" Value="Disabled"/>
+        </Style>
+
+        <Color x:Key="ForwardNavigationButtonForegroundColor">#FFFFFFFF</Color>
+        <Color x:Key="ForwardNavigationButtonBackgroundColor">#00000000</Color>
+        <Color x:Key="ForwardNavigationButtonPressedForegroundBrush">#FF000000</Color>
+        <Color x:Key="ForwardNavigationButtonHighlightColor">#44BBBBBB</Color>
+
+        <SolidColorBrush x:Key="ForwardNavigationButtonBackgroundBrush" Color="{ThemeResource ThemeColorHighlightSimilarBrightness}"/>
+        <SolidColorBrush x:Key="ForwardNavigationButtonForegroundBrush" Color="{StaticResource ForwardNavigationButtonForegroundColor}"/>
+        <SolidColorBrush x:Key="ForwardNavigationButtonPointerOverBackgroundBrush" Color="{StaticResource ThemeColorHighlightMediumBrightness}"/>
+        <SolidColorBrush x:Key="ForwardNavigationButtonPointerOverForegroundBrush" Color="{StaticResource ForwardNavigationButtonForegroundColor}"/>
+        <SolidColorBrush x:Key="ForwardNavigationButtonPointerPressedBackgroundBrush" Color="{StaticResource ThemeColorHighlightDifferentBrightness}"/>
+        <SolidColorBrush x:Key="ForwardNavigationButtonPointerPressedForegroundBrush" Color="{StaticResource ForwardNavigationButtonPressedForegroundBrush}"/>
+
+        <Style TargetType="Button" x:Key="ForwardNavigationButtonStyle">
+            <Setter Property="Background" Value="{ThemeResource ThemeBrushHighlightSimilarBrightness}" />
+            <Setter Property="Foreground" Value="{ThemeResource ForwardNavigationButtonForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ForwardNavigationButtonForegroundBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="12,4,12,4" />
+            <Setter Property="Margin" Value="0"/>
+            <!--<Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="200"/>-->
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerOverBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SymbolTextBlock"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerOverForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ArrowTextBlock"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerOverForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ImageBorder"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerOverBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>-->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerOverForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPointerPressedBackgroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SymbolTextBlock"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPressedForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ArrowTextBlock"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPressedForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ImageBorder"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPressedForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>-->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ForwardNavigationButtonPressedForegroundBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused" />
+                                    <VisualState x:Name="PointerFocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="Border"
+                            CornerRadius="0"
+                                    Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="3">
+                                <Grid HorizontalAlignment="Stretch" Margin="5" Background="Transparent">
+                                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                            Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="3" Opacity="0.3"/>
+                                    <!-- Background="{TemplateBinding Background}"-->
+                                    <Grid Margin="3" HorizontalAlignment="Center">
+
+
+                                        <TextBlock x:Name="SymbolTextBlock"  Text="{TemplateBinding AutomationProperties.Name}" FontFamily="ms-appx:///Assets/custom.ttf#PDFTron Glyphicons" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="60" Margin="0 0 0 20"/>
+                                        <!--<TextBlock x:Name="ArrowTextBlock" Text="&#xE2B7;" Grid.Column="1" Margin="15 0 15 0" FontSize="26" VerticalAlignment="Center" FontFamily="Segoe UI Symbol"/>
+                                        <Grid Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"  Width="60" Height="60">
+                                            <Border x:Name="ImageBorder" BorderBrush="Transparent" BorderThickness="1" Grid.Column="2" HorizontalAlignment="Left" Background="White">
+                                                <Image Source="../Assets/DocumentPage/FilePlaceHolder_pdf_locked.png" Stretch="Uniform" />
+                                            </Border>
+                                        </Grid>-->
+
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Bottom" 
+                                          AutomationProperties.AccessibilityView="Raw"
+                                                      Grid.Row="1" Grid.ColumnSpan="3"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                            <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <x:Double x:Key="NavigationButtonSize">60</x:Double>
+        <x:Double x:Key="NavigationButtonIconSize">45</x:Double>
+
+        <Style x:Key="NavigationButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource ButtonBackgroundThemeBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderThemeBrush}" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="FontWeight" Value="SemiLight"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="AutomationProperties.ItemType" Value="App Bar Button"/>
+            <Setter Property="Content" Value="&#xE0D5;"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Width="{StaticResource NavigationButtonSize}" Height="{StaticResource NavigationButtonSize}"  Background="Transparent">
+                            <Grid Width="{StaticResource NavigationButtonIconSize}" Height="{StaticResource NavigationButtonIconSize}" Margin="0,0,2,6" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="45" Margin="1,1,0,0" Foreground="Transparent"
+                                           VerticalAlignment="Center" />
+                                <TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="47" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                                <ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="0,4,5,0" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Rectangle
+                                x:Name="FocusVisualWhite"
+                                IsHitTestVisible="False"
+                                Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}"
+                                StrokeEndLineCap="Square"
+                                StrokeDashArray="1,1"
+                                Opacity="0"
+                                StrokeDashOffset="1.5"/>
+                            <Rectangle
+                                x:Name="FocusVisualBlack"
+                                IsHitTestVisible="False"
+                                Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}"
+                                StrokeEndLineCap="Square"
+                                StrokeDashArray="1,1"
+                                Opacity="0"
+                                StrokeDashOffset="0.5"/>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGlyph" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPointerOverForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OutlineGlyph" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGlyph" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonPressedBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OutlineGlyph" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AppBarItemDisabledForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource AppBarItemDisabledForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="FocusVisualWhite"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="FocusVisualBlack"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="1"
+                                                Duration="0"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused" />
+                                    <VisualState x:Name="PointerFocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar x:Name="CommandBar"
+                    Style="{StaticResource HamburgerCommandBar}">
+            <CommandBar.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding NavigationCommand}"
+                            FontSize="17"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontWeight="ExtraBold"
+                            Background="Transparent"
+                            Content=""
+                            Height="48"
+                            Width="48"/>
+                    <StackPanel Height="{Binding ElementName=CommandBar, Path=ActualHeight}"
+                                x:Name="CommandBarContentPanel" Orientation="Horizontal">
+                        <TextBlock x:Uid="DocumentsPage_CreateDocument_Title" 
+                               x:Name="CreateDocumentTitle"
+                               Margin="15,0,5,0" 
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Text="CreationPage%">
+                        </TextBlock>
+                        <TextBlock x:Uid="DocumentCreation_BlankDocument_Title"
+                               x:Name="CreateBlankDocumentTitle"
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=1}">
+                        </TextBlock>
+                        <TextBlock x:Uid="DocumentCreation_ImageDocument_Title"
+                               x:Name="CreateImageDocumentTitle"
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=2}">
+                        </TextBlock>
+                        <TextBlock x:Uid="DocumentCreation_CameraDocument_Title"
+                               x:Name="CreateCameraDocumentTitle"
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=3}">
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </CommandBar.Content>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid x:Name="PageCreationGrid" Margin="20,-35,20,0">
+        <Grid.Resources>
+            <Style TargetType="common:EntranceAnimationContentControl">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            </Style>
+
+            <Storyboard x:Name="MainMenuEntranceAnimation">
+                <DoubleAnimation Duration="0:0:0.350" x:Name="MainMenuEntranceDoubleAnimation" Storyboard.TargetName="MainMenuTransformation" Storyboard.TargetProperty="X" To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="MainMenuExitAnimation">
+                <DoubleAnimation Duration="0:0:0.267" x:Name="MainMenuExitDoubleAnimation" Storyboard.TargetName="MainMenuTransformation" Storyboard.TargetProperty="X" 
+                             To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="BlankDocEntranceAnimation">
+                <DoubleAnimation Duration="0:0:0.350" x:Name="BlankDocEntranceDoubleAnimation" Storyboard.TargetName="BlankDocTransformation" Storyboard.TargetProperty="X" To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="BlankDocExitAnimation">
+                <DoubleAnimation Duration="0:0:0.267" x:Name="BlankDocExitDoubleAnimation" Storyboard.TargetName="BlankDocTransformation" Storyboard.TargetProperty="X" 
+                             To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="ImageFromFileEntranceAnimation">
+                <DoubleAnimation Duration="0:0:0.350" x:Name="ImageFromFileEntranceDoubleAnimation" Storyboard.TargetName="ImageFromFileTransformation" 
+                                 Storyboard.TargetProperty="X" To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="ImageFromFileExitAnimation">
+                <DoubleAnimation Duration="0:0:0.267" x:Name="ImageFromFileExitDoubleAnimation" Storyboard.TargetName="ImageFromFileTransformation" 
+                                 Storyboard.TargetProperty="X" 
+                             To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+
+            <Storyboard x:Name="ImageFromCameraEntranceAnimation">
+                <DoubleAnimation Duration="0:0:0.350" x:Name="ImageFromCameraEntranceDoubleAnimation" Storyboard.TargetName="ImageFromCameraTransformation" 
+                                 Storyboard.TargetProperty="X" To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="ImageFromCameraExitAnimation">
+                <DoubleAnimation Duration="0:0:0.267" x:Name="ImageFromCameraExitDoubleAnimation" Storyboard.TargetName="ImageFromCameraTransformation" 
+                                 Storyboard.TargetProperty="X" 
+                             To="0">
+                    <DoubleAnimation.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </Grid.Resources>
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Thin">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ContentHostGrid.MaxWidth" Value="280"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Thick">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="450"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="400"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="ContentHostGrid" MaxWidth="400" HorizontalAlignment="Stretch">
+            <Grid.Clip>
+                <RectangleGeometry Rect="0,0,500,1980" x:Name="ClipRect"/>
+            </Grid.Clip>
+            <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0.3" CornerRadius="5"
+                   BorderBrush="{StaticResource ThemeBrushHighlightDifferentBrightness}" BorderThickness="0">
+                <Image Source="../Assets/DocumentPage/Logo1024.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0.5" Visibility="Collapsed"/>
+            </Border>
+            <Grid Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=1}">
+                <ScrollViewer x:Name="BlankDocumentScrollViewer" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" 
+                              ZoomMode="Disabled" HorizontalAlignment="Stretch">
+                    <local:CreateBlankDocumentControl x:Name="CreateBlankDocument" MaxWidth="300" HorizontalAlignment="Left"/>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=2}">
+                <ScrollViewer x:Name="ImageDocumentScrollViewer" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" 
+                              ZoomMode="Disabled" HorizontalAlignment="Left">
+                    <local:CreateImageDocumentControl x:Name="CreateImageDocument" local:IsForCamera="False" Margin="5" MaxWidth="300" HorizontalAlignment="Stretch"/>
+                </ScrollViewer>
+
+            </Grid>
+            
+            <Grid Visibility="{Binding CurrentViewIndex, Converter={StaticResource IntEnumToVisibilityConverter}, ConverterParameter=3}">
+                <ScrollViewer x:Name="CameraDocumentScrollViewer" HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" 
+                              ZoomMode="Disabled" HorizontalAlignment="Left">
+                    <local:CreateImageDocumentControl x:Name="CreateCameraDocument" local:IsForCamera="True" Margin="5" MaxWidth="300" HorizontalAlignment="Stretch"/>
+                </ScrollViewer>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</Page>

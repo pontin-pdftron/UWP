@@ -1,0 +1,195 @@
+﻿<UserControl
+    x:Class="CompleteReader.Documents.SubPages.CreateBlankDocumentControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.DocumentsPageDialogs"
+    xmlns:converter="using:CompleteReader.Pages.Common.Converters"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="500"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converter:IntEnumToBooleanConverter x:Key="IntEnumToBooleanConverter"/>
+
+        <x:Double x:Key="AddRemovebuttonSize">32</x:Double>
+        <x:Double x:Key="AddRemovebuttonFontSize">20</x:Double>
+
+        <Color x:Key="AddRemovebuttonForegroundColor">#FFFFFFFF</Color>
+        <Color x:Key="AddRemovebuttonPointerPressedForegroundColor">#FF000000</Color>
+
+        <SolidColorBrush x:Key="AddRemovebuttonBackgroundBrush" Color="{ThemeResource ThemeColorHighlightSimilarBrightness}"/>
+        <SolidColorBrush x:Key="AddRemovebuttonForegroundBrush" Color="{StaticResource AddRemovebuttonForegroundColor}"/>
+        <SolidColorBrush x:Key="AddRemovebuttonPointerOverBackgroundBrush" Color="{StaticResource ThemeColorHighlightMediumBrightness}"/>
+        <SolidColorBrush x:Key="AddRemovebuttonPointerOverForegroundBrush" Color="{StaticResource AddRemovebuttonForegroundColor}"/>
+        <SolidColorBrush x:Key="AddRemovebuttonPointerPressedBackgroundBrush" Color="{StaticResource ThemeColorHighlightDifferentBrightness}"/>
+        <SolidColorBrush x:Key="AddRemovebuttonPointerPressedForegroundBrush" Color="{StaticResource AddRemovebuttonPointerPressedForegroundColor}"/>
+
+        
+        <Style TargetType="Button" x:Key="AddRemovebuttonStyle">
+            <Setter Property="Background" Value="{ThemeResource AddRemovebuttonBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{ThemeResource AddRemovebuttonForegroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource AddRemovebuttonForegroundBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0 0 0 1" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="{StaticResource AddRemovebuttonFontSize}"/>
+            <Setter Property="Height" Value="{StaticResource AddRemovebuttonSize}"/>
+            <Setter Property="Width" Value="{StaticResource AddRemovebuttonSize}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AddRemovebuttonPointerOverBackgroundBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AddRemovebuttonPointerOverForegroundBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AddRemovebuttonPointerPressedBackgroundBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AddRemovebuttonPointerPressedForegroundBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused" />
+                                    <VisualState x:Name="PointerFocused" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="0">
+                                <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" 
+                                          AutomationProperties.AccessibilityView="Raw"/>
+                            </Border>
+                            <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                            <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Rectangle" BasedOn="{StaticResource DocumentCreationRectangleSeparatorStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource DocumentCreationRadioButtonStyle}"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Document Title%" x:Uid="DocumentCreation_AllDocuments_DocumentTitle" Style="{StaticResource DocumentCreationTextBlockStyle}"/>
+            <TextBox PlaceholderText="{Binding DefaultDocumentName}" Margin="2" Text="{Binding DocumentTitle}" 
+                     commands:TextChangedCommand.Command="{Binding TitleTextChangedCommand}"/>
+
+            <Grid Height="10"/>
+            
+            <TextBlock Text="Page Size%" x:Uid="DocumentCreation_BlankDocument_PageSizeHeader" Style="{StaticResource DocumentCreationTextBlockStyle}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="258"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox ItemsSource="{Binding AvailablePaperSizes}"
+                      Margin="2"
+                      HorizontalAlignment="Stretch"
+                      SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"/>
+            </Grid>
+            
+            <Grid Height="10"/>
+            
+            <TextBlock Text="Page Orientation%" x:Uid="DocumentCreation_BlankDocument_PageOrientationHeader" Style="{StaticResource DocumentCreationTextBlockStyle}"/>
+            <RadioButton Content="Portrait%" x:Uid="DocumentCreation_BlankDocument_Portrait" IsChecked="{Binding PageOrientationIndex, Converter={StaticResource IntEnumToBooleanConverter}, ConverterParameter=0, Mode=TwoWay}"/>
+            <RadioButton Content="Landscape%" x:Uid="DocumentCreation_BlankDocument_Landscape" IsChecked="{Binding PageOrientationIndex, Converter={StaticResource IntEnumToBooleanConverter}, ConverterParameter=1, Mode=TwoWay}"/>
+
+            <Grid Height="10"/>
+            
+            <TextBlock Text="Number of Pages" x:Uid="DocumentCreation_BlankDocument_NumberOfPagesHeader" Style="{StaticResource DocumentCreationTextBlockStyle}"/>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <TextBox Margin="0 0 10 0" InputScope="Number" Text="{Binding TotalPagesString}" Width="150" 
+                         commands:LostFocusCommand.Command="{Binding PageNumberTextLostFocusCommand}"
+                         commands:TextChangedCommand.Command="{Binding PageNumberTextChangedCommand}" VerticalContentAlignment="Center"/>
+                <Grid Width="20"/>
+                <Button Grid.Column="2" Style="{StaticResource AddRemovebuttonStyle}" Content="&#xE108;" Command="{Binding IncrementOrDecrementCommand}" CommandParameter="-"/>
+                <Grid Width="5"/>
+                <Button Style="{StaticResource AddRemovebuttonStyle}" Content="&#xE109;" Command="{Binding IncrementOrDecrementCommand}" CommandParameter="+"/>
+            </StackPanel>
+
+            <Grid Height="20"/>
+            <Rectangle Style="{StaticResource DocumentCreationRectangleSeparatorStyle2}"/>
+            <Button Content="Create and Save new Document%" 
+                    x:Uid="DocumentCreation_BlankDocument_CreateDocumentButton"
+                    HorizontalAlignment="Left" 
+                    IsEnabled="{Binding IsInputValid}" 
+                    Command="{Binding CreateNewDocument}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

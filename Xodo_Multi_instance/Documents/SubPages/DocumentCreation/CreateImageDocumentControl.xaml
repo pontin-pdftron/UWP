@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="CompleteReader.Documents.SubPages.CreateImageDocumentControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.DocumentsPageDialogs"
+    xmlns:converter="using:CompleteReader.Pages.Common.Converters"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="600"
+    d:DesignWidth="400">
+    
+    <UserControl.Resources>
+        <converter:ReverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>       
+        
+        <Style TargetType="Rectangle" x:Key="StrokeDashRecrangle"/>
+        <Style TargetType="Rectangle" BasedOn="{StaticResource DocumentCreationRectangleSeparatorStyle}"/>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource DocumentCreationRadioButtonStyle}"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Document Title%" x:Uid="DocumentCreation_AllDocuments_DocumentTitle" Style="{StaticResource DocumentCreationTextBlockStyle}"/>
+            <TextBox PlaceholderText="{Binding DefaultDocumentName}" Margin="2" Text="{Binding DocumentTitle}" 
+                     commands:TextChangedCommand.Command="{Binding TitleTextChangedCommand}"/>
+            <Grid Height="25"/>
+            <Grid>
+                <Button x:Name="FromFileButton" Command="{Binding PickDocumentCommand}" Content="Get Picture From File%" 
+                        x:Uid="DocumentCreation_ImageDocument_SelectFileButton" HorizontalAlignment="Left"/>
+                <Button x:Name="FromCameraButton" Grid.Column="2" Command="{Binding GetPictureFromCameraCommand}" Content="Get Picture From Camera%" 
+                        x:Uid="DocumentCreation_ImageDocument_TakePictureButton" HorizontalAlignment="Left"/>
+
+            </Grid>
+            <Grid Height="10"/>
+            <Border HorizontalAlignment="Left">
+                <Grid MinWidth="100" MinHeight="100" MaxWidth="200" MaxHeight="200" Margin="2" x:Name="ImageHostingGrid">
+                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource StrokeDashRecrangle}" Stroke="{StaticResource SystemControlBackgroundBaseHighBrush}" StrokeDashArray="2 2" Fill="Transparent"
+                               Visibility="{Binding IsImageSelected, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                    <TextBlock Text="preview%" x:Uid="DocumentCreation_ImageDocument_Preview" FontWeight="Light" HorizontalAlignment="Center" 
+                               Visibility="{Binding IsImageSelected, Converter={StaticResource InverseBooleanToVisibilityConverter}}" VerticalAlignment="Center"/>
+                    <Image Source="{Binding PreviewImage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </Grid>
+            </Border>
+
+            <Grid Height="20"/>
+            <Rectangle Style="{StaticResource DocumentCreationRectangleSeparatorStyle2}"/>
+            <Button Content="Create and Save new Document%" 
+                    x:Uid="DocumentCreation_ImageDocument_CreateDocumentButton"
+                    HorizontalAlignment="Left" 
+                    IsEnabled="{Binding IsInputValid}" 
+                    Command="{Binding CreateNewDocument}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

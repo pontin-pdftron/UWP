@@ -1,0 +1,98 @@
+﻿<Application
+    x:Class="CompleteReader.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--other resources can be here-->
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="ms-appx:///Resources/AppPalette.xaml" />-->
+                <ResourceDictionary Source="ms-appx:///Resources/ThemeColors.xaml" />
+                <ResourceDictionary Source="ms-appx:///Resources/CompleteReaderStyles.xaml" />
+                <ResourceDictionary Source="ms-appx:///Resources/CompleteReaderSharedStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/SplitViewStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Resources/AppAndCommandBarStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///pdftron.PDF.Tools/Controls/Resources/ControlStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///Common/Resources/CommonResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Override Generic AppBar or CommandBar Compact Height value -->
+            <x:Double x:Key="AppBarThemeCompactHeight">48</x:Double>
+            
+            <!--This is so that textblocks change from white/black accordingly to theme setting like in 8.1 -->
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource SystemBaseHighColor}"></Setter>
+            </Style>
+
+            <Style x:Key="EllipsisButton" TargetType="Button">
+                <Setter Property="Visibility" Value="Visible"/>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="0,0,9,0" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Top" />
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="Width" Value="{ThemeResource AppBarExpandButtonThemeWidth}" />
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        											Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        											Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        											Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        											Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter"
+        							Background="{TemplateBinding Background}"
+        							BorderBrush="{TemplateBinding BorderBrush}"
+        							BorderThickness="{TemplateBinding BorderThickness}"
+        							ContentTransitions="{TemplateBinding ContentTransitions}"
+        							ContentTemplate="{TemplateBinding ContentTemplate}"
+        							Padding="{TemplateBinding Padding}"
+        							HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+        							VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+        							AutomationProperties.AccessibilityView="Raw" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,600 @@
+﻿<Page
+    x:Class="CompleteReader.Documents.SubPages.FoldersPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Documents.SubPages"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:commands="using:CompleteReader.ViewModels.Common"
+    xmlns:common="using:CompleteReader.Pages.Common"
+    xmlns:document="using:CompleteReader.ViewModels.Document"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <EntranceNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    
+    <Page.Resources>
+        <converters:ReverseVisibilityConverter x:Key="ReverseVisibilityConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:ReverseBooleanConverter x:Key="ReverseBooleanConverter"/>
+        <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+        <converters:BooleanToOpacityParamConverter x:Key="BooleanToOpacityParamConverter"/>
+        <converters:ReverseEnumToBoolConverter x:Key="ReverseEnumToBoolConverter"/>
+        <converters:EmptyOrNullToVisibilityConverter x:Key="EmptyOrNullToVisibilityConverter"/>
+        <converters:ReverseBooleanToThicknessConverter x:Key="ReverseBooleanToThicknessConverter"/>
+        <converters:BooleanToThicknessConverter x:Key="BooleanToThicknessConverter"/>
+        <converters:ReverseBooleanToOpacityConverter x:Key="ReverseBooleanToOpacityConverter"/>
+        <converters:BooleanToMaxLengthConverter x:Key="BooleanToMaxLengthConverter"/>
+        <converters:ReverseEnumToVisibilityConverter x:Key="ReverseEnumToVisibilityConverter"/>
+
+        <DataTemplate x:Key="DefaultRecentListDataTemplate">
+            <Border Height="150" Width="350" Background="Transparent" Margin="12"
+                    RightTapped="FolderItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120">
+                            <Border BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0">
+                                <Grid>
+                                    <Border Name="ImageHost" BorderBrush="Black" 
+                                            BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" 
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0" 
+                                            Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Viewbox MaxHeight="150" MaxWidth="150">
+                                            <Grid >
+                                                <Image x:Name="ActualImage" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"
+                                                       Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                            </Grid>
+                                        </Viewbox>
+                                    </Border>
+                                    <TextBlock x:Name="PinFolderText" FontFamily="Segoe MDL2 Assets" Text="&#xE840;" 
+                                               VerticalAlignment="Center" FontSize="45"
+                                               Visibility="{Binding PinnedItemType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Pin}">
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                            <Border Background="White" Visibility="{Binding HasAdditionalIcon, Converter={StaticResource BooleanToVisibilityConverter}}" MaxHeight="21"
+                                    HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Grid>
+                                    <Image Source="{Binding AdditionalIconLocation}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="20" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center"  TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SmallRecentListDataTemplate">
+            <Border Height="85" Width="250" Background="Transparent" Margin="5" Padding="0,5,0,5"
+                    RightTapped="FolderItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120" Margin="0,0,5,0">
+                            <Border BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0">
+                                <Grid>
+                                    <Border Name="ImageHost" BorderBrush="Black" 
+                                            BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" 
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                            Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Viewbox MaxHeight="75" MaxWidth="75">
+                                            <Grid>
+                                                <Image x:Name="ActualImage" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"
+                                                       Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                            </Grid>
+                                        </Viewbox>
+                                    </Border>
+                                    <TextBlock x:Name="PinFolderText" FontFamily="Segoe MDL2 Assets" Text="&#xE840;" 
+                                           VerticalAlignment="Center" FontSize="35"
+                                           Visibility="{Binding PinnedItemType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Pin}">
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                            <Border Background="White" Visibility="{Binding HasAdditionalIcon, Converter={StaticResource BooleanToVisibilityConverter}}" MaxHeight="25" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Grid>
+                                    <Image Source="{Binding AdditionalIconLocation}"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="18" Text="{Binding DocumentName}" VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"  TextTrimming="CharacterEllipsis" Margin="-20,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ListRecentListDataTemplate">
+            <Border Height="70" Background="Transparent" Margin="3" Padding="3" Width="{Binding ElementName=FolderDocumentsView, Path=ActualWidth}"
+                    RightTapped="FolderItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Margin="0,-4,75,-4" 
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="100">
+                            <Border Name="ImageHost" BorderBrush="Black" 
+                                    BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}" 
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 1 10 1" 
+                                    Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Viewbox MaxHeight="75" MaxWidth="75">
+                                    <Grid>
+                                        <Image x:Name="ActualImage" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"
+                                               Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    </Grid>
+                                </Viewbox>
+                            </Border>
+                            <TextBlock x:Name="PinFolderText" FontFamily="Segoe MDL2 Assets" Text="&#xE840;" 
+                                           VerticalAlignment="Center" FontSize="35" Margin="30,0,0,0"
+                                           Visibility="{Binding PinnedItemType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Pin}">
+                            </TextBlock>
+                            <Border Background="White" Visibility="{Binding HasAdditionalIcon, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    MaxHeight="21" HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1" FontSize="18" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                       TextTrimming="CharacterEllipsis" Margin="-5,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CoverRecentListDataTemplate">
+            <Border Height="400" Width="300" Background="Transparent" Margin="25"
+                    RightTapped="FolderItem_RightTapped">
+                <Grid>
+                    <Border BorderBrush="#FF21578A" BorderThickness="3" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Border BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0">
+                            <Grid>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Border Name="ImageHost" BorderBrush="Black"
+                                            BorderThickness="{Binding NeedsBorder, Converter={StaticResource BooleanToThicknessConverter}, ConverterParameter=1}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 10 0" 
+                                            Visibility="{Binding ThumbLoaded, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                                        <Viewbox MaxWidth="{Binding IsFolder, Converter={StaticResource BooleanToMaxLengthConverter},ConverterParameter=150}"
+                                             MaxHeight="{Binding IsFolder, Converter={StaticResource BooleanToMaxLengthConverter},ConverterParameter=200}">
+                                            <Grid VerticalAlignment="Center">
+                                                <Image x:Name="ActualImage" VerticalAlignment="Center" Stretch="Uniform" Source="{Binding ThumbnailLocation}"
+                                                       />
+                                            </Grid>
+                                        </Viewbox>
+                                    </Border>
+                                    <Grid Grid.Row="1" Visibility="{Binding PinnedItemType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=File}">
+                                        <TextBlock FontSize="28" Text="{Binding DocumentName}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
+                                               Visibility="{Binding ShowNameInCoverMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    </Grid>
+                                </Grid>
+                                <TextBlock x:Name="PinFolderText" FontFamily="Segoe MDL2 Assets" Text="&#xE840;" 
+                                               VerticalAlignment="Center" FontSize="65"
+                                               Visibility="{Binding PinnedItemType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Pin}">
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                        <Border Background="White" Visibility="{Binding HasAdditionalIcon, Converter={StaticResource BooleanToVisibilityConverter}}" MaxHeight="21"
+                                    HorizontalAlignment="Right" VerticalAlignment="Bottom"  BorderThickness="1" BorderBrush="Black">
+                            <Grid>
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Visibility="{Binding PinnedItemType, Converter={StaticResource ReverseEnumToVisibilityConverter}, ConverterParameter=File}"
+                                   FontSize="24" TextTrimming="CharacterEllipsis" FontWeight="SemiLight"
+                                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10 40"
+                                   Text="{Binding DocumentName}"/>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding DocumentName}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+
+        <Storyboard x:Name="FadeInNoSubItemsMessage">
+            <DoubleAnimation Duration="0:0:1.0" Storyboard.TargetName="NoSubItemsMessageHost" 
+                             Storyboard.TargetProperty="Opacity" To="1.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeOutNoSubItemsMessage">
+            <DoubleAnimation Duration="0:0:0.200" Storyboard.TargetName="NoSubItemsMessageHost" 
+                             Storyboard.TargetProperty="Opacity" To="0.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeInFolderSpinner">
+            <DoubleAnimationUsingKeyFrames Duration="0:0:0.700" 
+                                           Storyboard.TargetName="FolderLoadingSpinnerHost" 
+                                           Storyboard.TargetProperty="Opacity">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.0"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="0.0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"></QuadraticEase>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeOutFolderSpinner">
+            <DoubleAnimation Duration="0:0:0.20" Storyboard.TargetName="FolderLoadingSpinnerHost" 
+                             Storyboard.TargetProperty="Opacity" To="0.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeInNoFilteredItemsMessage">
+            <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetName="NoFilteredItemTextBox" 
+                             Storyboard.TargetProperty="Opacity" To="1.0">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"></QuadraticEase>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="FadeOutNoFilteredItemsMessage">
+            <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetName="NoFilteredItemTextBox" 
+                             Storyboard.TargetProperty="Opacity" To="0.0">
+            </DoubleAnimation>
+        </Storyboard>
+
+        <MenuFlyout x:Name="FlyoutOptions">
+            <MenuFlyoutItem x:Uid="DocumentsPage_FoldersPage_Button_Unpin" Command="{Binding DeleteItemCommand}"/>
+            <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_Button_Share" Command="{Binding ShareCommand}"/>
+            <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_Button_FileInfo" Command="{Binding FileInfoCommand}"/>
+        </MenuFlyout>
+
+        <Flyout x:Name="FlyoutFileInfo">
+            <StackPanel x:Name="FlyoutStackPanel" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Title" Text="Title: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Author" Text="Author: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_PageCount" Text="Page Count: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Path" Text="Path: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Size" Text="Size: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_NumFolders" Text="Number of Folders%" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_NumPDFs" Text="Number of PDFs%" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_DateModified" Text="Date Modified: %" Margin="0,0,5,5" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                    <TextBlock />
+                </StackPanel>
+                <TextBlock x:Name="LayoutLoopPreventionTextBlock" Height="1" />
+                <!-- UWP can get into an infinite layout loop here on devices with a scale factor that is not 100 -->
+            </StackPanel>
+        </Flyout>
+    </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar x:Name="CommandBar" IsOpen="{Binding IsAppBarOpen, Mode=TwoWay}" 
+                    IsEnabled="{Binding IsModal, Converter={StaticResource ReverseBooleanConverter}}"
+                    Style="{StaticResource HamburgerCommandBar}">
+            <CommandBar.Content>
+                <Grid Height="{Binding ElementName=CommandBar, Path=ActualHeight}" x:Name="CommandBarContentGrid">
+                    <TextBlock x:Uid="DocumentsPage_MyFolders_Title" 
+                               x:Name="DocumentsPageMyFoldersTitle"
+                               Margin="20,0,0,0" 
+                               VerticalAlignment="Center" 
+                               FontWeight="Bold" 
+                               FontSize="17"
+                               Opacity="{Binding IsModal, Converter={StaticResource BooleanToOpacityParamConverter}, ConverterParameter=0.5}"
+                               Text="Pinned Folders%"
+                               Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    </TextBlock>
+                </Grid>
+            </CommandBar.Content>
+            <AppBarButton x:Name="CancelSelectionButton"
+                          Command="{Binding CancelSelectionButtonCommand}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsEnabled="{Binding IsModal, Converter={StaticResource ReverseBooleanConverter}}">
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18">Cancel</TextBlock>
+            </AppBarButton>
+
+            <AppBarSeparator x:Name="AppBarSeparatorBar"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+            </AppBarSeparator>
+
+            <AppBarButton x:Name="DeleteAppBarButton" Icon="UnPin" Command="{Binding DeleteSelectedItemsCommand}"
+                          x:Uid="DocumentsPage_FoldersPage_AppBar_Unpin" Label="Unpin" IsEnabled="{Binding IsDeleteEnabled}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}"/>
+
+            <AppBarButton x:Name="ShareAppBarButton" x:Uid="DocumentsPage_RecentItems_AppBar_Share" 
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                          IsEnabled="{Binding IsShareEnabled}"
+                          Command="{Binding ShareCommand}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph=""></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="SelectAppBarButton" x:Uid="DocumentsPage_RecentItems_AppBar_Select"
+                          Label="Select" 
+                          Command="{Binding SelectionButtonCommand}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsEnabled="{Binding HasFilteredItems}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph=""></FontIcon>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton x:Name="IconViewAppBarButton"  
+                          x:Uid="DocumentsPage_RecentItems_AppBar_IconView"
+                          Label="View Mode"
+                          Style="{StaticResource styleAppBarButtonPageNavigation}"
+                          Visibility="{Binding IsIconViewVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource ReverseBooleanConverter}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{Binding CurrVisibleIconView}"></FontIcon>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="l" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="0" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=List}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE179;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_ListView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="s" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="1" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Small}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE80A;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_SmallTilesView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="d" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="2" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Default}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE154;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_LargeTilesView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+                            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding IconViewButtonCommand}" CommandParameter="c" 
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Grid.Row="3" Margin="-3,-1,-1,3"
+                                IsEnabled="{Binding CurrentIconView, Converter={StaticResource ReverseEnumToBoolConverter}, ConverterParameter=Cover}">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0" HorizontalAlignment="Stretch">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE739;" FontSize="20"/>
+                                        <TextBlock x:Uid="DocumentsPage_RecentItems_AppBar_CoverView" Text="Single%" VerticalAlignment="Center" Margin="10,-5,0,0"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+
+            <AppBarButton x:Name="FilterAppBarButton" 
+                          Label="Filter%"
+                          x:Uid="DocumentsPage_FoldersPage_FilterButton"
+                          Style="{StaticResource styleAppBarButtonPageNavigation}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                          Icon="Filter">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox Content="Show all file types%" x:Uid="DocumentsPage_FoldersPage_FilterFlyout_ShowAll"
+                                      IsHitTestVisible="{Binding ShowAllFileTypes, Converter={StaticResource ReverseBooleanConverter}}"
+                                      IsTabStop="{Binding ShowAllFileTypes, Converter={StaticResource ReverseBooleanConverter}}"
+                                      IsChecked="{Binding ShowAllFileTypes, Mode=TwoWay}"/>
+                            <CheckBox Content="PDFs%" x:Uid="DocumentsPage_FoldersPage_FilterFlyout_ShowPDFs"
+                                      IsChecked="{Binding ShowPDFs, Mode=TwoWay}"/>
+                            <CheckBox Content="Office documents%" x:Uid="DocumentsPage_FoldersPage_FilterFlyout_ShowOffice"
+                                      IsChecked="{Binding ShowOfficeDocuments, Mode=TwoWay}"/>
+                            <CheckBox Content="Images%" x:Uid="DocumentsPage_FoldersPage_FilterFlyout_ShowImages"
+                                      IsChecked="{Binding ShowImages, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+                
+            </AppBarButton>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Uid="DocumentsPage_FoldersPage_AppBar_UnpinAll" 
+                          Label="Unpin All%" Icon="Clear" 
+                          Command="{Binding DeleteAllCommand}" 
+                          IsEnabled="{Binding IsDeleteAllEnabled}"
+                ></AppBarButton>
+                <!-- We handle this click in the View, since there are no conveniet ways to clear multiiple selection from the ViewModel -->
+                <AppBarButton x:Name="ClearSelectionAppBarButton" Icon="ClearSelection" Click="ClearSelectionAppBarButton_Click" 
+                          x:Uid="DocumentsPage_RecentItems_AppBar_ClearSelection" Label="Clear Selection" IsEnabled="{Binding HasSelection}"
+                          Visibility="{Binding IsSelectButtonVisible, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"/>
+                <AppBarButton x:Uid="DocumentsPage_RecentItems_AppBar_FileInfo" 
+                          Label="File Info%" Icon="Document" 
+                          Command="{Binding FileInfoCommand}"
+                          IsEnabled="{Binding IsOneItemSelected}"
+                ></AppBarButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Margin="20,-25,20,0" commands:TappedCommand.Command="{Binding GridTappedCommand}">
+
+        <common:EntranceAnimationContentControl x:Name="NoSubItemsMessageHost"
+                                                IsOpen="{Binding HasItems, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=HasNoSubItems}"
+                                                EntranceAnimation="{Binding ElementName=FadeInNoSubItemsMessage, Mode=TwoWay}"
+                                                ExitAnimation="{Binding ElementName=FadeOutNoSubItemsMessage, Mode=TwoWay}"
+                                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                Margin="0,0,0,100" Visibility="Collapsed" Opacity="0">
+                    <TextBlock x:Uid="NoSubFolderItems_Textblock" Text="NoDocuments%"
+                       VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="45"
+                       Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center">
+                    </TextBlock>
+        </common:EntranceAnimationContentControl>
+
+        <!-- Using this textblock to allign flyouts when using ShowAt()-->
+        <TextBlock x:Name="MarginTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="0"></TextBlock>
+        
+        <ScrollViewer x:Name="FolderNavigationViewScrollViewer"
+                      HorizontalScrollMode="Enabled" VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalAlignment="Top"
+                      HorizontalContentAlignment="Stretch"
+                      Margin="0,-25,0,0">
+            <GridView x:Name="FolderNavigationView"
+                  ItemContainerStyle="{StaticResource GridViewItemExpandedWithBackgroundHover}"
+                  ItemsSource="{Binding FolderPathList}"
+                  commands:ItemClickCommand.Command="{Binding FolderPathClickCommand}"      
+                  IsItemClickEnabled="True"
+                  SelectionMode="None">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Padding="6">
+                            <TextBlock Text="{Binding Value}" HorizontalAlignment="Stretch"/>
+                            <Polygon Points="0,0,0,10,10,5,0,0" Grid.Column="1" Fill="{StaticResource ThemeBrushHighlightMediumBrightness}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <GridView.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition></EntranceThemeTransition>
+                    </TransitionCollection>
+                </GridView.ItemContainerTransitions>
+            </GridView>
+        </ScrollViewer>
+
+        <Grid x:Name="FoldersDocumentGrid"
+              Visibility="{Binding HasItems, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=HasItems}">
+
+            <TextBox x:Name="FocusBox" Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="0"  TextChanged="FocusBox_TextChanged"/>
+
+            <ListView x:Name="FolderDocumentsView" 
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
+                      Margin="0,40,0,0"
+                      TabNavigation="Cycle"
+                      ItemTemplate="{StaticResource SmallRecentListDataTemplate}"
+                      ItemsSource="{Binding FilteredPinnedItems}" 
+                      SelectionMode="{Binding SelectionMode}" 
+                      IsItemClickEnabled="{Binding IsInSelectionMode, Converter={StaticResource ReverseBooleanConverter}}"
+                      commands:SelectionChangedCommand.Command="{Binding FolderItemsSelectionChangedCommand}"
+                      commands:ItemClickCommand.Command="{Binding FolderItemClickCommand}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" Loaded="ItemsWrapGrid_Loaded"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemWithBorderBrushSelection}"/>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+
+        <common:EntranceAnimationContentControl x:Name="FolderLoadingSpinnerHost" 
+                                                    IsOpen="{Binding LoadingItems}" 
+                                                    EntranceAnimation="{Binding ElementName=FadeInFolderSpinner, Mode=TwoWay}"
+                                                    ExitAnimation="{Binding ElementName=FadeOutFolderSpinner, Mode=TwoWay}"
+                                                    Visibility="Collapsed">
+            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" 
+                              IsActive="{Binding LoadingItems}" />
+
+        </common:EntranceAnimationContentControl>
+
+        <common:EntranceAnimationContentControl x:Name="NoFilteredItemsHost" 
+                                                IsOpen="{Binding HasOnlyUnfilteredItems}" 
+                                                EntranceAnimation="{Binding ElementName=FadeInNoFilteredItemsMessage, Mode=TwoWay}"
+                                                ExitAnimation="{Binding ElementName=FadeOutNoFilteredItemsMessage, Mode=TwoWay}"
+                                                Visibility="Collapsed">
+            <TextBlock x:Name="NoFilteredItemTextBox"
+                       FontSize="20" Text="There are no doucments of the selected file types in this folder.%" x:Uid="DocumentsPage_FoldersPage_NoFilteredDocuments"
+                       TextWrapping="WrapWholeWords" MaxWidth="400" Opacity="0"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        </common:EntranceAnimationContentControl>
+
+        <!-- HasFilteredItems  -->
+    </Grid>
+</Page>

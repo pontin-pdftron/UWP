@@ -1,0 +1,343 @@
+﻿<Page
+    x:Class="CompleteReader.Documents.SubPages.OpenedItemsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    mc:Ignorable="d"
+    Background="#F1F3F5"
+    Loaded="Page_Loaded">
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <EntranceNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Page.Resources>
+        <converters:BooleanToOpacityParamConverter x:Key="BooleanToOpacityParamConverter"/>
+        
+        <DataTemplate x:Key="DefaultOpenedDocsDataTemplate">
+            <Border Height="150"
+                    Width="350"
+                    Background="Transparent"
+                    Margin="12">
+                <Grid>
+                    <Border BorderBrush="#FF21578A"
+                            BorderThickness="3"
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120">
+                            <Border BorderBrush="Black"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="5 0 10 0"
+                                    BorderThickness="1">
+                                <Viewbox>
+                                    <Image Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Stretch="Uniform"
+                                           Source="{Binding Path=PreviewSource}"/>
+                                </Viewbox>
+                            </Border>
+                            <!--Border Background="White"
+                                    Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    MaxHeight="25"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    BorderThickness="1"
+                                    BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>-->
+                        </Grid>
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1"
+                                       FontSize="20"
+                                       Text="{Binding Path=Title}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding Path=Title}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="ListOpenedDocsDataTemplate">
+            <Border Height="70"
+                    Background="Transparent"
+                    Margin="3"
+                    Padding="3"
+                    Width="{Binding ElementName=OpenedDocsListView, Path=ActualWidth}">
+                <Grid>
+                    <Border BorderBrush="#FF21578A"
+                            BorderThickness="3"
+                            Margin="0,-4,75,-4"
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="100">
+                            <Border BorderBrush="Black"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="5 1 10 1"
+                                    BorderThickness="1" >
+                                <Viewbox MaxHeight="75"
+                                         MaxWidth="75">
+                                    <Image Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Stretch="Uniform"
+                                           Source="{Binding Path=PreviewSource}"/>
+                                </Viewbox>
+                            </Border>
+                            <!--<Border Background="White"
+                                    Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    MaxHeight="21"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    BorderThickness="1"
+                                    BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>-->
+                        </Grid>
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1"
+                                       FontSize="18"
+                                       Text="{Binding Path=Title}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"
+                                       Margin="-5,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="SmallOpenedDocsDataTemplate">
+            <Border Height="85"
+                    Width="250"
+                    Background="Transparent"
+                    Margin="5"
+                    Padding="0,5,0,5">
+                <Grid>
+                    <Border BorderBrush="#FF21578A"
+                            BorderThickness="3"
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="120">
+                            <Border BorderBrush="Black"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Margin="5 0 10 0"
+                                    BorderThickness="1" >
+                                <Viewbox MaxHeight="75"
+                                         MaxWidth="75">
+                                    <Image Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Stretch="Uniform"
+                                           Source="{Binding Path=PreviewSource}"/>
+                                </Viewbox>
+                            </Border>
+                            <!--<Border Background="White"
+                                    Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    MaxHeight="21"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    BorderThickness="1"
+                                    BorderBrush="Black">
+                                <Image Source="{Binding AdditionalIconLocation}"/>
+                            </Border>-->
+                        </Grid>
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left">
+                            <TextBlock Grid.Column="1"
+                                       FontSize="18"
+                                       Text="{Binding Path=Title}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"
+                                       Margin="-20,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding Path=Title}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="CoverOpenedDocsDataTemplate">
+            <Border Height="400"
+                    Width="300"
+                    Background="Transparent"
+                    Margin="25">
+                <Grid>
+                    <Border BorderBrush="#FF21578A"
+                            BorderThickness="3"
+                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Margin="-10,-10,-22,-10">
+                    </Border>
+                    <Grid>
+                        <Border BorderBrush="Black"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="5 0 10 0"
+                                BorderThickness="1" >
+                            <Viewbox>
+                                <Image Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Stretch="Uniform"
+                                       Source="{Binding Path=PreviewSource}"/>
+                            </Viewbox>
+                        </Border>
+                        <!--<Border Background="White"
+                                Visibility="{Binding HasAdditionalLogo, Converter={StaticResource BoolToVisibilityConverter}}"
+                                MaxHeight="25"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                BorderThickness="1"
+                                BorderBrush="Black">
+                            <Image Source="{Binding AdditionalIconLocation}"/>
+                        </Border>-->
+                    </Grid>
+                </Grid>
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{Binding Path=Title}"/>
+                </ToolTipService.ToolTip>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Page.TopAppBar>
+        <CommandBar x:Name="CommandBar"
+                    Style="{StaticResource HamburgerCommandBar}"
+                    Background="White">
+            <CommandBar.Content>
+                <Grid Height="{Binding ElementName=CommandBar, Path=ActualHeight}">
+                    <TextBlock x:Uid="DocumentsPage_OpenedDocuments_Title"
+                               Margin="20,0,0,0"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="17"
+                               Opacity="{Binding IsModal, Converter={StaticResource BooleanToOpacityParamConverter}, ConverterParameter=0.5}"
+                               Text="OpenedDocuments%"
+                               >
+                    </TextBlock>
+                </Grid>
+            </CommandBar.Content>
+            
+            <AppBarButton x:Uid="DocumentsPage_RecentItems_AppBar_IconView"
+                          Style="{StaticResource styleAppBarButtonPageNavigation}"
+                          IsCompact="{Binding ElementName=CommandBar, Path=IsOpen, Converter={StaticResource InverseBooleanConverter}}">
+                
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets"
+                              Glyph="{Binding Path=CurrVisibleIconView}"/>
+                </AppBarButton.Icon>
+                
+                <AppBarButton.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_AppBar_ListView"
+                                        Command="{Binding Path=OpenedIconViewCommand}"
+                                        CommandParameter="l"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{Binding Path=CurrentIconView, Converter={StaticResource InverseEnumToBooleanConverter}, ConverterParameter=List}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE179;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_AppBar_SmallTilesView"
+                                        Command="{Binding Path=OpenedIconViewCommand}"
+                                        CommandParameter="s"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{Binding Path=CurrentIconView, Converter={StaticResource InverseEnumToBooleanConverter}, ConverterParameter=Small}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE80A;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_AppBar_LargeTilesView"
+                                        Command="{Binding Path=OpenedIconViewCommand}"
+                                        CommandParameter="d"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{Binding Path=CurrentIconView, Converter={StaticResource InverseEnumToBooleanConverter}, ConverterParameter=Default}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE154;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="DocumentsPage_RecentItems_AppBar_CoverView"
+                                        Command="{Binding Path=OpenedIconViewCommand}"
+                                        CommandParameter="c"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        IsEnabled="{Binding Path=CurrentIconView, Converter={StaticResource InverseEnumToBooleanConverter}, ConverterParameter=Cover}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE739;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
+    </Page.TopAppBar>
+    <Grid Margin="20,-25,20,0">
+        <ListView x:Name="OpenedDocsListView"
+                  ItemsSource="{Binding Path=OpenedDocuments}"
+                  ItemTemplate="{Binding Path=OpenedItemTemplate}"
+                  SelectionMode="None"
+                  IsItemClickEnabled="True"
+                  ItemContainerStyle="{Binding Path=OpenedItemContainerStyle}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"
+                                   MaximumRowsOrColumns="{Binding Path=MaximumRowsOrColumns}"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <i:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="ItemClick">
+                    <core:InvokeCommandAction Command="{Binding OpenedItemClickCommand}"/>
+                </core:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </ListView>
+    </Grid>
+</Page>

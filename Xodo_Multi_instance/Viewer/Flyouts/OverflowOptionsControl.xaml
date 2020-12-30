@@ -1,0 +1,66 @@
+﻿<UserControl
+    x:Class="CompleteReader.Viewer.Flyouts.OverflowOptionsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompleteReader.Viewer.Flyouts"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="LayoutIconTextBlockStyle">
+            <Setter Property="Margin" Value="5 0 10 0"/>
+            <Setter Property="FontFamily" Value="ms-appx:///Assets/custom.ttf#PDFTron Glyphicons"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlBackgroundBaseHighBrush}"/>
+        </Style>
+
+        <Style TargetType="Rectangle" x:Key="ListSeparatorStyle">
+            <Setter Property="MinHeight" Value="1"/>
+            <Setter Property="MinWidth" Value="4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="Margin" Value="5 5 5 5"/>
+            <Setter Property="RadiusX" Value="3"/>
+            <Setter Property="RadiusY" Value="3"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel>
+            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding SaveAndFlattenCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0">
+                        <!--Align the Save As button to the bottom to account for it being drawn high up -->
+                        <TextBlock Text="" Style="{StaticResource LayoutIconTextBlockStyle}" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Bottom"/>
+                        <TextBlock x:Uid="ViewerPage_OverflowOptions_SaveAndFlatten" Text="Save and Flatten%" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding PrintCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0">
+                        <TextBlock Text="&#xE016;" Style="{StaticResource LayoutIconTextBlockStyle}"/>
+                        <TextBlock x:Uid="ViewerPage_OverflowOptions_Print" Text="Print%" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <!--<Button Style="{StaticResource ButtonAsTabStyle}" Command="{Binding SettingsCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" Margin="-10 0 0 0">
+                        <TextBlock Text="&#xE137;" Style="{StaticResource LayoutIconTextBlockStyle}" Foreground="White"/>
+                        <TextBlock x:Uid="ViewerPage_OverflowOptions_Settings" Text="Settings%" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>-->
+        </StackPanel>
+        
+
+    </Grid>
+</UserControl>

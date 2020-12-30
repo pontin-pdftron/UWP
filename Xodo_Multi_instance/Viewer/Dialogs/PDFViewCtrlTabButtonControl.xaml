@@ -1,0 +1,517 @@
+﻿<UserControl
+    x:Class="CompleteReader.Viewer.Dialogs.PDFViewCtrlTabButtonControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="CompleteReader.Viewer.Dialogs"
+    xmlns:resources="using:CompleteReader.Resources"
+    xmlns:toolResources="using:pdftron.PDF.Tools.Controls.Resources"
+    xmlns:converters="using:CompleteReader.Pages.Common.Converters"
+    xmlns:toolConverters="using:pdftron.PDF.Tools.Controls.ViewModels.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="200"
+    d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Resources/CompleteReaderSharedStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TabButtonUnmatchedBackgroundBrush" Color="#FF353535"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedForegroundBrush" Color="#B4FFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerOverBackgroundBrush" Color="#FF404040"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerOverForegroundBrush" Color="#B4FFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerPressedBackgroundBrush" Color="#FF656565"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerPressedForegroundBrush" Color="#B4FFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedBackgroundBrush" Color="#FF575757"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedForegroundBrush" Color="#FFFFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerOverBackgroundBrush" Color="#FF656565"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerOverForegroundBrush" Color="#FFFFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerPressedBackgroundBrush" Color="#FF747474"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerPressedForegroundBrush" Color="#FFFFFFFF"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerOverBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerOverForegroundBrush" Color="#FFF05A2A"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerPressedBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerPressedForegroundBrush" Color="#A0F05A2A"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TabButtonUnmatchedBackgroundBrush" Color="#FFCECECE"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedForegroundBrush" Color="#B4000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerOverBackgroundBrush" Color="#FFC8C8C8"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerOverForegroundBrush" Color="#B4000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerPressedBackgroundBrush" Color="#FFAAAAAA"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonUnmatchedPointerPressedForegroundBrush" Color="#B4000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedBackgroundBrush" Color="#FFB8B8B8"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedForegroundBrush" Color="#FF000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerOverBackgroundBrush" Color="#FFAAAAAA"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerOverForegroundBrush" Color="#FF000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerPressedBackgroundBrush" Color="#FF9B9B9B"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabButtonMatchedPointerPressedForegroundBrush" Color="#FF000000"></SolidColorBrush>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerOverBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerOverForegroundBrush" Color="#FFF05A2A"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerPressedBackgroundBrush" Color="Transparent"/>
+                    <SolidColorBrush x:Key="TabCloseButtonPointerPressedForegroundBrush" Color="#A0F05A2A"/>
+                </ResourceDictionary>
+
+            </ResourceDictionary.ThemeDictionaries>
+
+            <Style TargetType="toolResources:TabButton" BasedOn="{StaticResource NonMatchedTabButtonStyle}" x:Key="NonMatchedDocumentTabButtonStyle">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Foreground" Value="{ThemeResource TabButtonUnmatchedForegroundBrush}"/>
+                <Setter Property="Background" Value="{ThemeResource TabButtonUnmatchedBackgroundBrush}"/>
+                <Setter Property="PointerOverForegroundBrush" Value="{ThemeResource TabButtonUnmatchedPointerOverForegroundBrush}"/>
+                <Setter Property="PointerOverBackgroundBrush" Value="{ThemeResource TabButtonUnmatchedPointerOverBackgroundBrush}"/>
+                <Setter Property="PointerPressedForegroundBrush" Value="{ThemeResource TabButtonUnmatchedPointerPressedForegroundBrush}"/>
+                <Setter Property="PointerPressedBackgroundBrush" Value="{ThemeResource TabButtonUnmatchedPointerPressedBackgroundBrush}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+
+            <Style TargetType="toolResources:TabButton" BasedOn="{StaticResource MatchedTabButtonStyle}" x:Key="MatchedDocumentTabButtonStyle">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Foreground" Value="{ThemeResource TabButtonMatchedForegroundBrush}"/>
+                <Setter Property="Background" Value="{ThemeResource TabButtonMatchedBackgroundBrush}"/>
+                <Setter Property="PointerOverForegroundBrush" Value="{ThemeResource TabButtonMatchedPointerOverForegroundBrush}"/>
+                <Setter Property="PointerOverBackgroundBrush" Value="{ThemeResource TabButtonMatchedPointerOverBackgroundBrush}"/>
+                <Setter Property="PointerPressedForegroundBrush" Value="{ThemeResource TabButtonMatchedPointerPressedForegroundBrush}"/>
+                <Setter Property="PointerPressedBackgroundBrush" Value="{ThemeResource TabButtonMatchedPointerPressedBackgroundBrush}"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+            </Style>
+
+            <toolConverters:EnumToStyleConverter x:Key="TabButtonStyleConverter" MatchedStyle="{StaticResource MatchedDocumentTabButtonStyle}"
+                                             NotMatchedStyle="{StaticResource NonMatchedDocumentTabButtonStyle}"/>
+            <converters:ReverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:ReverseBooleanToOpacityConverter x:Key="ReverseBooleanToOpacityConverter"/>
+
+            <Style TargetType="TextBlock" x:Key="TabButtonTitleTextStyle">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Button" x:Key="CloseTabButtonStyle">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderThemeBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="14" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabCloseButtonPointerOverBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CrossPath"
+                                                                   Storyboard.TargetProperty="Stroke">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabCloseButtonPointerOverForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabCloseButtonPointerPressedBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CrossPath"
+                                                                   Storyboard.TargetProperty="Stroke">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabCloseButtonPointerPressedForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                        <VisualState x:Name="PointerFocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="0">
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Path x:Name="CrossPath"
+                                              Data="M 0,0 L 10,10 M 0,10 L 10,0" Margin="{TemplateBinding Padding}"
+                                              Stroke="{TemplateBinding Foreground}" StrokeThickness="2" 
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          AutomationProperties.AccessibilityView="Raw"/>
+                                    </Grid>
+                                </Border>
+                                <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                                <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            <Style TargetType="Button" x:Key="NewTabButtonStyle">
+                <Setter Property="Background" Value="{ThemeResource TabButtonUnmatchedBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource TabButtonUnmatchedForegroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{ThemeResource TabButtonUnmatchedForegroundBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Width" Value="60"/>
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerOverBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlusHorizRect"
+                                                                   Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerOverForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlusVertRect"
+                                                                   Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerOverForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerPressedBackgroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlusHorizRect"
+                                                                   Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerPressedForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlusVertRect"
+                                                                   Storyboard.TargetProperty="Fill">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TabButtonUnmatchedPointerPressedForegroundBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBackgroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledBorderThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonDisabledForegroundThemeBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                                <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                        <VisualState x:Name="PointerFocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="0">
+                                    <Grid>
+                                        <Rectangle x:Name="PlusHorizRect" Fill="{TemplateBinding Foreground}"
+                                                   Margin="{TemplateBinding Padding}" Height="2"
+                                                   HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                   MaxWidth="24"/>
+                                        <Rectangle x:Name="PlusVertRect" Fill="{TemplateBinding Foreground}"
+                                                   Margin="{TemplateBinding Padding}" Width="2"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                                                   MaxHeight="24"/>
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          AutomationProperties.AccessibilityView="Raw"/>
+                                    </Grid>
+                                </Border>
+                                <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                                <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <DataTemplate x:Key="TabItemTemplate">
+                <Grid RightTapped="TabButtonItem_RightTapped">
+                    <toolResources:TabButton Visibility="{Binding IsFixedItem, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                         Margin="1 0 1 0" Padding="0" BorderThickness="0" 
+                                         Style="{Binding IsSelected, Converter={StaticResource TabButtonStyleConverter}, ConverterParameter=True}"
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                         Command="{Binding ItemClickedCommand}" >
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- this ensure that the close button always has room -->
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="8 2 0 2" Grid.Column="0" UseLayoutRounding="True" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid x:Name="IndicatorGrid" Visibility="{Binding ShowPreview, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                      Margin="4 4 9 4">
+                                    <Image Source="{Binding PreviewSource}" MaxWidth="100" 
+                                           Opacity="{Binding IsConverting, Converter={StaticResource ReverseBooleanToOpacityConverter}}"/>
+                                    <ProgressRing Visibility="{Binding ShowConversionProgress, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" 
+                                              Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" IsActive="{Binding ShowConversionProgress}" Loaded="ProgressRing_Loaded"/>
+                                </Grid>
+
+                                <TextBlock Grid.Column="1" Text="*" Style="{StaticResource TabButtonTitleTextStyle}" FontSize="22"
+                                           Visibility="{Binding ShowHasUnsavedChanged, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                <TextBlock Grid.Column="2" Text="{Binding Title}" Style="{StaticResource TabButtonTitleTextStyle}" Margin="0 0 5 0" TextTrimming="CharacterEllipsis"/>
+                            </Grid>
+                            <Button Grid.Column="1" Style="{StaticResource CloseTabButtonStyle}" HorizontalAlignment="Right" Margin="0 0 0 0"
+                                    Command="{Binding ItemClickedCommand}" CommandParameter="Close"/>
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{Binding Title}"></ToolTip>
+                            </ToolTipService.ToolTip>
+                        </Grid>
+                    </toolResources:TabButton>
+                    <Grid Visibility="{Binding IsFixedItem, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                              Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1 0 1 0">
+                            <Button Style="{StaticResource NewTabButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ItemClickedCommand}"
+                                BorderThickness="0"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="PhoneTabItemTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <toolResources:TabButton Visibility="{Binding IsFixedItem, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                                         Grid.Column="1" Margin="1 0 1 0" Padding="0" BorderThickness="0" 
+                                         Style="{Binding IsSelected, Converter={StaticResource TabButtonStyleConverter}, ConverterParameter=True}"
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                         Command="{Binding ItemClickedCommand}" >
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- this ensure that the close button always has room -->
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="2 2 0 2" Grid.Column="0" Grid.ColumnSpan="1" UseLayoutRounding="True" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                  Visibility="{Binding ShowPreview, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Image Source="{Binding PreviewSource}" MaxWidth="100"
+                                       Opacity="{Binding IsConverting, Converter={StaticResource ReverseBooleanToOpacityConverter}}"/>
+                                <ProgressRing Visibility="{Binding ShowConversionProgress, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}" 
+                                              Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" IsActive="{Binding ShowConversionProgress}" Loaded="ProgressRing_Loaded"/>
+                            </Grid>
+                            <Button Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource CloseTabButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                    Command="{Binding ItemClickedCommand}" CommandParameter="Close" Padding="10"/>
+
+                            <Grid Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="*" Style="{StaticResource TabButtonTitleTextStyle}" FontSize="10" Margin="1 0 1 0"
+                                           Visibility="{Binding ShowHasUnsavedChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           FontWeight="Bold" VerticalAlignment="Bottom" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Title}" Style="{StaticResource TabButtonTitleTextStyle}"
+                                           TextTrimming="CharacterEllipsis" FontSize="10" Margin="2 0 0 0" VerticalAlignment="Bottom" TextAlignment="Center"/>
+                            </Grid>
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{Binding Title}"></ToolTip>
+                            </ToolTipService.ToolTip>
+                        </Grid>
+                    </toolResources:TabButton>
+                    <Grid Grid.Column="1" Visibility="{Binding IsFixedItem, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                              Width="40" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1 0 1 0">
+                        <Button Style="{StaticResource NewTabButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ItemClickedCommand}"
+                                BorderThickness="0"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+
+            <Flyout x:Name="FlyoutFileInfo">
+                <StackPanel x:Name="FlyoutStackPanel" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel.Resources>
+                        <Storyboard x:Name="FadeInAndOutCopyToClipboard">
+                            <DoubleAnimationUsingKeyFrames Duration="0:0:0.750" Storyboard.TargetName="TextCopiedTextBlock" 
+                                                           Storyboard.TargetProperty="Opacity">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.250" Value="0.7">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseOut"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.500" Value="0.7"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.750" Value="0">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <QuadraticEase EasingMode="EaseIn"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </StackPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Title" Text="Title: %" Margin="0,0,5,0" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                        <TextBlock x:Name="FlyoutTitleTextBlock" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Uid="DocumentsPage_RecentItems_FileInfo_Path" Text="Path: %" Margin="0,0,5,0" 
+                                   VerticalAlignment="Center" Foreground="{StaticResource PrimaryHighlightMediumBrush}"/>
+                        <TextBlock x:Name="FlyoutPathTextBlock" MinHeight="0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button x:Name="CopyPathButton" Content="Copy path%" x:Uid="DocumentsPage_RecentItems_FileInfo_CopyPath" 
+                            HorizontalAlignment="Center" Margin="0 5 0 0"/>
+                    <TextBlock x:Name="TextCopiedTextBlock" Text="Path copied to clipboard%" x:Uid="DocumentsPage_RecentItems_FileInfo_PathCopied"
+                               Margin="0 -3 0 -13" HorizontalAlignment="Center" Opacity="0"/>
+                    <TextBlock x:Name="LayoutLoopPreventionTextBlock" Height="1" />
+                    <!-- UWP can get into an infinite layout loop here on devices with a scale factor that is not 100 -->
+                </StackPanel>
+            </Flyout>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Using this textblock to allign flyouts when using ShowAt()-->
+        <TextBlock x:Name="MarginTextBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="0"></TextBlock>
+        <Border>
+            <resources:HorizontallyEvenSpacedItemsControl x:Name="HorizontalItemsControl" 
+                                                          IsEnabled="{Binding IsEnabled}"
+                                                          ItemsSource="{Binding Tabs}"
+                                                          ItemTemplate="{StaticResource TabItemTemplate}"
+                                                          MaxItemWidth="300"
+                                                          IsLastItemFixedSize="{Binding ShowFixedItem, Mode=TwoWay}">
+                <resources:HorizontallyEvenSpacedItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </resources:HorizontallyEvenSpacedItemsControl.ItemsPanel>
+                <resources:HorizontallyEvenSpacedItemsControl.ItemContainerTransitions>
+                    <TransitionCollection></TransitionCollection>
+                </resources:HorizontallyEvenSpacedItemsControl.ItemContainerTransitions>
+            </resources:HorizontallyEvenSpacedItemsControl>
+        </Border>
+    </Grid>
+</UserControl>
